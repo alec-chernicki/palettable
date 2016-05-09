@@ -1,5 +1,5 @@
 module.exports = {
-  entry: './app/App.js',
+  entry: './app/index.js',
   output: {
     path: './public',
     filename: 'bundle.js'
@@ -11,7 +11,8 @@ module.exports = {
         exclude: /(node_modules|bower_components)/,
         loader: 'babel',
         query: {
-          presets: ['react', 'es2015']
+          presets: ['react', 'es2015'],
+          plugins: ['transform-object-rest-spread']
         }
       }
     ]

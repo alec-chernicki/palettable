@@ -1,17 +1,33 @@
 * {
   box-sizing: border-box;
+  /*GET RID OF THIS JESUS CHRIST*/
   height: 100%;
 }
 
-html, body {
+.theme-dark,
+.theme-light {
+  height: auto;
+}
+
+
+html, body, #root {
   margin: 0;
-  background-color: #001F3F;
   padding: 0;
   color: #FFF;
   height: 100%;
-  font-family: 'Montserrat';
+  font-family: 'Asap';
   -webkit-font-smoothing: antialiased;
   font-weight: 700;
+  overflow: hidden;
+  min-width: 650px;
+}
+
+h1 {
+  margin: 0;
+}
+
+span, p {
+  -webkit-font-smoothing: antialiased;
 }
 
 ul {
@@ -19,12 +35,13 @@ ul {
   padding: 0;
 }
 
-li {
-  list-style: none;
+a, a:visited, a:active {
+  color: #FFF;
+  text-decoration: none;
 }
 
-.title {
-  font-size: 20px;
+li {
+  list-style: none;
 }
 
 .btn {
@@ -47,10 +64,11 @@ li {
 }
 
 .title {
-  float: left;
   margin: 0;
   position: absolute;
   top: 25px;
+  font-size: 12px;
+  letter-spacing: 1px;
   left: 25px;
   height: auto;
 }
@@ -70,17 +88,214 @@ li {
 }
 
 .color {
+  cursor: pointer;
   width: 100%;
+  transition: all 0.2s;
   display: flex;
   justify-content: center;
   align-items: center;
-}
-
-.color:last-child {
-  border: solid 10px #FFF;
+  overflow: hidden;
 }
 
 .color-container {
   height: auto;
   font-size: 30px;
+  position: relative;
+}
+
+.spinner {
+  margin: 0 auto;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 55%;
+  display: none;
+  width: 100px;
+  text-align: center;
+}
+
+.spinner > div {
+  width: 14px;
+  height: 14px;
+  margin: 0 8px;
+  text-align: justify;
+  border-radius: 100%;
+  display: inline-block;
+  -webkit-animation: sk-bouncedelay 1.4s infinite ease-in-out both;
+  animation: sk-bouncedelay 1.4s infinite ease-in-out both;
+}
+
+.spinner .bounce1 {
+  -webkit-animation-delay: -0.32s;
+  animation-delay: -0.32s;
+}
+
+.spinner .bounce2 {
+  -webkit-animation-delay: -0.16s;
+  animation-delay: -0.16s;
+}
+
+@-webkit-keyframes sk-bouncedelay {
+  0%, 80%, 100% { -webkit-transform: scale(0) }
+  40% { -webkit-transform: scale(1.0) }
+}
+
+@keyframes sk-bouncedelay {
+  0%, 80%, 100% {
+    -webkit-transform: scale(0);
+    transform: scale(0);
+  } 40% {
+    -webkit-transform: scale(1.0);
+    transform: scale(1.0);
+  }
+}
+
+.color-animation-enter {
+  width: 0%;
+}
+
+.color-animation-enter.color-animation-enter-active {
+  width: 100%;
+  transition: width 300ms ease-in;
+}
+
+.color-animation-leave {
+  width: 100%;
+}
+
+.color-animation-leave.color-animation-leave-active {
+  width: 0%;
+  transition: width 300ms ease-in;
+}
+
+.color-text {
+  transition: all 300ms ease-in;
+  opacity: 1;
+  opacity: 0.4;
+  font-weight: 400;
+}
+
+.searching li:last-of-type .spinner {
+  opacity: 1;
+  display: block;
+}
+
+/**********************************
+Onboarding Container
+**********************************/
+.onboarding-container {
+  width: 100%;
+  position: absolute;
+  height: 45px;
+  bottom: 150px;
+  min-width: 650px;
+}
+
+.onboarding-container p,
+.onboarding-container span {
+  text-align: center;
+  line-height: 39px;
+}
+
+.keyboard-button {
+  margin: 0 10px;
+  display: inline-block;
+  padding: 0 15px;
+  height: auto;
+  position: relative;
+  border: solid 2px #FFF;
+  border-radius: 4px;
+}
+
+
+.step-one {
+  text-align: center;
+}
+
+.step {
+  width: 300px;
+  margin: auto;
+}
+
+.step-two,
+.step-three {
+  margin-left: 75%;
+  transform: translateX(-50%);
+}
+
+/**********************************
+Tweet Link
+**********************************/
+.tweet {
+  padding: 10px 15px 10px 35px;
+  border: solid 2px #FFF;
+  border-radius: 4px;
+  position: absolute;
+  bottom: 25px;
+  left: 25px;
+  height: auto;
+  cursor: pointer;
+  z-index: 1000;
+  font-size: 13px;
+}
+
+.tweet:before {
+  position: absolute;
+  content: '';
+  background-image: url('twitter-logo.svg');
+  background-size: cover;
+  height: 14px;
+  left: 10px;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  width: 18px;
+}
+
+.theme-dark a,
+.theme-dark h1,
+.theme-dark p {
+  color: #444;
+}
+
+.theme-light a,
+.theme-light h1,
+.theme-light p {
+  color: #FFF;
+}
+
+.theme-dark .keyboard-button {
+  border: solid 2px #444;
+}
+
+.theme-light .keyboard-button {
+  border: solid 2px #FFF;
+}
+
+.theme-light .spinner div{
+  background-color: #FFF;
+}
+
+.theme-dark .spinner div{
+  background-color: #444;
+}
+
+.loading {
+  position: absolute;
+  z-index: 10000;
+  top:0;
+  left: 0;
+}
+
+
+@keyframes pulse {
+  0% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.5;
+  }
 }
