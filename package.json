@@ -1,7 +1,7 @@
 {
-  "name": "react-starter",
+  "name": "Palettable",
   "version": "1.0.0",
-  "description": "An sxtremely simplistic boilerplate for a React application",
+  "description": "A search engine for user-generated color palettes.",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -12,16 +12,14 @@
   "dependencies": {
     "axios": "^0.11.0",
     "babel-plugin-transform-object-rest-spread": "^6.6.5",
-    "classnames": "^2.2.4",
     "color": "^0.11.1",
     "express": "^4.13.4",
     "react": "^15.0.1",
-    "react-addons-css-transition-group": "^15.0.1",
+    "react-addons-css-transition-group": "^15.0.2",
     "react-copy-to-clipboard": "^4.1.0",
     "react-dom": "^15.0.1",
     "react-motion": "^0.4.3",
     "react-redux": "^4.4.5",
-    "react-router": "^2.0.1",
     "redux": "^3.5.2",
     "redux-logger": "^2.6.1",
     "redux-thunk": "^2.0.1",
@@ -33,6 +31,12 @@
     "babel-loader": "^6.2.4",
     "babel-preset-es2015": "^6.6.0",
     "babel-preset-react": "^6.5.0",
+    "eslint": "^2.9.0",
+    "eslint-config-standard": "^5.3.1",
+    "eslint-plugin-promise": "^1.1.0",
+    "eslint-plugin-react": "^5.1.1",
+    "eslint-plugin-standard": "^1.3.2",
+    "expect.js": "^0.3.1",
     "webpack": "^1.12.14",
     "webpack-dev-server": "^1.14.1"
   }

@@ -1,13 +1,9 @@
 import React, { PropTypes } from 'react'
 import Color from 'color'
-import ClassNames from 'classnames'
 
 const InterfaceTheme = ({color, children}) => {
   const luminosity = Color(color).luminosity()
-  const themeClass = ClassNames({
-    'theme-light': luminosity < 0.6,
-    'theme-dark': luminosity >= 0.6
-  })
+  const themeClass = luminosity < 0.6 ? 'theme-light' : 'theme-dark'
 
   return (
     <div className={ themeClass }>

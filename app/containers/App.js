@@ -31,10 +31,14 @@ class App extends Component {
   handleKeydown (e) {
     e.preventDefault()
 
-    const { dispatch, shownColors, isFetching } = this.props
+    const { dispatch, shownColors, isFetching, onboardingStep } = this.props
+
+    const onboardingStatus = onboardingStep < 3 ? onboardingStep : true
 
     if(!isFetching) {
-      if (e.which === 76 && shownColors.length < 5) {
+      if (e.which === 76 && shownColors.length < 5 &&
+        (onboardingStep === 0 || onboardingStep > 2)) {
+          console.log('liked');
         dispatch(
           fetchColorFromPaletteIfNeeded(shownColors)
         ).then(color => {
@@ -44,7 +48,8 @@ class App extends Component {
           dispatch(continueOnboarding())
         })
       }
-      else if (e.which === 68) {
+      else if (e.which === 68 &&
+        (onboardingStep === 1 || onboardingStep > 2)) {
         // FIXME: Possible race condition here
         dispatch(invalidatePalette())
         dispatch(
@@ -54,7 +59,8 @@ class App extends Component {
           dispatch(continueOnboarding())
         })
       }
-      else if (e.which === 8 && shownColors.length > 1) {;
+      else if (e.which === 8 && shownColors.length > 1 &&
+        onboardingStep >= 2) {;
         // REMOVE
         // FIXME: Possible race condition here
         dispatch(invalidatePalette())
@@ -66,7 +72,7 @@ class App extends Component {
   }
   render () {
     const { shownColors, isFetching, onboardingStep } = this.props
-
+    console.log(shownColors);
     if (shownColors.length === 0) {
       return <h1 className='loading'>Loading</h1>
     }

@@ -1,20 +1,27 @@
 import React, { PropTypes } from 'react'
-import ColorItem from './ColorItem';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 
-const ColorList = ({ shownColors, isFetching }) => {
-  const colorItems = shownColors.map(color => {
+import ColorItem from './ColorItem'
+
+class ColorList extends React.Component {
+  render () {
+    const colorItems = this.props.shownColors.map(color => {
+      return <ColorItem key={color.id} color={color} />
+    })
+
     return (
-      <ColorItem key={ color.id } color={ color.color } />
+      <div className={ this.props.isFetching && 'searching' }>
+        <ReactCSSTransitionGroup
+          component="ul"
+          className='color-list'
+          transitionName='color-animation'
+          transitionEnterTimeout={300}
+          transitionLeaveTimeout={300} >
+          { colorItems }
+        </ReactCSSTransitionGroup>
+      </div>
     )
-  })
-
-  return (
-    <div className={ isFetching && 'searching' }>
-      <ul className='color-list'>
-        { colorItems }
-      </ul>
-    </div>
-  )
+  }
 }
 
 ColorList.propTypes = {

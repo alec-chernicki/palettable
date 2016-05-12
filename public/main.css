@@ -9,7 +9,6 @@
   height: auto;
 }
 
-
 html, body, #root {
   margin: 0;
   padding: 0;
@@ -92,6 +91,7 @@ li {
   width: 100%;
   transition: all 0.2s;
   display: flex;
+  transition: width 300ms ease-in;
   justify-content: center;
   align-items: center;
   overflow: hidden;
@@ -151,7 +151,7 @@ li {
 }
 
 .color-animation-enter {
-  width: 0%;
+  width: 0.01%;
 }
 
 .color-animation-enter.color-animation-enter-active {
@@ -164,19 +164,18 @@ li {
 }
 
 .color-animation-leave.color-animation-leave-active {
-  width: 0%;
+  width: 0.01%;
   transition: width 300ms ease-in;
 }
 
 .color-text {
   transition: all 300ms ease-in;
-  opacity: 1;
   opacity: 0.4;
   font-weight: 400;
 }
 
 .searching li:last-of-type .spinner {
-  opacity: 1;
+  width: 1;
   display: block;
 }
 
