@@ -11,8 +11,7 @@ export default function configureStore(initialState) {
     initialState,
     compose(
       applyMiddleware(
-        thunkMiddleware,
-        loggerMiddleware
+        thunkMiddleware
       ),
       window.devToolsExtension ? window.devToolsExtension() : f => f
     )

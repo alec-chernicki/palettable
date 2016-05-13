@@ -38,7 +38,6 @@ class App extends Component {
     if(!isFetching) {
       if (e.which === 76 && shownColors.length < 5 &&
         (onboardingStep === 0 || onboardingStep > 2)) {
-          console.log('liked');
         dispatch(
           fetchColorFromPaletteIfNeeded(shownColors)
         ).then(color => {
@@ -72,9 +71,8 @@ class App extends Component {
   }
   render () {
     const { shownColors, isFetching, onboardingStep } = this.props
-    console.log(shownColors);
     if (shownColors.length === 0) {
-      return <h1 className='loading'>Loading</h1>
+      return <h1 className='loading' style={{zIndex: 10000, position: 'relative'}}>Loading</h1>
     }
 
     return (
@@ -97,6 +95,7 @@ function mapStateToProps(state) {
   return {
     shownColors,
     onboardingStep,
+    // containerStatusText: shownColors[shownColors.length - 1].statusText,
     isFetching: fetchedPalette.isFetching
   }
 }

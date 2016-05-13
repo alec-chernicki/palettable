@@ -168,12 +168,6 @@ li {
   transition: width 300ms ease-in;
 }
 
-.color-text {
-  transition: all 300ms ease-in;
-  opacity: 0.4;
-  font-weight: 400;
-}
-
 .searching li:last-of-type .spinner {
   width: 1;
   display: block;
@@ -186,7 +180,7 @@ Onboarding Container
   width: 100%;
   position: absolute;
   height: 45px;
-  bottom: 150px;
+  bottom: 20%;
   min-width: 650px;
 }
 
@@ -220,6 +214,73 @@ Onboarding Container
 .step-three {
   margin-left: 75%;
   transform: translateX(-50%);
+}
+
+/**********************************
+Color Name Container
+**********************************/
+
+/*.Liked .color:nth-last-child(2) .color-text {
+  animation: fade-out-in 1s ease-in-out;
+}
+.Liked .color:nth-last-child(2) .status-text {
+  animation: bounce-in-out 1s ease-in-out;
+}
+
+.Disliked .color:last-child .color-text {
+  animation: fade-out-in 1s ease-in-out;
+}
+
+.Disliked .color:last-child .status-text {
+
+}*/
+
+.color-text {
+  animation: fade-out-in 1s ease-in-out;
+  opacity: 0.4;
+  transition: opacity 0.25s ease-in-out;
+  font-weight: 400;
+}
+
+.color-text:hover {
+  opacity: 1;
+}
+
+.status-text {
+  animation: bounce-in-out 1s ease-in-out;
+  position: absolute;
+  top: 0;
+  opacity: 0;
+}
+
+@keyframes fade-out-in{
+  0% {
+    opacity: 0.4;
+  }
+  25% {
+    opacity: 0;
+  }
+  75% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0.4;
+  }
+}
+
+@keyframes bounce-in-out {
+  0% {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(0%);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
 }
 
 /**********************************

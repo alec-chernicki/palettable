@@ -6,6 +6,7 @@ export const CONTINUE_ONBOARDING = 'CONTINUE_ONBOARDING'
 export const ADD_COLOR = 'ADD_COLOR'
 export const CHANGE_COLOR = 'CHANGE_COLOR'
 export const REMOVE_COLOR = 'REMOVE_COLOR'
+export const COPY_COLOR = 'COPY_COLOR'
 
 export const REQUEST_PALETTE = 'REQUEST_PALETTE'
 export const RECEIVE_PALETTE = 'RECEIVE_PALETTE'
@@ -34,6 +35,13 @@ export function addColor(color) {
 export function changeColor(color) {
   return {
     type: CHANGE_COLOR,
+    color
+  }
+}
+
+export function copyColor(color) {
+  return {
+    type: COPY_COLOR,
     color
   }
 }

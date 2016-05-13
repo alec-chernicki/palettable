@@ -10,7 +10,7 @@ const ColorItem = ({color}) => {
         key={ color.id }>
           <InterfaceTheme color={ color.color }>
             <div className='color-container'>
-              <ColorName color={ color.color }/>
+              <ColorName color={ color.color } statusText={color.statusText}/>
               <div className="spinner">
                 <div className="bounce1"></div>
                 <div className="bounce2"></div>

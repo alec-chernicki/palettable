@@ -6,7 +6,7 @@
 import { combineReducers } from 'redux'
 import {
   CONTINUE_ONBOARDING,
-  ADD_COLOR, REMOVE_COLOR, CHANGE_COLOR,
+  ADD_COLOR, REMOVE_COLOR, CHANGE_COLOR, COPY_COLOR,
   REQUEST_PALETTE, RECEIVE_PALETTE, INVALIDATE_PALETTE
 } from './actions'
 
@@ -22,10 +22,23 @@ function onboardingStep(state = 0, action) {
 function color(state, action) {
   switch (action.type) {
     case ADD_COLOR:
+      return {
+        ...state,
+        id: state.reduce((maxId, color) => Math.max(color.id, maxId), -1) + 1,
+        color: action.color,
+        statusText: 'Liked'
+      }
     case CHANGE_COLOR:
       return {
+        ...state,
         id: state.reduce((maxId, color) => Math.max(color.id, maxId), -1) + 1,
-        color: action.color
+        color: action.color,
+        statusText: 'Disliked'
+      }
+    case COPY_COLOR:
+      return {
+        ...state,
+        statusText: 'Copied'
       }
     default:
       return state
@@ -35,6 +48,7 @@ function color(state, action) {
 function shownColors(state = [], action) {
   switch (action.type) {
     case ADD_COLOR:
+    case COPY_COLOR:
       return [
         ...state,
         color(state, action)
