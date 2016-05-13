@@ -9,12 +9,14 @@ const ColorItem = ({color}) => {
         className='color'
         key={ color.id }>
           <InterfaceTheme color={ color.color }>
-            <div className='color-container'>
-              <ColorName color={ color.color } statusText={color.statusText}/>
-              <div className="spinner">
-                <div className="bounce1"></div>
-                <div className="bounce2"></div>
-                <div className="bounce3"></div>
+            <div className={color.animating && 'animating'}>
+              <div className='color-container'>
+                <ColorName color={ color.color } statusText={color.statusText}/>
+                <div className="spinner">
+                  <div className="bounce1"></div>
+                  <div className="bounce2"></div>
+                  <div className="bounce3"></div>
+                </div>
               </div>
             </div>
           </InterfaceTheme>

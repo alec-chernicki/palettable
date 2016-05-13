@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import {
-  continueOnboarding,
+  continueOnboarding, animateColorStatus,
   addColor, removeColor, changeColor,
   fetchColorFromPaletteIfNeeded, invalidatePalette,
 } from '../actions'
@@ -42,6 +42,9 @@ class App extends Component {
           fetchColorFromPaletteIfNeeded(shownColors)
         ).then(color => {
           dispatch(addColor(color))
+          const likedColor = shownColors[shownColors.length - 1] || shownColors[0]
+
+          dispatch(animateColorStatus(likedColor))
 
           // FIXME: This logic feels weird here
           dispatch(continueOnboarding())
@@ -55,6 +58,11 @@ class App extends Component {
           fetchColorFromPaletteIfNeeded(shownColors)
         ).then(color => {
           dispatch(changeColor(color))
+          const  { shownColors } = this.props
+          const changedColor = shownColors[shownColors.length - 1];
+          console.log(changedColor);
+          dispatch(animateColorStatus(changedColor))
+
           dispatch(continueOnboarding())
         })
       }
@@ -83,6 +91,7 @@ class App extends Component {
           shownColors={shownColors}
           onboardingStep={onboardingStep} />
         <ColorList
+          onAnimateColor={animateColorStatus}
           shownColors={shownColors}
           isFetching={isFetching} />
       </div>

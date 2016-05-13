@@ -8,6 +8,8 @@ export const CHANGE_COLOR = 'CHANGE_COLOR'
 export const REMOVE_COLOR = 'REMOVE_COLOR'
 export const COPY_COLOR = 'COPY_COLOR'
 
+export const TOGGLE_COLOR_ANIMATION = 'TOGGLE_COLOR_ANIMATION'
+
 export const REQUEST_PALETTE = 'REQUEST_PALETTE'
 export const RECEIVE_PALETTE = 'RECEIVE_PALETTE'
 export const INVALIDATE_PALETTE = 'INVALIDATE_PALETTE'
@@ -35,6 +37,13 @@ export function addColor(color) {
 export function changeColor(color) {
   return {
     type: CHANGE_COLOR,
+    color
+  }
+}
+
+export function toggleColorAnimation(color) {
+  return {
+    type: TOGGLE_COLOR_ANIMATION,
     color
   }
 }
@@ -112,5 +121,14 @@ export function fetchColorFromPaletteIfNeeded(shownColors) {
       const color = removeDuplicatesFrom(shownColors, getFetchedPalette())
       return Promise.resolve(color)
     }
+  }
+}
+
+export function animateColorStatus(color) {
+  return dispatch => {
+    dispatch(toggleColorAnimation(color))
+    setTimeout(() => {
+      dispatch(toggleColorAnimation(color))
+    }, 1000)
   }
 }

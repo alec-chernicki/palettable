@@ -87,7 +87,6 @@ li {
 }
 
 .color {
-  cursor: pointer;
   width: 100%;
   transition: all 0.2s;
   display: flex;
@@ -156,7 +155,7 @@ li {
 
 .color-animation-enter.color-animation-enter-active {
   width: 100%;
-  transition: width 300ms ease-in;
+  transition: width 300ms linear;
 }
 
 .color-animation-leave {
@@ -165,7 +164,7 @@ li {
 
 .color-animation-leave.color-animation-leave-active {
   width: 0.01%;
-  transition: width 300ms ease-in;
+  transition: width 300ms linear;
 }
 
 .searching li:last-of-type .spinner {
@@ -220,23 +219,15 @@ Onboarding Container
 Color Name Container
 **********************************/
 
-/*.Liked .color:nth-last-child(2) .color-text {
+.animating .color-text {
   animation: fade-out-in 1s ease-in-out;
 }
-.Liked .color:nth-last-child(2) .status-text {
+
+.animating .status-text {
   animation: bounce-in-out 1s ease-in-out;
 }
 
-.Disliked .color:last-child .color-text {
-  animation: fade-out-in 1s ease-in-out;
-}
-
-.Disliked .color:last-child .status-text {
-
-}*/
-
 .color-text {
-  animation: fade-out-in 1s ease-in-out;
   opacity: 0.4;
   transition: opacity 0.25s ease-in-out;
   font-weight: 400;
@@ -247,7 +238,6 @@ Color Name Container
 }
 
 .status-text {
-  animation: bounce-in-out 1s ease-in-out;
   position: absolute;
   top: 0;
   opacity: 0;
