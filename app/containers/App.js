@@ -96,9 +96,12 @@ const mapDispatchToProps= (dispatch, ownProps) => {
       dispatch(editColorText(color, text))
     },
     onTextChangeSubmit (color, text) {
+
       const regex = /^#?([a-fA-F0-9]{6}|[a-fA-F0-9]{3})$/;
-      if (regex.test(text)) {
-        dispatch(changeColorText(color, text))
+      const colorText = /#/.test(text) ? text : '#' + text
+      if (regex.test(colorText)) {
+        dispatch(invalidatePalette())
+        dispatch(changeColorText(color, colorText))
       }
       else {
         dispatch(resetColorName(color))

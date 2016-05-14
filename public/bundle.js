@@ -23860,9 +23860,12 @@
 	      dispatch((0, _actions.editColorText)(color, text));
 	    },
 	    onTextChangeSubmit: function onTextChangeSubmit(color, text) {
+
 	      var regex = /^#?([a-fA-F0-9]{6}|[a-fA-F0-9]{3})$/;
-	      if (regex.test(text)) {
-	        dispatch((0, _actions.changeColorText)(color, text));
+	      var colorText = /#/.test(text) ? text : '#' + text;
+	      if (regex.test(colorText)) {
+	        dispatch((0, _actions.invalidatePalette)());
+	        dispatch((0, _actions.changeColorText)(color, colorText));
 	      } else {
 	        dispatch((0, _actions.resetColorName)(color));
 	      }
@@ -28234,15 +28237,24 @@
 
 	var StepOne = function StepOne() {
 	  return _react2.default.createElement(
-	    'p',
+	    'div',
 	    { className: 'step step-one' },
-	    'Press',
 	    _react2.default.createElement(
-	      'span',
-	      { className: 'keyboard-button' },
-	      'L'
+	      'p',
+	      { className: 'helper-text' },
+	      'Palettable helps you create color palettes without any prior knowledge of color theory.'
 	    ),
-	    'To Like A Color'
+	    _react2.default.createElement(
+	      'p',
+	      null,
+	      ' Press ',
+	      _react2.default.createElement(
+	        'span',
+	        { className: 'keyboard-button' },
+	        'L'
+	      ),
+	      ' To Like A Color '
+	    )
 	  );
 	};
 
@@ -28266,15 +28278,24 @@
 
 	var StepTwo = function StepTwo() {
 	  return _react2.default.createElement(
-	    'p',
+	    'div',
 	    { className: 'step step-two' },
-	    'Press',
 	    _react2.default.createElement(
-	      'span',
-	      { className: 'keyboard-button' },
-	      'D'
+	      'p',
+	      { className: 'helper-text' },
+	      'We\'ll use the colors you like and search thousands of user-generated palettes to find more that coordinate'
 	    ),
-	    'To Dislike A Color'
+	    _react2.default.createElement(
+	      'p',
+	      null,
+	      ' Press ',
+	      _react2.default.createElement(
+	        'span',
+	        { className: 'keyboard-button' },
+	        'D'
+	      ),
+	      ' To Dislike A Color '
+	    )
 	  );
 	};
 
@@ -28298,15 +28319,24 @@
 
 	var StepThree = function StepThree() {
 	  return _react2.default.createElement(
-	    'p',
+	    'div',
 	    { className: 'step step-three' },
-	    'Press',
 	    _react2.default.createElement(
-	      'span',
-	      { className: 'keyboard-button' },
-	      'BACKSPACE'
+	      'p',
+	      { className: 'helper-text' },
+	      'All you need to do is like or dislike what we find for you!'
 	    ),
-	    'To Remove'
+	    _react2.default.createElement(
+	      'p',
+	      null,
+	      'Press ',
+	      _react2.default.createElement(
+	        'span',
+	        { className: 'keyboard-button' },
+	        'BACKSPACE'
+	      ),
+	      ' To Remove'
+	    )
 	  );
 	};
 

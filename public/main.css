@@ -179,7 +179,7 @@ Onboarding Container
   width: 100%;
   position: absolute;
   height: 45px;
-  bottom: 20%;
+  bottom: 30%;
   min-width: 650px;
 }
 
@@ -204,9 +204,14 @@ Onboarding Container
   text-align: center;
 }
 
+.helper-text {
+  font-weight: 400;
+}
+
 .step {
   width: 300px;
   margin: auto;
+  height: auto;
 }
 
 .step-two,
