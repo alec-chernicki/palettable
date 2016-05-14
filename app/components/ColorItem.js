@@ -3,20 +3,22 @@ import { TransitionMotion, spring } from 'react-motion';
 import ColorName from './ColorName';
 import InterfaceTheme from './InterfaceTheme';
 
-const ColorItem = ({color}) => {
+const ColorItem = ({color, onTextChangeSubmit, onTextEdit, onColorNameReset}) => {
     return (
       <li style={{backgroundColor: color.color }}
         className='color'
         key={ color.id }>
-          <InterfaceTheme color={ color.color }>
-            <div className={color.animating && 'animating'}>
-              <div className='color-container'>
-                <ColorName color={ color.color } statusText={color.statusText}/>
-                <div className="spinner">
-                  <div className="bounce1"></div>
-                  <div className="bounce2"></div>
-                  <div className="bounce3"></div>
-                </div>
+        <InterfaceTheme color={ color.color }>
+          <div className='color-container'>
+            <ColorName
+              color={ color }
+              onColorNameReset={onColorNameReset}
+              onTextChangeSubmit={onTextChangeSubmit}
+              onTextEdit={onTextEdit}/>
+            <div className="spinner">
+                <div className="bounce1"></div>
+                <div className="bounce2"></div>
+                <div className="bounce3"></div>
               </div>
             </div>
           </InterfaceTheme>

@@ -216,6 +216,27 @@ Onboarding Container
 }
 
 /**********************************
+Onboarding Animation
+**********************************/
+.onboarding-animation-enter {
+  opacity: 0.01;
+}
+
+.onboarding-animation-enter.onboarding-animation-enter-active {
+  opacity: 1;
+  transition: opacity 150ms linear;
+}
+
+.onboarding-animation-leave {
+  opacity: 1;
+}
+
+.onboarding-animation-leave.onboarding-animation-leave-active {
+  opacity: 0.01;
+  transition: opacity 150ms linear;
+}
+
+/**********************************
 Color Name Container
 **********************************/
 
@@ -229,11 +250,18 @@ Color Name Container
 
 .color-text {
   opacity: 0.4;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-family: 'ASAP';
+  text-align: center;
+  font-size: 30px;
   transition: opacity 0.25s ease-in-out;
   font-weight: 400;
 }
 
-.color-text:hover {
+.color-text:hover,
+.color-text:focus {
   opacity: 1;
 }
 
@@ -304,13 +332,15 @@ Tweet Link
 
 .theme-dark a,
 .theme-dark h1,
-.theme-dark p {
+.theme-dark p,
+.theme-dark input {
   color: #444;
 }
 
 .theme-light a,
 .theme-light h1,
-.theme-light p {
+.theme-light p,
+.theme-light input {
   color: #FFF;
 }
 

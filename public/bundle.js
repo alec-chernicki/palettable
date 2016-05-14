@@ -21902,7 +21902,7 @@
 	var loggerMiddleware = (0, _reduxLogger2.default)();
 
 	function configureStore(initialState) {
-	  return (0, _redux.createStore)(_reducers2.default, initialState, (0, _redux.compose)((0, _redux.applyMiddleware)(_reduxThunk2.default), window.devToolsExtension ? window.devToolsExtension() : function (f) {
+	  return (0, _redux.createStore)(_reducers2.default, initialState, (0, _redux.compose)((0, _redux.applyMiddleware)(_reduxThunk2.default, loggerMiddleware), window.devToolsExtension ? window.devToolsExtension() : function (f) {
 	    return f;
 	  }));
 	}
@@ -22173,10 +22173,7 @@
 	  value: true
 	});
 
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; // Props that need passing
-	// addEnabled: true,
-	// changeEnabled: false,
-	// removeEnabled: false
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 	var _redux = __webpack_require__(177);
 
@@ -22197,29 +22194,49 @@
 	}
 
 	// FIXME: rename to something that's not semantic to the state tree naming
-	function color(state, action) {
+	function color() {
+	  var state = arguments.length <= 0 || arguments[0] === undefined ? {
+	    id: 0,
+	    color: '',
+	    editedColor: '',
+	    animating: false
+	  } : arguments[0];
+	  var action = arguments[1];
+
 	  switch (action.type) {
 	    case _actions.ADD_COLOR:
 	      return {
 	        id: state.reduce(function (maxId, color) {
 	          return Math.max(color.id, maxId);
 	        }, -1) + 1,
-	        color: action.color,
-	        statusText: 'Liked'
+	        color: action.color
 	      };
 	    case _actions.CHANGE_COLOR:
 	      return {
 	        id: state.reduce(function (maxId, color) {
 	          return Math.max(color.id, maxId);
 	        }, -1) + 1,
-	        color: action.color,
-	        statusText: 'Disliked'
+	        color: action.color
 	      };
-	    case _actions.COPY_COLOR:
+	    // TODO: These action names feel weird, maybe refactor into seperate reducer and combine
+	    case _actions.EDIT_COLOR_TEXT:
+	      if (state.id !== action.color.id) {
+	        return state;
+	      }
 	      return _extends({}, state, {
-	        statusText: 'Copied'
+	        editedColor: action.text
 	      });
-	    // FIXME: These arent included in initial default state
+	    case _actions.CHANGE_COLOR_TEXT:
+	      if (state.id !== action.color.id) {
+	        return state;
+	      }
+	      return _extends({}, state, {
+	        color: action.text
+	      });
+	    case _actions.RESET_COLOR_NAME:
+	      return _extends({}, state, {
+	        editedColor: ''
+	      });
 	    case _actions.TOGGLE_COLOR_ANIMATION:
 	      if (state.id !== action.color.id) {
 	        return state;
@@ -22239,14 +22256,17 @@
 	  switch (action.type) {
 	    // FIXME: refactor into combine reducers
 	    case _actions.ADD_COLOR:
-	    case _actions.COPY_COLOR:
 	      return [].concat(_toConsumableArray(state), [color(state, action)]);
 	    case _actions.CHANGE_COLOR:
 	      return [].concat(_toConsumableArray(state.slice(0, -1)), [color(state, action)]);
+
 	    case _actions.REMOVE_COLOR:
 	      return state.filter(function (color) {
 	        return color.id !== action.id;
 	      });
+	    case _actions.CHANGE_COLOR_TEXT:
+	    case _actions.EDIT_COLOR_TEXT:
+	    case _actions.RESET_COLOR_NAME:
 	    case _actions.TOGGLE_COLOR_ANIMATION:
 	      return state.map(function (c) {
 	        return color(c, action);
@@ -22304,13 +22324,15 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.INVALIDATE_PALETTE = exports.RECEIVE_PALETTE = exports.REQUEST_PALETTE = exports.TOGGLE_COLOR_ANIMATION = exports.COPY_COLOR = exports.REMOVE_COLOR = exports.CHANGE_COLOR = exports.ADD_COLOR = exports.CONTINUE_ONBOARDING = undefined;
+	exports.INVALIDATE_PALETTE = exports.RECEIVE_PALETTE = exports.REQUEST_PALETTE = exports.TOGGLE_COLOR_ANIMATION = exports.RESET_COLOR_NAME = exports.EDIT_COLOR_TEXT = exports.CHANGE_COLOR_TEXT = exports.REMOVE_COLOR = exports.CHANGE_COLOR = exports.ADD_COLOR = exports.CONTINUE_ONBOARDING = undefined;
 	exports.continueOnboarding = continueOnboarding;
 	exports.removeColor = removeColor;
 	exports.addColor = addColor;
 	exports.changeColor = changeColor;
+	exports.changeColorText = changeColorText;
+	exports.editColorText = editColorText;
+	exports.resetColorName = resetColorName;
 	exports.toggleColorAnimation = toggleColorAnimation;
-	exports.copyColor = copyColor;
 	exports.invalidatePalette = invalidatePalette;
 	exports.fetchColorFromPaletteIfNeeded = fetchColorFromPaletteIfNeeded;
 	exports.animateColorStatus = animateColorStatus;
@@ -22328,7 +22350,10 @@
 	var ADD_COLOR = exports.ADD_COLOR = 'ADD_COLOR';
 	var CHANGE_COLOR = exports.CHANGE_COLOR = 'CHANGE_COLOR';
 	var REMOVE_COLOR = exports.REMOVE_COLOR = 'REMOVE_COLOR';
-	var COPY_COLOR = exports.COPY_COLOR = 'COPY_COLOR';
+
+	var CHANGE_COLOR_TEXT = exports.CHANGE_COLOR_TEXT = 'CHANGE_COLOR_TEXT';
+	var EDIT_COLOR_TEXT = exports.EDIT_COLOR_TEXT = 'EDIT_COLOR_TEXT';
+	var RESET_COLOR_NAME = exports.RESET_COLOR_NAME = 'RESET_COLOR_NAME';
 
 	var TOGGLE_COLOR_ANIMATION = exports.TOGGLE_COLOR_ANIMATION = 'TOGGLE_COLOR_ANIMATION';
 
@@ -22363,16 +22388,33 @@
 	  };
 	}
 
-	function toggleColorAnimation(color) {
+	// TODO: Fix these weird names
+	function changeColorText(color, text) {
 	  return {
-	    type: TOGGLE_COLOR_ANIMATION,
+	    type: CHANGE_COLOR_TEXT,
+	    color: color,
+	    text: text
+	  };
+	}
+
+	function editColorText(color, text) {
+	  return {
+	    type: EDIT_COLOR_TEXT,
+	    color: color,
+	    text: text
+	  };
+	}
+
+	function resetColorName(color) {
+	  return {
+	    type: RESET_COLOR_NAME,
 	    color: color
 	  };
 	}
 
-	function copyColor(color) {
+	function toggleColorAnimation(color) {
 	  return {
-	    type: COPY_COLOR,
+	    type: TOGGLE_COLOR_ANIMATION,
 	    color: color
 	  };
 	}
@@ -22385,6 +22427,7 @@
 	}
 
 	function receivePalette(palette) {
+	  // FIXME: whats with this naming?
 	  return {
 	    type: RECEIVE_PALETTE,
 	    colors: palette
@@ -22451,9 +22494,12 @@
 	}
 
 	function animateColorStatus(color) {
+	  var animationTimeout = void 0;
+	  clearTimeout(animationTimeout);
 	  return function (dispatch) {
 	    dispatch(toggleColorAnimation(color));
-	    setTimeout(function () {
+
+	    animationTimeout = setTimeout(function () {
 	      dispatch(toggleColorAnimation(color));
 	    }, 1000);
 	  };
@@ -23710,15 +23756,21 @@
 	  _createClass(App, [{
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
-	      var _props = this.props;
-	      var dispatch = _props.dispatch;
-	      var shownColors = _props.shownColors;
-
-	      dispatch((0, _actions.fetchColorFromPaletteIfNeeded)(shownColors)).then(function (color) {
-	        dispatch((0, _actions.addColor)(color));
-	      });
+	      this.props.onAddColor(this.props.shownColors);
 
 	      document.addEventListener('keydown', this.handleKeydown.bind(this));
+	      document.onkeydown = this.suppressBackspace.bind(this);
+	      document.onkeypress = this.suppressBackspace.bind(this);
+	    }
+	  }, {
+	    key: 'suppressBackspace',
+	    value: function suppressBackspace(evt) {
+	      evt = evt || window.event;
+	      var target = evt.target || evt.srcElement;
+
+	      if (evt.keyCode == 8 && !/input|textarea/i.test(target.nodeName)) {
+	        return false;
+	      }
 	    }
 	  }, {
 	    key: 'componentWillUnmount',
@@ -23728,67 +23780,43 @@
 	  }, {
 	    key: 'handleKeydown',
 	    value: function handleKeydown(e) {
-	      var _this2 = this;
-
-	      e.preventDefault();
-
-	      var _props2 = this.props;
-	      var dispatch = _props2.dispatch;
-	      var shownColors = _props2.shownColors;
-	      var isFetching = _props2.isFetching;
-	      var onboardingStep = _props2.onboardingStep;
-
-
-	      var onboardingStatus = onboardingStep < 3 ? onboardingStep : true;
+	      var _props = this.props;
+	      var shownColors = _props.shownColors;
+	      var isFetching = _props.isFetching;
+	      var onContinueOnboarding = _props.onContinueOnboarding;
+	      var onboardingStep = _props.onboardingStep;
+	      // TODO: Refactor this complex checking logic into an action creator
 
 	      if (!isFetching) {
 	        if (e.which === 76 && shownColors.length < 5 && (onboardingStep === 0 || onboardingStep > 2)) {
-	          dispatch((0, _actions.fetchColorFromPaletteIfNeeded)(shownColors)).then(function (color) {
-	            dispatch((0, _actions.addColor)(color));
-	            var likedColor = shownColors[shownColors.length - 1] || shownColors[0];
-
-	            dispatch((0, _actions.animateColorStatus)(likedColor));
-
-	            // FIXME: This logic feels weird here
-	            dispatch((0, _actions.continueOnboarding)());
-	          });
+	          this.props.onAddColor(shownColors).then(onContinueOnboarding);
 	        } else if (e.which === 68 && (onboardingStep === 1 || onboardingStep > 2)) {
-	          // FIXME: Possible race condition here
-	          dispatch((0, _actions.invalidatePalette)());
-	          dispatch((0, _actions.fetchColorFromPaletteIfNeeded)(shownColors)).then(function (color) {
-	            dispatch((0, _actions.changeColor)(color));
-	            var shownColors = _this2.props.shownColors;
-
-	            var changedColor = shownColors[shownColors.length - 1];
-	            console.log(changedColor);
-	            dispatch((0, _actions.animateColorStatus)(changedColor));
-
-	            dispatch((0, _actions.continueOnboarding)());
-	          });
+	          this.props.onChangeColor(shownColors).then(onContinueOnboarding);
 	        } else if (e.which === 8 && shownColors.length > 1 && onboardingStep >= 2) {
-	          ;
-	          // REMOVE
-	          // FIXME: Possible race condition here
-	          dispatch((0, _actions.invalidatePalette)());
-	          dispatch(_actions.removeColor.apply(undefined, _toConsumableArray(shownColors.slice(-1))));
-
-	          dispatch((0, _actions.continueOnboarding)());
+	          this.props.onRemoveColor(shownColors).then(onContinueOnboarding);
 	        }
 	      }
 	    }
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      var _props3 = this.props;
-	      var shownColors = _props3.shownColors;
-	      var isFetching = _props3.isFetching;
-	      var onboardingStep = _props3.onboardingStep;
+	      var _props2 = this.props;
+	      var shownColors = _props2.shownColors;
+	      var isFetching = _props2.isFetching;
+	      var onboardingStep = _props2.onboardingStep;
+	      var onTextChangeSubmit = _props2.onTextChangeSubmit;
+	      var onTextEdit = _props2.onTextEdit;
+	      var onColorNameReset = _props2.onColorNameReset;
 
 	      if (shownColors.length === 0) {
 	        return _react2.default.createElement(
-	          'h1',
-	          { className: 'loading', style: { zIndex: 10000, position: 'relative' } },
-	          'Loading'
+	          'div',
+	          { className: 'loading-cotainer' },
+	          _react2.default.createElement(
+	            'h1',
+	            { className: 'loading' },
+	            'Loading'
+	          )
 	        );
 	      }
 
@@ -23803,7 +23831,10 @@
 	        _react2.default.createElement(_ColorList2.default, {
 	          onAnimateColor: _actions.animateColorStatus,
 	          shownColors: shownColors,
-	          isFetching: isFetching })
+	          isFetching: isFetching,
+	          onColorNameReset: onColorNameReset,
+	          onTextEdit: onTextEdit,
+	          onTextChangeSubmit: onTextChangeSubmit })
 	      );
 	    }
 	  }]);
@@ -23811,7 +23842,7 @@
 	  return App;
 	}(_react.Component);
 
-	function mapStateToProps(state) {
+	var mapStateToProps = function mapStateToProps(state) {
 	  var shownColors = state.shownColors;
 	  var onboardingStep = state.onboardingStep;
 	  var fetchedPalette = state.fetchedPalette;
@@ -23819,12 +23850,55 @@
 	  return {
 	    shownColors: shownColors,
 	    onboardingStep: onboardingStep,
-	    // containerStatusText: shownColors[shownColors.length - 1].statusText,
 	    isFetching: fetchedPalette.isFetching
 	  };
-	}
+	};
 
-	exports.default = (0, _reactRedux.connect)(mapStateToProps)(App);
+	var mapDispatchToProps = function mapDispatchToProps(dispatch, ownProps) {
+	  return {
+	    onTextEdit: function onTextEdit(color, text) {
+	      dispatch((0, _actions.editColorText)(color, text));
+	    },
+	    onTextChangeSubmit: function onTextChangeSubmit(color, text) {
+	      var regex = /^#?([a-fA-F0-9]{6}|[a-fA-F0-9]{3})$/;
+	      if (regex.test(text)) {
+	        dispatch((0, _actions.changeColorText)(color, text));
+	      } else {
+	        dispatch((0, _actions.resetColorName)(color));
+	      }
+	    },
+
+	    // FIXME: Refactor into redux-thunk to avoid passing as param to make more composable
+	    onAddColor: function onAddColor(shownColors) {
+	      return dispatch((0, _actions.fetchColorFromPaletteIfNeeded)(shownColors)).then(function (color) {
+	        dispatch((0, _actions.addColor)(color));
+	      });
+	    },
+	    onChangeColor: function onChangeColor(shownColors) {
+	      // FIXME: Possible race condition here
+	      dispatch((0, _actions.invalidatePalette)());
+
+	      return dispatch((0, _actions.fetchColorFromPaletteIfNeeded)(shownColors)).then(function (color) {
+	        dispatch((0, _actions.changeColor)(color));
+	      });
+	    },
+	    onRemoveColor: function onRemoveColor(shownColors) {
+	      // FIXME: Possible race condition here
+	      dispatch((0, _actions.invalidatePalette)());
+
+	      dispatch(_actions.removeColor.apply(undefined, _toConsumableArray(shownColors.slice(-1))));
+
+	      // TODO: Returning promise since the others return a promisified AJAX call,
+	      // Is there a better way to do this than to just return a promise resolve
+	      return Promise.resolve();
+	    },
+	    onContinueOnboarding: function onContinueOnboarding() {
+	      dispatch((0, _actions.continueOnboarding)());
+	    }
+	  };
+	};
+
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(App);
 
 /***/ },
 /* 221 */
@@ -25663,9 +25737,18 @@
 	      var shownColors = _props.shownColors;
 	      var isFetching = _props.isFetching;
 	      var onAnimateColor = _props.onAnimateColor;
+	      var onTextChangeSubmit = _props.onTextChangeSubmit;
+	      var onTextEdit = _props.onTextEdit;
+	      var onColorNameReset = _props.onColorNameReset;
 
 	      var colorItems = shownColors.map(function (color) {
-	        return _react2.default.createElement(_ColorItem2.default, { key: color.id, color: color, onAnimateColor: onAnimateColor });
+	        return _react2.default.createElement(_ColorItem2.default, {
+	          key: color.id,
+	          color: color,
+	          onAnimateColor: onAnimateColor,
+	          onColorNameReset: onColorNameReset,
+	          onTextChangeSubmit: onTextChangeSubmit,
+	          onTextEdit: onTextEdit });
 	      });
 
 	      // FIXME: EWww refactor
@@ -26503,6 +26586,9 @@
 
 	var ColorItem = function ColorItem(_ref) {
 	  var color = _ref.color;
+	  var onTextChangeSubmit = _ref.onTextChangeSubmit;
+	  var onTextEdit = _ref.onTextEdit;
+	  var onColorNameReset = _ref.onColorNameReset;
 
 	  return _react2.default.createElement(
 	    'li',
@@ -26514,18 +26600,18 @@
 	      { color: color.color },
 	      _react2.default.createElement(
 	        'div',
-	        { className: color.animating && 'animating' },
+	        { className: 'color-container' },
+	        _react2.default.createElement(_ColorName2.default, {
+	          color: color,
+	          onColorNameReset: onColorNameReset,
+	          onTextChangeSubmit: onTextChangeSubmit,
+	          onTextEdit: onTextEdit }),
 	        _react2.default.createElement(
 	          'div',
-	          { className: 'color-container' },
-	          _react2.default.createElement(_ColorName2.default, { color: color.color, statusText: color.statusText }),
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'spinner' },
-	            _react2.default.createElement('div', { className: 'bounce1' }),
-	            _react2.default.createElement('div', { className: 'bounce2' }),
-	            _react2.default.createElement('div', { className: 'bounce3' })
-	          )
+	          { className: 'spinner' },
+	          _react2.default.createElement('div', { className: 'bounce1' }),
+	          _react2.default.createElement('div', { className: 'bounce2' }),
+	          _react2.default.createElement('div', { className: 'bounce3' })
 	        )
 	      )
 	    )
@@ -28029,27 +28115,33 @@
 
 	var ColorName = function ColorName(_ref) {
 	  var color = _ref.color;
-	  var statusText = _ref.statusText;
+	  var onTextChangeSubmit = _ref.onTextChangeSubmit;
+	  var onTextEdit = _ref.onTextEdit;
+	  var onColorNameReset = _ref.onColorNameReset;
 
+	  // FIXME: Passing these callback functions WAY down the tree, refactor
 	  return _react2.default.createElement(
 	    'div',
 	    null,
-	    _react2.default.createElement(
-	      'p',
-	      { className: 'color-text' },
-	      color
-	    ),
+	    _react2.default.createElement('input', { type: 'text',
+	      className: 'color-text',
+	      value: color.editedColor || color.color,
+	      onChange: function onChange(e) {
+	        return onTextEdit(color, e.target.value);
+	      },
+	      onBlur: function onBlur(e) {
+	        return onTextChangeSubmit(color, color.editedColor);
+	      } }),
 	    _react2.default.createElement(
 	      'p',
 	      { className: 'status-text' },
-	      statusText
+	      'COPIED'
 	    )
 	  );
 	};
 
 	ColorName.propTypes = {
-	  color: _react.PropTypes.string.isRequired,
-	  statusText: _react.PropTypes.string.isRequired
+	  color: _react.PropTypes.object.isRequired
 	};
 
 	exports.default = ColorName;
@@ -28067,6 +28159,10 @@
 	var _react = __webpack_require__(2);
 
 	var _react2 = _interopRequireDefault(_react);
+
+	var _reactAddonsCssTransitionGroup = __webpack_require__(230);
+
+	var _reactAddonsCssTransitionGroup2 = _interopRequireDefault(_reactAddonsCssTransitionGroup);
 
 	var _StepOne = __webpack_require__(254);
 
@@ -28100,9 +28196,15 @@
 	    _InterfaceTheme2.default,
 	    { color: color },
 	    _react2.default.createElement(
-	      'div',
-	      { className: 'onboarding-container' },
-	      step
+	      _reactAddonsCssTransitionGroup2.default,
+	      {
+	        className: 'onboarding-container',
+	        transitionName: 'onboarding-animation',
+	        transitionEnterTimeout: 300,
+	        transitionLeaveTimeout: 350 },
+	      onboardingStep === 0 && _react2.default.createElement(_StepOne2.default, null),
+	      onboardingStep === 1 && _react2.default.createElement(_StepTwo2.default, null),
+	      onboardingStep === 2 && _react2.default.createElement(_StepThree2.default, null)
 	    )
 	  );
 	};

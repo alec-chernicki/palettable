@@ -6,7 +6,10 @@ export const CONTINUE_ONBOARDING = 'CONTINUE_ONBOARDING'
 export const ADD_COLOR = 'ADD_COLOR'
 export const CHANGE_COLOR = 'CHANGE_COLOR'
 export const REMOVE_COLOR = 'REMOVE_COLOR'
-export const COPY_COLOR = 'COPY_COLOR'
+
+export const CHANGE_COLOR_TEXT = 'CHANGE_COLOR_TEXT'
+export const EDIT_COLOR_TEXT = 'EDIT_COLOR_TEXT'
+export const RESET_COLOR_NAME = 'RESET_COLOR_NAME'
 
 export const TOGGLE_COLOR_ANIMATION = 'TOGGLE_COLOR_ANIMATION'
 
@@ -41,16 +44,33 @@ export function changeColor(color) {
   }
 }
 
-export function toggleColorAnimation(color) {
+// TODO: Fix these weird names
+export function changeColorText(color, text) {
   return {
-    type: TOGGLE_COLOR_ANIMATION,
+    type: CHANGE_COLOR_TEXT,
+    color,
+    text
+  }
+}
+
+export function editColorText(color, text) {
+  return {
+    type: EDIT_COLOR_TEXT,
+    color,
+    text
+  }
+}
+
+export function resetColorName(color) {
+  return {
+    type: RESET_COLOR_NAME,
     color
   }
 }
 
-export function copyColor(color) {
+export function toggleColorAnimation(color) {
   return {
-    type: COPY_COLOR,
+    type: TOGGLE_COLOR_ANIMATION,
     color
   }
 }
@@ -63,6 +83,7 @@ function requestPalette(currentColors) {
 }
 
 function receivePalette(palette) {
+  // FIXME: whats with this naming?
   return {
     type: RECEIVE_PALETTE,
     colors: palette
@@ -125,9 +146,12 @@ export function fetchColorFromPaletteIfNeeded(shownColors) {
 }
 
 export function animateColorStatus(color) {
+  let animationTimeout
+  clearTimeout(animationTimeout)
   return dispatch => {
     dispatch(toggleColorAnimation(color))
-    setTimeout(() => {
+
+    animationTimeout = setTimeout(() => {
       dispatch(toggleColorAnimation(color))
     }, 1000)
   }

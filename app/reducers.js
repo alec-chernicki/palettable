@@ -1,12 +1,8 @@
-// Props that need passing
-// addEnabled: true,
-// changeEnabled: false,
-// removeEnabled: false
-
 import { combineReducers } from 'redux'
 import {
   CONTINUE_ONBOARDING, TOGGLE_COLOR_ANIMATION,
-  ADD_COLOR, REMOVE_COLOR, CHANGE_COLOR, COPY_COLOR,
+  CHANGE_COLOR_TEXT, EDIT_COLOR_TEXT, RESET_COLOR_NAME,
+  ADD_COLOR, REMOVE_COLOR, CHANGE_COLOR,
   REQUEST_PALETTE, RECEIVE_PALETTE, INVALIDATE_PALETTE
 } from './actions'
 
@@ -20,26 +16,45 @@ function onboardingStep(state = 0, action) {
 }
 
 // FIXME: rename to something that's not semantic to the state tree naming
-function color(state, action) {
+function color(state = {
+  id: 0,
+  color: '',
+  editedColor: '',
+  animating: false
+}, action) {
   switch (action.type) {
     case ADD_COLOR:
       return {
         id: state.reduce((maxId, color) => Math.max(color.id, maxId), -1) + 1,
-        color: action.color,
-        statusText: 'Liked'
+        color: action.color
       }
     case CHANGE_COLOR:
       return {
         id: state.reduce((maxId, color) => Math.max(color.id, maxId), -1) + 1,
-        color: action.color,
-        statusText: 'Disliked'
+        color: action.color
       }
-    case COPY_COLOR:
+    // TODO: These action names feel weird, maybe refactor into seperate reducer and combine
+    case EDIT_COLOR_TEXT:
+      if (state.id !== action.color.id) {
+        return state
+      }
       return {
         ...state,
-        statusText: 'Copied'
+        editedColor: action.text
       }
-    // FIXME: These arent included in initial default state
+    case CHANGE_COLOR_TEXT:
+      if (state.id !== action.color.id) {
+        return state
+      }
+      return {
+        ...state,
+        color: action.text
+      }
+    case RESET_COLOR_NAME:
+      return {
+        ...state,
+        editedColor: ''
+      }
     case TOGGLE_COLOR_ANIMATION:
       if (state.id !== action.color.id) {
         return state
@@ -58,7 +73,6 @@ function shownColors(state = [], action) {
   switch (action.type) {
     // FIXME: refactor into combine reducers
     case ADD_COLOR:
-    case COPY_COLOR:
       return [
         ...state,
         color(state, action)
@@ -68,10 +82,15 @@ function shownColors(state = [], action) {
         ...state.slice(0, -1),
         color(state, action)
       ]
+
+
     case REMOVE_COLOR:
       return state.filter(color =>
         color.id !== action.id
       )
+    case CHANGE_COLOR_TEXT:
+    case EDIT_COLOR_TEXT:
+    case RESET_COLOR_NAME:
     case TOGGLE_COLOR_ANIMATION:
       return state.map(c =>
         color(c, action)

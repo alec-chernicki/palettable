@@ -5,9 +5,17 @@ import ColorItem from './ColorItem'
 
 class ColorList extends React.Component {
   render () {
-    const { shownColors, isFetching, onAnimateColor } = this.props
+    const { shownColors, isFetching, onAnimateColor, onTextChangeSubmit, onTextEdit, onColorNameReset } = this.props
     const colorItems = shownColors.map(color => {
-      return <ColorItem key={color.id} color={color} onAnimateColor={onAnimateColor}/>
+      return (
+        <ColorItem
+          key={color.id}
+          color={color}
+          onAnimateColor={onAnimateColor}
+          onColorNameReset={onColorNameReset}
+          onTextChangeSubmit={onTextChangeSubmit}
+          onTextEdit={onTextEdit} />
+      )
     })
 
     // FIXME: EWww refactor
