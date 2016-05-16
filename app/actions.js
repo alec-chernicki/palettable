@@ -10,6 +10,8 @@ export const REMOVE_COLOR = 'REMOVE_COLOR'
 export const CHANGE_COLOR_TEXT = 'CHANGE_COLOR_TEXT'
 export const EDIT_COLOR_TEXT = 'EDIT_COLOR_TEXT'
 export const RESET_COLOR_NAME = 'RESET_COLOR_NAME'
+export const TOGGLE_COLOR_PICKER = 'TOGGLE_COLOR_PICKER'
+
 
 export const TOGGLE_COLOR_ANIMATION = 'TOGGLE_COLOR_ANIMATION'
 
@@ -40,6 +42,13 @@ export function addColor(color) {
 export function changeColor(color) {
   return {
     type: CHANGE_COLOR,
+    color
+  }
+}
+
+export function toggleColorPicker(color) {
+  return {
+    type: TOGGLE_COLOR_PICKER,
     color
   }
 }
@@ -100,11 +109,11 @@ function fetchPalette(shownColors) {
   return dispatch => {
     dispatch(requestPalette(shownColors))
     const apiURL = shownColors.length <= 1 ? '/api/random' : '/api/change'
-
+    const requestColors = shownColors.map(color => color.color)
     return axios
       .get(apiURL, {
         params: {
-          colors: shownColors
+          colors: requestColors
         }
       })
       .then(({ data }) => dispatch(receivePalette(data)))

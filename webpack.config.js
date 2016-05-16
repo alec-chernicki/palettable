@@ -2,7 +2,7 @@ var webpack = require('webpack');
 
 module.exports = {
   entry: [
-    './app/index.js' // Your appʼs entry point
+    './app/index.js'
   ],
   output: {
     path: './public',

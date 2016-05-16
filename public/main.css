@@ -9,6 +9,10 @@
   height: auto;
 }
 
+.popover {
+  height: auto;
+}
+
 html, body, #root {
   margin: 0;
   padding: 0;
@@ -276,6 +280,15 @@ Color Name Container
   opacity: 0;
 }
 
+.color-picker {
+  cursor: pointer;
+  display: block;
+  background-image: url('/images/options-icon.svg');
+  height: 50px;
+  width: 50px;
+  margin: 30px auto 0;
+}
+
 @keyframes fade-out-in{
   0% {
     opacity: 0.4;
@@ -304,6 +317,69 @@ Color Name Container
     opacity: 0;
     transform: translateY(-100%);
   }
+}
+
+/**********************************
+Color Picker
+**********************************/
+
+.picker {
+  width: 225px;
+  padding: 10px 10px 0;
+  box-sizing: initial;
+  background: #fff;
+  border-radius: 4px;
+  box-shadow: 0 0 0 1px rgba(0,0,0,.15), 0 8px 16px rgba(0,0,0,.15);
+}
+
+.saturation {
+  width: 100%;
+  padding-bottom: 60%;
+  position: relative;
+  overflow: hidden;
+  border-radius: 3px;
+}
+
+
+.saturation-main {
+  border-radius: 3px;
+  box-shadow: inset 0 0 0 1px rgba(0,0,0,.15), inset 0 0 4px rgba(0,0,0,.25);
+}
+
+.controls {
+  display: flex;
+}
+
+.popover {
+  position: absolute;
+  z-index: 2;
+}
+.cover {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.sliders {
+  padding: 10px 0;
+  flex: 1;
+}
+
+.hue {
+  position: relative;
+  height: 15px;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.hue * {
+  height: 95% !important;
+}
+
+.hue > div {
+  height: 100% !important;
 }
 
 /**********************************

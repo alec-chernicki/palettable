@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import {
   continueOnboarding, animateColorStatus,
-  changeColorText, editColorText, resetColorName,
+  changeColorText, editColorText, resetColorName, toggleColorPicker,
   addColor, removeColor, changeColor,
   fetchColorFromPaletteIfNeeded, invalidatePalette,
 } from '../actions'
@@ -53,7 +53,7 @@ class App extends Component {
     }
   }
   render () {
-    const { shownColors, isFetching, onboardingStep, onTextChangeSubmit, onTextEdit, onColorNameReset } = this.props
+    const { shownColors, isFetching, onboardingStep, onTextChangeSubmit, onTextEdit, onColorNameReset, onToggleColorPicker } = this.props
     if (shownColors.length === 0) {
       return (
         <div className='loading-cotainer'>
@@ -75,7 +75,8 @@ class App extends Component {
           isFetching={isFetching}
           onColorNameReset={onColorNameReset}
           onTextEdit={onTextEdit}
-          onTextChangeSubmit={onTextChangeSubmit}/>
+          onTextChangeSubmit={onTextChangeSubmit}
+          onToggleColorPicker={onToggleColorPicker}/>
       </div>
     )
   }
@@ -92,11 +93,13 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps= (dispatch, ownProps) => {
   return {
+    onToggleColorPicker (color) {
+      dispatch(toggleColorPicker(color))
+    },
     onTextEdit (color, text) {
       dispatch(editColorText(color, text))
     },
     onTextChangeSubmit (color, text) {
-
       const regex = /^#?([a-fA-F0-9]{6}|[a-fA-F0-9]{3})$/;
       const colorText = /#/.test(text) ? text : '#' + text
       if (regex.test(colorText)) {

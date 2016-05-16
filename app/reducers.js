@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux'
 import {
   CONTINUE_ONBOARDING, TOGGLE_COLOR_ANIMATION,
-  CHANGE_COLOR_TEXT, EDIT_COLOR_TEXT, RESET_COLOR_NAME,
+  CHANGE_COLOR_TEXT, EDIT_COLOR_TEXT, RESET_COLOR_NAME, TOGGLE_COLOR_PICKER,
   ADD_COLOR, REMOVE_COLOR, CHANGE_COLOR,
   REQUEST_PALETTE, RECEIVE_PALETTE, INVALIDATE_PALETTE
 } from './actions'
@@ -55,6 +55,16 @@ function color(state = {
         ...state,
         editedColor: ''
       }
+    case TOGGLE_COLOR_PICKER:
+      // TODO: this shouldnt be color.id it should just be id
+      if (state.id !== action.color.id) {
+        return state
+      }
+
+      return {
+        ...state,
+        pickerActive: !state.pickerActive
+      }
     case TOGGLE_COLOR_ANIMATION:
       if (state.id !== action.color.id) {
         return state
@@ -63,6 +73,7 @@ function color(state = {
         ...state,
         animating: !state.animating
       }
+
     default:
       return state
   }
@@ -92,6 +103,7 @@ function shownColors(state = [], action) {
     case EDIT_COLOR_TEXT:
     case RESET_COLOR_NAME:
     case TOGGLE_COLOR_ANIMATION:
+    case TOGGLE_COLOR_PICKER:
       return state.map(c =>
         color(c, action)
       )

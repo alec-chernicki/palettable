@@ -33,6 +33,7 @@ function randomIndexOf (arr) {
 
 function filterDuplicatesFromData (currentColors, data) {
   let newColors = randomIndexOf(data).colors;
+  // console.log(newColors);
   let uniqueColors = newColors.filter((value) => currentColors.indexOf(value) === -1);
 
   return uniqueColors;
@@ -45,13 +46,12 @@ app.get('/', function (req, res){
   res.sendFile(__dirname + '/public/index.html');
 });
 
-// Returns a random color palette from the API
 app.get('/api/random', function(req, res, next) {
 
   // Continue calling API until palette that's 5 colors long (which is most of
   // them) returns. This is because the API doesn't allow you to search by
   // palette length and doesn't standardize this on their platform.
-  (function getRandom () {
+  function getRandom () {
     baseRequest('/random', function (err, request, body) {
       if (request.statusCode === 403) {
         return next(new Error('Error retrieving random palette'));
@@ -66,32 +66,29 @@ app.get('/api/random', function(req, res, next) {
         res.json(colors);
       }
     });
-  })()
+  }
+  getRandom()
 });
 
-
-// TODO: After refactor, could we combine this with the add route somehow?
-// Returns a color palette that doesn't include the disliked color or current colors
 app.get('/api/change', function(req, res, next) {
-  const currentColors = req.query.colors;
+  const currentColors = req.query.colors.map(color => color.replace(/#/g, ''));
   const dislikedColor = currentColors[currentColors.length - 1];
   const colorsWithoutLast = [...currentColors.slice(0, currentColors.length - 1)];
 
-  baseRequest({url: '/', qs: { hex: colorsWithoutLast }}, function(err, request, body) {
+  baseRequest({url: '/', qs: { hex: colorsWithoutLast.toString() }}, function(err, request, body) {
     if (request.statusCode === 403) {
       return next(new Error('Error changing exact palettes'));
     }
     let colorData = JSON.parse(body);
-
     if (colorData.length > 1) {
       let uniqueColorPalettes = colorData.filter((palette) => palette.colors.indexOf(dislikedColor) === -1);
-      let newColor = filterDuplicatesFromData(currentColors, uniqueColorPalettes);
-
-      res.json(newColor)
+      let newColors = filterDuplicatesFromData(currentColors, uniqueColorPalettes);
+      // FIXME: Not returning palette with color that matches queried color
+      res.json(newColors)
     }
 
     else {
-      baseRequest({url: '/', qs: { hex: colorsWithoutLast[colorsWithoutLast.length - 1] }}, function(err, request, body) {
+      baseRequest({url: '/', qs: { hex: colorsWithoutLast[colorsWithoutLast.length - 1].toString() }}, function(err, request, body) {
         if (request.statusCode === 403) {
           return next(new Error('Error changing unique palettes'));
         }
@@ -100,9 +97,9 @@ app.get('/api/change', function(req, res, next) {
         // TODO: Performing a filter when may not need, feels weird, refactor
         let palettesWithoutDisliked = colorData.filter((palette) => palette.colors.indexOf(dislikedColor) === -1);
         let uniqueColorPalettes = colorData.length > 1 ? palettesWithoutDisliked : colorData;
-        let newColor = filterDuplicatesFromData(currentColors, uniqueColorPalettes);
-
-        res.json(newColor);
+        let newColors = filterDuplicatesFromData(currentColors, uniqueColorPalettes);
+        // console.log('Unique: ' + newColors);
+        res.json(newColors);
       });
     }
   });
