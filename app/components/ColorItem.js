@@ -25,7 +25,7 @@ const ColorItem = ({color, onTextChangeSubmit, onTextEdit, onColorNameReset, onT
             <div className="bounce3"></div>
           </div>
         </div>
-        <div className='options-icon' onClick={() => onToggleColorPicker(color)}>
+        <div className='color-picker-icon' onClick={() => onToggleColorPicker(color)}>
           <div className='line-container'>
             <div className='line' />
             <div className='circle' />

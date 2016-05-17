@@ -8,7 +8,7 @@ import {
 } from '../actions'
 
 import Title from '../components/Title';
-import Tweet from '../components/Tweet';
+// import Tweet from '../components/Tweet';
 import ColorList from '../components/ColorList';
 import Onboarding from '../components/Onboarding/Onboarding';
 
@@ -36,19 +36,37 @@ class App extends Component {
   }
   handleKeydown (e) {
     const { shownColors, isFetching, onContinueOnboarding, onboardingStep } = this.props
+    const tag = e.target.tagName.toLowerCase();
+
     // TODO: Refactor this complex checking logic into an action creator
-    if(!isFetching) {
+    if(!isFetching && tag != 'input') {
       if (e.which === 76 && shownColors.length < 5 && (onboardingStep === 0 || onboardingStep > 2)) {
         this.props.onAddColor(shownColors)
-          .then(onContinueOnboarding)
+          .then(() => {
+            //FIXME: This check should not be here
+            if (onboardingStep <= 2) {
+              onContinueOnboarding()
+            }
+          })
+
       }
       else if (e.which === 68 && (onboardingStep === 1 || onboardingStep > 2)) {
         this.props.onChangeColor(shownColors)
-          .then(onContinueOnboarding)
+          .then(() => {
+            //FIXME: This check should not be here
+            if (onboardingStep <= 2) {
+              onContinueOnboarding()
+            }
+          })
       }
       else if (e.which === 8 && shownColors.length > 1 && onboardingStep >= 2) {
         this.props.onRemoveColor(shownColors)
-          .then(onContinueOnboarding)
+          .then(() => {
+            //FIXME: This check should not be here
+            if (onboardingStep <= 2) {
+              onContinueOnboarding()
+            }
+          })
       }
     }
   }
@@ -65,18 +83,26 @@ class App extends Component {
     return (
       <div>
         <Title shownColors={shownColors} />
-        <Tweet shownColors={shownColors} />
         <Onboarding
           shownColors={shownColors}
           onboardingStep={onboardingStep} />
-        <ColorList
-          onAnimateColor={animateColorStatus}
-          shownColors={shownColors}
-          isFetching={isFetching}
-          onColorNameReset={onColorNameReset}
-          onTextEdit={onTextEdit}
-          onTextChangeSubmit={onTextChangeSubmit}
-          onToggleColorPicker={onToggleColorPicker}/>
+        <div className='main-container'>
+          <ColorList
+            onAnimateColor={animateColorStatus}
+            shownColors={shownColors}
+            isFetching={isFetching}
+            onColorNameReset={onColorNameReset}
+            onTextEdit={onTextEdit}
+            onTextChangeSubmit={onTextChangeSubmit}
+            onToggleColorPicker={onToggleColorPicker}/>
+          <div className='social-bar'>
+            <a className='social-icon' href='#'/>
+            <p className='social-text'>
+              Made By
+              <a href='http://www.alecortega.com/' className='social-name'> Alec Ortega</a>
+            </p>
+          </div>
+        </div>
       </div>
     )
   }

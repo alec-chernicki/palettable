@@ -19,21 +19,17 @@ class ColorList extends React.Component {
       )
     })
 
-    // FIXME: EWww refactor
-    const statusText = shownColors[shownColors.length - 1].statusText
-    const containerClassName = isFetching ? 'searching ' + statusText : statusText
-
+    let containerClassName = isFetching ? 'searching color-list' : 'color-list'
+    
     return (
-      <div className={containerClassName}>
-        <ReactCSSTransitionGroup
-          component="ul"
-          className='color-list'
-          transitionName={ 'color-animation' }
-          transitionEnterTimeout={300}
-          transitionLeaveTimeout={350} >
-          { colorItems }
-        </ReactCSSTransitionGroup>
-      </div>
+      <ReactCSSTransitionGroup
+        component="ul"
+        className={containerClassName}
+        transitionName={ 'color-animation' }
+        transitionEnterTimeout={300}
+        transitionLeaveTimeout={350} >
+        { colorItems }
+      </ReactCSSTransitionGroup>
     )
   }
 }
