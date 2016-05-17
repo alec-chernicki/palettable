@@ -9,7 +9,6 @@ const ColorName = ({color, onTextChangeSubmit, onTextEdit, onColorNameReset, onT
         value={color.editedColor || color.color}
         onChange={(e) => onTextEdit(color, e.target.value)}
         onBlur={(e) => onTextChangeSubmit(color, color.editedColor)}/>
-      <p className='status-text'>COPIED</p>
     </div>
   )
 }

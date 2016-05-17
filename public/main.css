@@ -113,7 +113,7 @@ li {
   position: absolute;
   left: 0;
   right: 0;
-  top: 55%;
+  bottom: -40px;
   display: none;
   width: 100px;
   text-align: center;
@@ -255,8 +255,10 @@ Color Picker Icon
 .color-picker-icon {
   cursor: pointer;
   width: 40px;
-  margin: 60px auto 0;
+  margin: 65px auto 0;
   opacity: 0.4;
+  position: relative;
+  z-index: 1000;
   transition: opacity 0.25s ease-in-out;
 }
 
@@ -389,6 +391,8 @@ Color Picker
   background: #fff;
   margin: 0 auto;
   border-radius: 4px;
+  position: relative;
+  z-index: 1100;
   box-shadow: 0 0 0 1px rgba(0,0,0,.15), 0 8px 16px rgba(0,0,0,.15);
 }
 
@@ -423,7 +427,12 @@ Color Picker
   top: 0;
   right: 0;
   bottom: 0;
+  z-index: 900;
   left: 0;
+}
+
+.cover.onboarding {
+  z-index: 1100;
 }
 
 .sliders {

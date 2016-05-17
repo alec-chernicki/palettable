@@ -11,19 +11,23 @@ const Onboarding = ({shownColors, onboardingStep}) => {
   const steps = [<StepOne/>, <StepTwo/>, <StepThree/>];
   const step = steps[onboardingStep] || false;
   const color = shownColors[shownColors.length - 1].color
+  const onboardingCompleted = onboardingStep > 2;
 
   return (
-    <InterfaceTheme color={color}>
-      <ReactCSSTransitionGroup
-        className='onboarding-container'
-        transitionName={ 'onboarding-animation' }
-        transitionEnterTimeout={300}
-        transitionLeaveTimeout={350} >
-        {onboardingStep === 0 && <StepOne/>}
-        {onboardingStep === 1 && <StepTwo/>}
-        {onboardingStep === 2 && <StepThree/>}
-      </ReactCSSTransitionGroup>
-    </InterfaceTheme>
+    <div>
+      { !onboardingCompleted && <InterfaceTheme color={color}>
+        <div className="cover onboarding" />
+        <ReactCSSTransitionGroup
+          className='onboarding-container'
+          transitionName={ 'onboarding-animation' }
+          transitionEnterTimeout={300}
+          transitionLeaveTimeout={350} >
+          {onboardingStep === 0 && <StepOne/>}
+          {onboardingStep === 1 && <StepTwo/>}
+          {onboardingStep === 2 && <StepThree/>}
+        </ReactCSSTransitionGroup>
+      </InterfaceTheme> }
+    </div>
   )
 }
 
