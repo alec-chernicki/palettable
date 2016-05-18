@@ -33,7 +33,7 @@ function color(state = {
         id: state.reduce((maxId, color) => Math.max(color.id, maxId), -1) + 1,
         color: action.color
       }
-    // TODO: These action names feel weird, maybe refactor into seperate reducer and combine
+    // TODO: These action names feel weird, mrefactor into seperate reducer and combine
     case EDIT_COLOR_TEXT:
       if (state.id !== action.color.id) {
         return state
@@ -48,7 +48,8 @@ function color(state = {
       }
       return {
         ...state,
-        color: action.text
+        color: action.text,
+        editedColor: ''
       }
     case RESET_COLOR_NAME:
       return {

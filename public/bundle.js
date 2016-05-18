@@ -21979,7 +21979,7 @@
 	        }, -1) + 1,
 	        color: action.color
 	      };
-	    // TODO: These action names feel weird, maybe refactor into seperate reducer and combine
+	    // TODO: These action names feel weird, mrefactor into seperate reducer and combine
 	    case _actions.EDIT_COLOR_TEXT:
 	      if (state.id !== action.color.id) {
 	        return state;
@@ -21992,7 +21992,8 @@
 	        return state;
 	      }
 	      return _extends({}, state, {
-	        color: action.text
+	        color: action.text,
+	        editedColor: ''
 	      });
 	    case _actions.RESET_COLOR_NAME:
 	      return _extends({}, state, {
@@ -69495,6 +69496,7 @@
 	  var onToggleColorPicker = _ref.onToggleColorPicker;
 
 	  // FIXME: Passing these callback functions WAY down the tree, refactor
+
 	  return _react2.default.createElement(
 	    'div',
 	    null,

@@ -3,6 +3,7 @@
  * Initialize middleware
  */
 const path = require('path');
+const axios = require('axios');
 const request = require('request');
 const baseRequest = request.defaults({
   baseUrl: 'http://www.colourlovers.com/api/palettes',
@@ -10,6 +11,9 @@ const baseRequest = request.defaults({
     format: 'json'
   }
 });
+axios.defaults.baseURL = 'http://www.colourlovers.com/api/palettes';
+axios.defaults.params = { format: 'json' }
+
 
 /**
  * Create Express app
@@ -33,7 +37,6 @@ function randomIndexOf (arr) {
 
 function filterDuplicatesFromData (currentColors, data) {
   let newColors = randomIndexOf(data).colors;
-  // console.log(newColors);
   let uniqueColors = newColors.filter((value) => currentColors.indexOf(value) === -1);
 
   return uniqueColors;
@@ -47,60 +50,51 @@ app.get('/', function (req, res){
 });
 
 app.get('/api/random', function(req, res, next) {
-
   // Continue calling API until palette that's 5 colors long (which is most of
   // them) returns. This is because the API doesn't allow you to search by
   // palette length and doesn't standardize this on their platform.
   function getRandom () {
-    baseRequest('/random', function (err, request, body) {
-      if (request.statusCode === 403) {
-        return next(new Error('Error retrieving random palette'));
-      }
+    axios.get('/random')
+      .then(response => {
+        let colors = response.data[0].colors;
 
-      let colors = JSON.parse(body)[0].colors;
-
-      if (colors.length < 5) {
-        getRandom();
-      }
-      else {
-        res.json(colors);
-      }
-    });
+        if (colors.length < 5) {
+          getRandom();
+        }
+        else {
+          res.json(colors);
+        }
+      })
+      .catch(error => {
+        return next(new Error('Error changing exact palettes'));
+      })
   }
-  getRandom()
+  getRandom();
 });
+
+function getPalettes (colors) {
+  return axios.get('/', { params: { hex: colors }})
+    .then(request => {
+      return request.data
+    })
+    .catch(e => {
+      return next(new Error('Error fetching palettes'));
+    })
+}
 
 app.get('/api/change', function(req, res, next) {
   const currentColors = req.query.colors.map(color => color.replace(/#/g, ''));
   const dislikedColor = currentColors[currentColors.length - 1];
-  const colorsWithoutLast = [...currentColors.slice(0, currentColors.length - 1)];
+  const searchColor = currentColors[currentColors.length - 2];
 
-  baseRequest({url: '/', qs: { hex: colorsWithoutLast.toString() }}, function(err, request, body) {
-    if (request.statusCode === 403) {
-      return next(new Error('Error changing exact palettes'));
-    }
-    let colorData = JSON.parse(body);
-    if (colorData.length > 1) {
-      let uniqueColorPalettes = colorData.filter((palette) => palette.colors.indexOf(dislikedColor) === -1);
-      let newColors = filterDuplicatesFromData(currentColors, uniqueColorPalettes);
-      // FIXME: Not returning palette with color that matches queried color
+  getPalettes(searchColor)
+    .then(palettes => {
+      console.log(palettes);
+      let palettesWithoutDisliked = palettes.filter(palette => palette.colors.indexOf(dislikedColor) === -1);
+      let newColors = filterDuplicatesFromData(currentColors, palettesWithoutDisliked);
       res.json(newColors)
-    }
-
-    else {
-      baseRequest({url: '/', qs: { hex: colorsWithoutLast[colorsWithoutLast.length - 1].toString() }}, function(err, request, body) {
-        if (request.statusCode === 403) {
-          return next(new Error('Error changing unique palettes'));
-        }
-
-        let colorData = JSON.parse(body);
-        // TODO: Performing a filter when may not need, feels weird, refactor
-        let palettesWithoutDisliked = colorData.filter((palette) => palette.colors.indexOf(dislikedColor) === -1);
-        let uniqueColorPalettes = colorData.length > 1 ? palettesWithoutDisliked : colorData;
-        let newColors = filterDuplicatesFromData(currentColors, uniqueColorPalettes);
-        // console.log('Unique: ' + newColors);
-        res.json(newColors);
-      });
-    }
-  });
+    })
+    .catch(e => {
+      console.log(e)
+    })
 });

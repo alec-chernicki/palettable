@@ -72,7 +72,7 @@ li {
   letter-spacing: 1px;
   left: 25px;
   height: auto;
-  z-index: 1000;
+  z-index: 10000;
 }
 
 .btn {
@@ -184,7 +184,7 @@ Onboarding Container
   width: 100%;
   position: absolute;
   height: 180px;
-  bottom: 5%;
+  bottom: 50px;
   min-width: 650px;
   z-index: 1000;
 }
@@ -426,13 +426,15 @@ Color Picker
   position: fixed;
   top: 0;
   right: 0;
-  bottom: 0;
+  bottom: 35px;
   z-index: 900;
   left: 0;
+
 }
 
 .cover.onboarding {
   z-index: 1100;
+  cursor: auto;
 }
 
 .sliders {
