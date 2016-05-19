@@ -26333,6 +26333,10 @@
 
 	var _CustomColorPicker2 = _interopRequireDefault(_CustomColorPicker);
 
+	var _reactAddonsCssTransitionGroup = __webpack_require__(228);
+
+	var _reactAddonsCssTransitionGroup2 = _interopRequireDefault(_reactAddonsCssTransitionGroup);
+
 	var _reactColor = __webpack_require__(237);
 
 	var _ColorName = __webpack_require__(449);
@@ -26344,9 +26348,6 @@
 	var _InterfaceTheme2 = _interopRequireDefault(_InterfaceTheme);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	// var { Alpha } = require('react-color/src/components/common');
-
 
 	var ColorItem = function ColorItem(_ref) {
 	  var color = _ref.color;
@@ -26404,16 +26405,23 @@
 	          _react2.default.createElement('div', { className: 'circle' })
 	        )
 	      ),
-	      color.pickerActive ? _react2.default.createElement(
-	        'div',
-	        { className: 'popover' },
-	        _react2.default.createElement('div', { className: 'cover', onClick: function onClick() {
-	            return onToggleColorPicker(color);
-	          } }),
-	        _react2.default.createElement(_CustomColorPicker2.default, { color: color.color, onChange: function onChange(newColor) {
-	            return onTextChangeSubmit(color, newColor.hex.toUpperCase());
-	          } })
-	      ) : null
+	      _react2.default.createElement(
+	        _reactAddonsCssTransitionGroup2.default,
+	        {
+	          transitionName: 'color-picker-animation',
+	          transitionEnterTimeout: 175,
+	          transitionLeaveTimeout: 175 },
+	        color.pickerActive ? _react2.default.createElement(
+	          'div',
+	          { className: 'popover' },
+	          _react2.default.createElement('div', { className: 'cover', onClick: function onClick() {
+	              return onToggleColorPicker(color);
+	            } }),
+	          _react2.default.createElement(_CustomColorPicker2.default, { color: color.color, onChange: function onChange(newColor) {
+	              return onTextChangeSubmit(color, newColor.hex.toUpperCase());
+	            } })
+	        ) : null
+	      )
 	    )
 	  );
 	};

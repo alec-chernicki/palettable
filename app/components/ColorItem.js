@@ -1,7 +1,6 @@
 import React, { PropTypes } from 'react';
-// var { Alpha } = require('react-color/src/components/common');
 import CustomColorPicker from './CustomColorPicker'
-
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import { SliderPicker } from 'react-color'
 import ColorName from './ColorName';
 import InterfaceTheme from './InterfaceTheme';
@@ -39,10 +38,15 @@ const ColorItem = ({color, onTextChangeSubmit, onTextEdit, onColorNameReset, onT
             <div className='circle' />
           </div>
         </div>
-        { color.pickerActive ? <div className="popover">
-          <div className="cover" onClick={() => onToggleColorPicker(color)}/>
-          <CustomColorPicker color={ color.color } onChange={(newColor) => onTextChangeSubmit(color, newColor.hex.toUpperCase())}/>
-        </div> : null }
+        <ReactCSSTransitionGroup
+          transitionName={ 'color-picker-animation' }
+          transitionEnterTimeout={175}
+          transitionLeaveTimeout={175} >
+          { color.pickerActive ? <div className="popover">
+            <div className="cover" onClick={() => onToggleColorPicker(color)}/>
+            <CustomColorPicker color={ color.color } onChange={(newColor) => onTextChangeSubmit(color, newColor.hex.toUpperCase())}/>
+          </div> : null }
+        </ReactCSSTransitionGroup>
       </InterfaceTheme>
     </li>
   )

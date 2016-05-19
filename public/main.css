@@ -458,6 +458,29 @@ Color Picker
 }
 
 /**********************************
+Color Picker Animation
+**********************************/
+.color-picker-animation-enter {
+  transform: scale(0.01, 0.01);
+}
+
+.color-picker-animation-enter.color-picker-animation-enter-active {
+  transform: scale(1, 1);
+  transition: transform 175ms cubic-bezier(.17,.89,.56,1.22);
+  transform-origin: 50% 0%;
+}
+
+.color-picker-animation-leave {
+  transform: scale(1, 1);
+}
+
+.color-picker-animation-leave.color-picker-animation-leave-active {
+  transform: scale(0.01, 0.01);
+  transition: transform 175ms cubic-bezier(.56, -.22, .83, .89);
+  transform-origin: 50% 0%;
+}
+
+/**********************************
 Tweet Link
 **********************************/
 .main-container {

@@ -89,12 +89,12 @@ app.get('/api/change', function(req, res, next) {
 
   getPalettes(searchColor)
     .then(palettes => {
-      console.log(palettes);
       let palettesWithoutDisliked = palettes.filter(palette => palette.colors.indexOf(dislikedColor) === -1);
       let newColors = filterDuplicatesFromData(currentColors, palettesWithoutDisliked);
       res.json(newColors)
     })
     .catch(e => {
       console.log(e)
+      res.end()
     })
 });
