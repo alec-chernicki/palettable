@@ -22110,7 +22110,6 @@
 	  addColor: _react.PropTypes.func.isRequired,
 	  changeColor: _react.PropTypes.func.isRequired,
 	  removeColor: _react.PropTypes.func.isRequired,
-	  onToggleColorPicker: _react.PropTypes.func.isRequired,
 	  colors: _react.PropTypes.array.isRequired,
 	  isFetching: _react.PropTypes.bool.isRequired,
 	  onboardingStep: _react.PropTypes.number.isRequired
@@ -22130,9 +22129,6 @@
 
 	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 	  return {
-	    onToggleColorPicker: function onToggleColorPicker(color) {
-	      dispatch((0, _actions.toggleColorPicker)(color));
-	    },
 	    addColor: function addColor() {
 	      return dispatch((0, _actions.addColorIfValid)());
 	    },
@@ -25342,9 +25338,9 @@
 
 	var _reactAddonsCssTransitionGroup2 = _interopRequireDefault(_reactAddonsCssTransitionGroup);
 
-	var _ColorItem = __webpack_require__(236);
+	var _SyncedColor = __webpack_require__(462);
 
-	var _ColorItem2 = _interopRequireDefault(_ColorItem);
+	var _SyncedColor2 = _interopRequireDefault(_SyncedColor);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -25372,7 +25368,7 @@
 	      var onToggleColorPicker = _props.onToggleColorPicker;
 
 	      var colorItems = colors.map(function (color) {
-	        return _react2.default.createElement(_ColorItem2.default, { key: color.id, color: color, onToggleColorPicker: onToggleColorPicker });
+	        return _react2.default.createElement(_SyncedColor2.default, { key: color.id, color: color, onToggleColorPicker: onToggleColorPicker });
 	      });
 
 	      var containerClassName = isFetching ? 'searching color-list' : 'color-list';
@@ -25395,8 +25391,7 @@
 
 	ColorList.propTypes = {
 	  colors: _react.PropTypes.array.isRequired,
-	  isFetching: _react.PropTypes.bool.isRequired,
-	  onToggleColorPicker: _react.PropTypes.func.isRequired
+	  isFetching: _react.PropTypes.bool.isRequired
 	};
 
 	exports.default = ColorList;
@@ -26199,9 +26194,13 @@
 
 	var _reactAddonsCssTransitionGroup2 = _interopRequireDefault(_reactAddonsCssTransitionGroup);
 
-	var _VisibleColorName = __webpack_require__(460);
+	var _ColorName = __webpack_require__(450);
 
-	var _VisibleColorName2 = _interopRequireDefault(_VisibleColorName);
+	var _ColorName2 = _interopRequireDefault(_ColorName);
+
+	var _SliderIcon = __webpack_require__(461);
+
+	var _SliderIcon2 = _interopRequireDefault(_SliderIcon);
 
 	var _InterfaceTheme = __webpack_require__(222);
 
@@ -26211,20 +26210,25 @@
 
 	var ColorItem = function ColorItem(_ref) {
 	  var color = _ref.color;
+	  var colorValue = _ref.colorValue;
 	  var onToggleColorPicker = _ref.onToggleColorPicker;
+	  var onTextChangeSubmit = _ref.onTextChangeSubmit;
+	  var onTextEdit = _ref.onTextEdit;
 
 	  return _react2.default.createElement(
 	    'li',
-	    { style: { backgroundColor: color.color },
-	      className: 'color',
-	      key: color.id },
+	    { style: { backgroundColor: color.color }, className: 'color', key: color.id },
 	    _react2.default.createElement(
 	      _InterfaceTheme2.default,
 	      { color: color.color },
 	      _react2.default.createElement(
 	        'div',
 	        { className: 'color-container' },
-	        _react2.default.createElement(_VisibleColorName2.default, { color: color }),
+	        _react2.default.createElement(_ColorName2.default, {
+	          color: color,
+	          colorValue: colorValue,
+	          onTextEdit: onTextEdit,
+	          onTextChangeSubmit: onTextChangeSubmit }),
 	        _react2.default.createElement(
 	          'div',
 	          { className: 'spinner' },
@@ -26233,30 +26237,9 @@
 	          _react2.default.createElement('div', { className: 'bounce3' })
 	        )
 	      ),
-	      _react2.default.createElement(
-	        'div',
-	        { className: 'color-picker-icon', onClick: function onClick() {
-	            return onToggleColorPicker(color);
-	          } },
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'line-container' },
-	          _react2.default.createElement('div', { className: 'line' }),
-	          _react2.default.createElement('div', { className: 'circle' })
-	        ),
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'line-container' },
-	          _react2.default.createElement('div', { className: 'line' }),
-	          _react2.default.createElement('div', { className: 'circle' })
-	        ),
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'line-container' },
-	          _react2.default.createElement('div', { className: 'line' }),
-	          _react2.default.createElement('div', { className: 'circle' })
-	        )
-	      ),
+	      _react2.default.createElement(_SliderIcon2.default, { onToggle: function onToggle() {
+	          return onToggleColorPicker(color);
+	        } }),
 	      _react2.default.createElement(
 	        _reactAddonsCssTransitionGroup2.default,
 	        {
@@ -26280,7 +26263,10 @@
 
 	ColorItem.propTypes = {
 	  color: _react.PropTypes.object.isRequired,
-	  onToggleColorPicker: _react.PropTypes.func.isRequired
+	  colorValue: _react.PropTypes.string.isRequired,
+	  onToggleColorPicker: _react.PropTypes.func.isRequired,
+	  onTextChangeSubmit: _react.PropTypes.func.isRequired,
+	  onTextEdit: _react.PropTypes.func.isRequired
 	};
 
 	exports.default = ColorItem;
@@ -69353,14 +69339,14 @@
 	  var color = _ref.color;
 	  var onTextChangeSubmit = _ref.onTextChangeSubmit;
 	  var onTextEdit = _ref.onTextEdit;
-	  var value = _ref.value;
+	  var colorValue = _ref.colorValue;
 
 	  return _react2.default.createElement(
 	    'div',
 	    null,
 	    _react2.default.createElement('input', { type: 'text',
 	      className: 'color-text',
-	      value: value,
+	      value: colorValue,
 	      onChange: function onChange(e) {
 	        return onTextEdit(color, e.target.value);
 	      },
@@ -69372,7 +69358,7 @@
 
 	ColorName.propTypes = {
 	  color: _react.PropTypes.object.isRequired,
-	  value: _react.PropTypes.string.isRequired,
+	  colorValue: _react.PropTypes.string.isRequired,
 	  onTextEdit: _react.PropTypes.func.isRequired,
 	  onTextChangeSubmit: _react.PropTypes.func.isRequired
 	};
@@ -69845,7 +69831,57 @@
 	exports.default = Footer;
 
 /***/ },
-/* 460 */
+/* 460 */,
+/* 461 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var SliderIcon = function SliderIcon(_ref) {
+	  var onToggle = _ref.onToggle;
+
+	  return _react2.default.createElement(
+	    'div',
+	    { className: 'color-picker-icon', onClick: onToggle },
+	    _react2.default.createElement(
+	      'div',
+	      { className: 'line-container' },
+	      _react2.default.createElement('div', { className: 'line' }),
+	      _react2.default.createElement('div', { className: 'circle' })
+	    ),
+	    _react2.default.createElement(
+	      'div',
+	      { className: 'line-container' },
+	      _react2.default.createElement('div', { className: 'line' }),
+	      _react2.default.createElement('div', { className: 'circle' })
+	    ),
+	    _react2.default.createElement(
+	      'div',
+	      { className: 'line-container' },
+	      _react2.default.createElement('div', { className: 'line' }),
+	      _react2.default.createElement('div', { className: 'circle' })
+	    )
+	  );
+	};
+
+	SliderIcon.propTypes = {
+	  onToggle: _react.PropTypes.func.isRequired
+	};
+
+	exports.default = SliderIcon;
+
+/***/ },
+/* 462 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -69858,9 +69894,9 @@
 
 	var _actions = __webpack_require__(201);
 
-	var _ColorName = __webpack_require__(450);
+	var _ColorItem = __webpack_require__(236);
 
-	var _ColorName2 = _interopRequireDefault(_ColorName);
+	var _ColorItem2 = _interopRequireDefault(_ColorItem);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -69870,12 +69906,15 @@
 	  var editedColor = _ownProps$color.editedColor;
 
 	  return {
-	    value: editedColor || color
+	    colorValue: editedColor || color
 	  };
 	};
 
 	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 	  return {
+	    onToggleColorPicker: function onToggleColorPicker(color) {
+	      dispatch((0, _actions.toggleColorPicker)(color));
+	    },
 	    onTextChangeSubmit: function onTextChangeSubmit(color, text) {
 	      var regex = /^#?([a-fA-F0-9]{6}|[a-fA-F0-9]{3})$/;
 	      var colorText = /#/.test(text) ? text : '#' + text;
@@ -69893,9 +69932,9 @@
 	  };
 	};
 
-	var VisibleColorName = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_ColorName2.default);
+	var SyncedColor = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_ColorItem2.default);
 
-	exports.default = VisibleColorName;
+	exports.default = SyncedColor;
 
 /***/ }
 /******/ ]);

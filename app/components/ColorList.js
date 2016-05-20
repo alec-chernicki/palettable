@@ -1,13 +1,12 @@
 import React, {PropTypes} from 'react'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
-
-import ColorItem from './ColorItem'
+import SyncedColor from '../containers/SyncedColor'
 
 class ColorList extends React.Component {
   render() {
     const {colors, isFetching, onToggleColorPicker} = this.props
     const colorItems = colors.map(color => {
-      return (<ColorItem key={color.id} color={color} onToggleColorPicker={onToggleColorPicker}/>)
+      return <SyncedColor key={color.id} color={color} onToggleColorPicker={onToggleColorPicker}/>
     })
 
     let containerClassName = isFetching ? 'searching color-list' : 'color-list'
@@ -27,8 +26,7 @@ class ColorList extends React.Component {
 
 ColorList.propTypes = {
   colors: PropTypes.array.isRequired,
-  isFetching: PropTypes.bool.isRequired,
-  onToggleColorPicker: PropTypes.func.isRequired
+  isFetching: PropTypes.bool.isRequired
 }
 
 export default ColorList

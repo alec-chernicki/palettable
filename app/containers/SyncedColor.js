@@ -1,19 +1,21 @@
 import { connect } from 'react-redux'
 import {
-  invalidatePalette, changeColorText, resetColorName, editColorText
+  invalidatePalette, changeColorText, resetColorName, editColorText, toggleColorPicker
 } from '../actions'
-import ColorName from '../components/ColorName'
-
+import ColorItem from '../components/ColorItem'
 
 const mapStateToProps = (state, ownProps) => {
   const { color, editedColor } = ownProps.color
   return {
-    value: editedColor || color
+    colorValue: editedColor || color
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    onToggleColorPicker: (color) => {
+      dispatch(toggleColorPicker(color))
+    },
     onTextChangeSubmit: (color, text) => {
       const regex = /^#?([a-fA-F0-9]{6}|[a-fA-F0-9]{3})$/
       const colorText = /#/.test(text) ? text : '#' + text
@@ -32,9 +34,9 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-const VisibleColorName = connect(
+const SyncedColor = connect(
   mapStateToProps,
   mapDispatchToProps
-)(ColorName)
+)(ColorItem)
 
-export default VisibleColorName
+export default SyncedColor

@@ -70,7 +70,6 @@ App.propTypes = {
   addColor: PropTypes.func.isRequired,
   changeColor: PropTypes.func.isRequired,
   removeColor: PropTypes.func.isRequired,
-  onToggleColorPicker: PropTypes.func.isRequired,
   colors: PropTypes.array.isRequired,
   isFetching: PropTypes.bool.isRequired,
   onboardingStep: PropTypes.number.isRequired
@@ -87,9 +86,6 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onToggleColorPicker (color) {
-      dispatch(toggleColorPicker(color))
-    },
     addColor () {
       return dispatch(addColorIfValid())
     },

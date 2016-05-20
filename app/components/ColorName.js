@@ -1,11 +1,11 @@
 import React, { PropTypes } from 'react'
 
-const ColorName = ({ color, onTextChangeSubmit, onTextEdit, value }) => {
+const ColorName = ({ color, onTextChangeSubmit, onTextEdit, colorValue }) => {
   return (
     <div>
       <input type="text"
         className='color-text'
-        value={value}
+        value={colorValue}
         onChange={(e) => onTextEdit(color, e.target.value)}
         onBlur={() => onTextChangeSubmit(color, color.editedColor)}/>
     </div>
@@ -14,7 +14,7 @@ const ColorName = ({ color, onTextChangeSubmit, onTextEdit, value }) => {
 
 ColorName.propTypes = {
   color: PropTypes.object.isRequired,
-  value: PropTypes.string.isRequired,
+  colorValue: PropTypes.string.isRequired,
   onTextEdit: PropTypes.func.isRequired,
   onTextChangeSubmit: PropTypes.func.isRequired
 }
