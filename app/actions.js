@@ -37,7 +37,7 @@ export function changeColor(color) {
 export function toggleColorPicker(color) {
   return {
     type: TOGGLE_COLOR_PICKER,
-    color
+    id: color.id
   }
 }
 
@@ -45,7 +45,7 @@ export function toggleColorPicker(color) {
 export function changeColorText(color, text) {
   return {
     type: CHANGE_COLOR_TEXT,
-    color,
+    id: color.id,
     text
   }
 }
@@ -53,7 +53,7 @@ export function changeColorText(color, text) {
 export function editColorText(color, text) {
   return {
     type: EDIT_COLOR_TEXT,
-    color,
+    id: color.id,
     text
   }
 }
@@ -87,7 +87,7 @@ function receivePalette(palette) {
   }
 }
 
-export function invalidatePalette(palette) {
+export function invalidatePalette() {
   return {
     type: INVALIDATE_PALETTE
   }
@@ -105,12 +105,10 @@ function fetchPalette(colors) {
         }
       })
       .then(({ data }) => dispatch(receivePalette(data)))
-      // TODO: Add an error state / catch here
   }
 }
 
 function shouldFetchPalette(state) {
-  // FIXME: State tree feels weird here with double fetchedPalette
   const { colors, isFetching, didInvalidate } = state.fetchedPalette
   if (colors.length === 0) {
     return true
@@ -137,6 +135,62 @@ export function fetchColorFromPaletteIfNeeded(colors) {
     else {
       const color = removeDuplicatesFrom(colors, getFetchedPalette())
       return Promise.resolve(color)
+    }
+  }
+}
+
+export function continueOnboardingIfNeeded() {
+  return (dispatch, getState) => {
+    const { onboardingStep } = getState()
+    // FIXME: This checking logic is scattered around and gross
+    if (onboardingStep <= 3 && onboardingStep >= 0) {
+      dispatch(continueOnboarding())
+    }
+  }
+}
+
+export function addColorIfValid () {
+  return (dispatch, getState) => {
+    const { colors, onboardingStep } = getState()
+
+    if ((onboardingStep <= 1 || onboardingStep > 3) && colors.length < 5) {
+      return dispatch(
+        fetchColorFromPaletteIfNeeded(colors)
+      ).then(color => {
+        dispatch(addColor(color))
+      }).then(() => {
+        dispatch(continueOnboardingIfNeeded())
+      })
+    }
+  }
+}
+
+export function changeColorIfValid () {
+  return (dispatch, getState) => {
+    const { colors, onboardingStep } = getState()
+
+    if (onboardingStep === 2 || onboardingStep > 3) {
+      dispatch(invalidatePalette())
+
+      return dispatch(
+        fetchColorFromPaletteIfNeeded(colors)
+      ).then(color => {
+        dispatch(changeColor(color))
+      }).then(() => {
+        dispatch(continueOnboardingIfNeeded())
+      })
+    }
+  }
+}
+
+export function removeColorIfValid () {
+  return (dispatch, getState) => {
+    const { colors, onboardingStep } = getState()
+
+    if (colors.length > 1 && onboardingStep >= 3) {
+      dispatch(invalidatePalette())
+      dispatch(removeColor(...colors.slice(-1)))
+      dispatch(continueOnboardingIfNeeded())
     }
   }
 }

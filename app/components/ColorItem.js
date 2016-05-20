@@ -1,30 +1,24 @@
-import React, { PropTypes } from 'react';
+import React, { PropTypes } from 'react'
 import CustomColorPicker from './CustomColorPicker'
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
-import { SliderPicker } from 'react-color'
-import ColorName from './ColorName';
-import InterfaceTheme from './InterfaceTheme';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
+import VisibleColorName from '../containers/VisibleColorName'
+import InterfaceTheme from './InterfaceTheme'
 
-const ColorItem = ({color, onTextChangeSubmit, onTextEdit, onColorNameReset, onToggleColorPicker}) => {
+const ColorItem = ({color, onToggleColorPicker}) => {
   return (
     <li style={{ backgroundColor: color.color }}
       className='color'
       key={ color.id }>
       <InterfaceTheme color={ color.color }>
         <div className='color-container'>
-          <ColorName
-            color={ color }
-            onColorNameReset={onColorNameReset}
-            onTextChangeSubmit={onTextChangeSubmit}
-            onTextEdit={onTextEdit}
-            onToggleColorPicker={onToggleColorPicker}/>
+          <VisibleColorName color={ color } />
           <div className="spinner">
             <div className="bounce1"></div>
             <div className="bounce2"></div>
             <div className="bounce3"></div>
           </div>
         </div>
-        <div className='color-picker-icon' onClick={() => onToggleColorPicker(color.id)}>
+        <div className='color-picker-icon' onClick={() => onToggleColorPicker(color)}>
           <div className='line-container'>
             <div className='line' />
             <div className='circle' />
@@ -43,7 +37,7 @@ const ColorItem = ({color, onTextChangeSubmit, onTextEdit, onColorNameReset, onT
           transitionEnterTimeout={175}
           transitionLeaveTimeout={175} >
           { color.pickerActive ? <div className="popover">
-            <div className="cover" onClick={() => onToggleColorPicker(color.id)}/>
+            <div className="cover" onClick={() => onToggleColorPicker(color)}/>
             <CustomColorPicker color={ color.color } onChange={(newColor) => onTextChangeSubmit(color, newColor.hex.toUpperCase())}/>
           </div> : null }
         </ReactCSSTransitionGroup>
@@ -53,7 +47,8 @@ const ColorItem = ({color, onTextChangeSubmit, onTextEdit, onColorNameReset, onT
 }
 
 ColorItem.propTypes = {
-  color: PropTypes.object.isRequired
+  color: PropTypes.object.isRequired,
+  onToggleColorPicker: PropTypes.func.isRequired
 }
 
-export default ColorItem;
+export default ColorItem

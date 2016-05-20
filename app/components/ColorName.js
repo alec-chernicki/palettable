@@ -1,21 +1,22 @@
 import React, { PropTypes } from 'react'
 
-const ColorName = ({color, onTextChangeSubmit, onTextEdit, onColorNameReset, onToggleColorPicker}) => {
-  // FIXME: Passing these callback functions WAY down the tree, refactor
-
+const ColorName = ({ color, onTextChangeSubmit, onTextEdit, value }) => {
   return (
     <div>
       <input type="text"
         className='color-text'
-        value={color.editedColor || color.color}
-        onChange={(e) => onTextEdit(color.id, e.target.value)}
-        onBlur={(e) => onTextChangeSubmit(color.id, color.editedColor)}/>
+        value={value}
+        onChange={(e) => onTextEdit(color, e.target.value)}
+        onBlur={() => onTextChangeSubmit(color, color.editedColor)}/>
     </div>
   )
 }
 
 ColorName.propTypes = {
-  color: PropTypes.object.isRequired
+  color: PropTypes.object.isRequired,
+  value: PropTypes.string.isRequired,
+  onTextEdit: PropTypes.func.isRequired,
+  onTextChangeSubmit: PropTypes.func.isRequired
 }
 
 export default ColorName

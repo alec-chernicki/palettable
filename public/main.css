@@ -519,14 +519,15 @@ Tweet Link
   height: 100vh;
 }
 
-.social-bar {
+.footer-bar {
   width: 100%;
   color: #444;
   padding: 10px 25px;
 }
 
-.social-icon {
+.footer-icon {
   float: left;
+  cursor: pointer;
   background-image: url('twitter.svg');
   background-size: contain;
   background-repeat: no-repeat;
@@ -536,47 +537,21 @@ Tweet Link
   position: relative;
 }
 
-.social-text {
+.footer-text {
   float: right;
   margin: 0;
   font-weight: 400;
   font-size: 14px;
 }
 
-a.social-name {
+a.footer-name {
   font-weight: 600;
   color: #444;
   transition: color 0.25s ease-in-out;
 }
 
-a.social-name:hover {
+a.footer-name:hover {
   color: #000;
-}
-
-.tweet {
-  padding: 10px 15px 10px 35px;
-  border: solid 2px #FFF;
-  border-radius: 4px;
-  position: absolute;
-  bottom: 25px;
-  left: 25px;
-  height: auto;
-  cursor: pointer;
-  z-index: 1000;
-  font-size: 13px;
-}
-
-.tweet:before {
-  position: absolute;
-  content: '';
-  background-image: url('twitter-logo.svg');
-  background-size: cover;
-  height: 14px;
-  left: 10px;
-  top: 0;
-  bottom: 0;
-  margin: auto;
-  width: 18px;
 }
 
 /**********************************

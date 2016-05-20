@@ -13,7 +13,8 @@ const InterfaceTheme = ({color, children}) => {
 }
 
 InterfaceTheme.propTypes = {
-  color: PropTypes.string.isRequired
+  color: PropTypes.string.isRequired,
+  children: PropTypes.node
 }
 
 export default InterfaceTheme

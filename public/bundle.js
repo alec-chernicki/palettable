@@ -22000,6 +22000,10 @@
 
 	var _Title2 = _interopRequireDefault(_Title);
 
+	var _Footer = __webpack_require__(459);
+
+	var _Footer2 = _interopRequireDefault(_Footer);
+
 	var _ColorList = __webpack_require__(228);
 
 	var _ColorList2 = _interopRequireDefault(_ColorList);
@@ -22010,15 +22014,11 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
-
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	// import Tweet from '../components/Tweet';
-
 
 	var App = function (_Component) {
 	  _inherits(App, _Component);
@@ -22032,7 +22032,7 @@
 	  _createClass(App, [{
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
-	      this.props.onAddColor(this.props.colors);
+	      this.props.addColor();
 
 	      document.addEventListener('keydown', this.handleKeydown.bind(this));
 	      document.onkeydown = this.suppressBackspace.bind(this);
@@ -22040,53 +22040,32 @@
 	    }
 	  }, {
 	    key: 'suppressBackspace',
-	    value: function suppressBackspace(evt) {
-	      evt = evt || window.event;
-	      var target = evt.target || evt.srcElement;
+	    value: function suppressBackspace(e) {
+	      var event = e || window.event;
+	      var target = event.target || event.srcElement;
 
-	      if (evt.keyCode == 8 && !/input|textarea/i.test(target.nodeName)) {
+	      if (event.keyCode === 8 && !/input|textarea/i.test(target.nodeName)) {
 	        return false;
 	      }
-	    }
-	  }, {
-	    key: 'componentWillUnmount',
-	    value: function componentWillUnmount() {
-	      document.removeListener('keydown', this.handleKeydown);
 	    }
 	  }, {
 	    key: 'handleKeydown',
 	    value: function handleKeydown(e) {
 	      var _props = this.props;
-	      var colors = _props.colors;
 	      var isFetching = _props.isFetching;
-	      var onContinueOnboarding = _props.onContinueOnboarding;
-	      var onboardingStep = _props.onboardingStep;
+	      var addColor = _props.addColor;
+	      var changeColor = _props.changeColor;
+	      var removeColor = _props.removeColor;
 
 	      var tag = e.target.tagName.toLowerCase();
 
-	      // TODO: Refactor this complex checking logic into an action creator
 	      if (!isFetching && tag != 'input') {
-	        if (e.which === 76 && colors.length < 5 && (onboardingStep === 0 || onboardingStep > 2)) {
-	          this.props.onAddColor(colors).then(function () {
-	            //FIXME: This check should not be here
-	            if (onboardingStep <= 2) {
-	              onContinueOnboarding();
-	            }
-	          });
-	        } else if (e.which === 68 && (onboardingStep === 1 || onboardingStep > 2)) {
-	          this.props.onChangeColor(colors).then(function () {
-	            //FIXME: This check should not be here
-	            if (onboardingStep <= 2) {
-	              onContinueOnboarding();
-	            }
-	          });
-	        } else if (e.which === 8 && colors.length > 1 && onboardingStep >= 2) {
-	          this.props.onRemoveColor(colors).then(function () {
-	            //FIXME: This check should not be here
-	            if (onboardingStep <= 2) {
-	              onContinueOnboarding();
-	            }
-	          });
+	        if (e.which === 76) {
+	          addColor();
+	        } else if (e.which === 68) {
+	          changeColor();
+	        } else if (e.which === 8) {
+	          removeColor();
 	        }
 	      }
 	    }
@@ -22097,10 +22076,6 @@
 	      var colors = _props2.colors;
 	      var isFetching = _props2.isFetching;
 	      var onboardingStep = _props2.onboardingStep;
-	      var onTextChangeSubmit = _props2.onTextChangeSubmit;
-	      var onTextEdit = _props2.onTextEdit;
-	      var onColorNameReset = _props2.onColorNameReset;
-	      var onToggleColorPicker = _props2.onToggleColorPicker;
 
 	      if (colors.length === 0) {
 	        return _react2.default.createElement(
@@ -22113,40 +22088,16 @@
 	          )
 	        );
 	      }
-
 	      return _react2.default.createElement(
 	        'div',
 	        null,
 	        _react2.default.createElement(_Title2.default, { colors: colors }),
-	        _react2.default.createElement(_Onboarding2.default, {
-	          colors: colors,
-	          onboardingStep: onboardingStep }),
+	        _react2.default.createElement(_Onboarding2.default, { colors: colors, onboardingStep: onboardingStep }),
 	        _react2.default.createElement(
 	          'div',
 	          { className: 'main-container' },
-	          _react2.default.createElement(_ColorList2.default, {
-	            onAnimateColor: _actions.animateColorStatus,
-	            colors: colors,
-	            isFetching: isFetching,
-	            onColorNameReset: onColorNameReset,
-	            onTextEdit: onTextEdit,
-	            onTextChangeSubmit: onTextChangeSubmit,
-	            onToggleColorPicker: onToggleColorPicker }),
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'social-bar' },
-	            _react2.default.createElement('a', { className: 'social-icon', href: '#' }),
-	            _react2.default.createElement(
-	              'p',
-	              { className: 'social-text' },
-	              'Made By',
-	              _react2.default.createElement(
-	                'a',
-	                { href: 'http://www.alecortega.com/', className: 'social-name' },
-	                ' Alec Ortega'
-	              )
-	            )
-	          )
+	          _react2.default.createElement(_ColorList2.default, { colors: colors, isFetching: isFetching }),
+	          _react2.default.createElement(_Footer2.default, null)
 	        )
 	      );
 	    }
@@ -22154,6 +22105,16 @@
 
 	  return App;
 	}(_react.Component);
+
+	App.propTypes = {
+	  addColor: _react.PropTypes.func.isRequired,
+	  changeColor: _react.PropTypes.func.isRequired,
+	  removeColor: _react.PropTypes.func.isRequired,
+	  onToggleColorPicker: _react.PropTypes.func.isRequired,
+	  colors: _react.PropTypes.array.isRequired,
+	  isFetching: _react.PropTypes.bool.isRequired,
+	  onboardingStep: _react.PropTypes.number.isRequired
+	};
 
 	var mapStateToProps = function mapStateToProps(state) {
 	  var colors = state.colors;
@@ -22167,51 +22128,19 @@
 	  };
 	};
 
-	var mapDispatchToProps = function mapDispatchToProps(dispatch, ownProps) {
+	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 	  return {
 	    onToggleColorPicker: function onToggleColorPicker(color) {
 	      dispatch((0, _actions.toggleColorPicker)(color));
 	    },
-	    onTextEdit: function onTextEdit(color, text) {
-	      dispatch((0, _actions.editColorText)(color, text));
+	    addColor: function addColor() {
+	      return dispatch((0, _actions.addColorIfValid)());
 	    },
-	    onTextChangeSubmit: function onTextChangeSubmit(color, text) {
-	      var regex = /^#?([a-fA-F0-9]{6}|[a-fA-F0-9]{3})$/;
-	      var colorText = /#/.test(text) ? text : '#' + text;
-	      if (regex.test(colorText)) {
-	        dispatch((0, _actions.invalidatePalette)());
-	        dispatch((0, _actions.changeColorText)(color, colorText));
-	      } else {
-	        dispatch((0, _actions.resetColorName)(color));
-	      }
+	    changeColor: function changeColor() {
+	      return dispatch((0, _actions.changeColorIfValid)());
 	    },
-
-	    // FIXME: Refactor into redux-thunk to avoid passing as param to make more composable
-	    onAddColor: function onAddColor(colors) {
-	      return dispatch((0, _actions.fetchColorFromPaletteIfNeeded)(colors)).then(function (color) {
-	        dispatch((0, _actions.addColor)(color));
-	      });
-	    },
-	    onChangeColor: function onChangeColor(colors) {
-	      // FIXME: Possible race condition here
-	      dispatch((0, _actions.invalidatePalette)());
-
-	      return dispatch((0, _actions.fetchColorFromPaletteIfNeeded)(colors)).then(function (color) {
-	        dispatch((0, _actions.changeColor)(color));
-	      });
-	    },
-	    onRemoveColor: function onRemoveColor(colors) {
-	      // FIXME: Possible race condition here
-	      dispatch((0, _actions.invalidatePalette)());
-
-	      dispatch(_actions.removeColor.apply(undefined, _toConsumableArray(colors.slice(-1))));
-
-	      // TODO: Returning promise since the others return a promisified AJAX call,
-	      // Is there a better way to do this than to just return a promise resolve
-	      return Promise.resolve();
-	    },
-	    onContinueOnboarding: function onContinueOnboarding() {
-	      dispatch((0, _actions.continueOnboarding)());
+	    removeColor: function removeColor() {
+	      return dispatch((0, _actions.removeColorIfValid)());
 	    }
 	  };
 	};
@@ -22238,6 +22167,10 @@
 	exports.toggleColorAnimation = toggleColorAnimation;
 	exports.invalidatePalette = invalidatePalette;
 	exports.fetchColorFromPaletteIfNeeded = fetchColorFromPaletteIfNeeded;
+	exports.continueOnboardingIfNeeded = continueOnboardingIfNeeded;
+	exports.addColorIfValid = addColorIfValid;
+	exports.changeColorIfValid = changeColorIfValid;
+	exports.removeColorIfValid = removeColorIfValid;
 	exports.animateColorStatus = animateColorStatus;
 
 	var _axios = __webpack_require__(202);
@@ -22249,6 +22182,8 @@
 	var _ActionTypes = __webpack_require__(199);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
 	function continueOnboarding() {
 	  return {
@@ -22280,7 +22215,7 @@
 	function toggleColorPicker(color) {
 	  return {
 	    type: _ActionTypes.TOGGLE_COLOR_PICKER,
-	    color: color
+	    id: color.id
 	  };
 	}
 
@@ -22288,7 +22223,7 @@
 	function changeColorText(color, text) {
 	  return {
 	    type: _ActionTypes.CHANGE_COLOR_TEXT,
-	    color: color,
+	    id: color.id,
 	    text: text
 	  };
 	}
@@ -22296,7 +22231,7 @@
 	function editColorText(color, text) {
 	  return {
 	    type: _ActionTypes.EDIT_COLOR_TEXT,
-	    color: color,
+	    id: color.id,
 	    text: text
 	  };
 	}
@@ -22330,7 +22265,7 @@
 	  };
 	}
 
-	function invalidatePalette(palette) {
+	function invalidatePalette() {
 	  return {
 	    type: _ActionTypes.INVALIDATE_PALETTE
 	  };
@@ -22351,12 +22286,10 @@
 	      var data = _ref.data;
 	      return dispatch(receivePalette(data));
 	    });
-	    // TODO: Add an error state / catch here
 	  };
 	}
 
 	function shouldFetchPalette(state) {
-	  // FIXME: State tree feels weird here with double fetchedPalette
 	  var _state$fetchedPalette = state.fetchedPalette;
 	  var colors = _state$fetchedPalette.colors;
 	  var isFetching = _state$fetchedPalette.isFetching;
@@ -22386,6 +22319,73 @@
 	    } else {
 	      var color = (0, _helpers.removeDuplicatesFrom)(colors, getFetchedPalette());
 	      return Promise.resolve(color);
+	    }
+	  };
+	}
+
+	function continueOnboardingIfNeeded() {
+	  return function (dispatch, getState) {
+	    var _getState = getState();
+
+	    var onboardingStep = _getState.onboardingStep;
+	    // FIXME: This checking logic is scattered around and gross
+
+	    if (onboardingStep <= 3 && onboardingStep >= 0) {
+	      dispatch(continueOnboarding());
+	    }
+	  };
+	}
+
+	function addColorIfValid() {
+	  return function (dispatch, getState) {
+	    var _getState2 = getState();
+
+	    var colors = _getState2.colors;
+	    var onboardingStep = _getState2.onboardingStep;
+
+
+	    if ((onboardingStep <= 1 || onboardingStep > 3) && colors.length < 5) {
+	      return dispatch(fetchColorFromPaletteIfNeeded(colors)).then(function (color) {
+	        dispatch(addColor(color));
+	      }).then(function () {
+	        dispatch(continueOnboardingIfNeeded());
+	      });
+	    }
+	  };
+	}
+
+	function changeColorIfValid() {
+	  return function (dispatch, getState) {
+	    var _getState3 = getState();
+
+	    var colors = _getState3.colors;
+	    var onboardingStep = _getState3.onboardingStep;
+
+
+	    if (onboardingStep === 2 || onboardingStep > 3) {
+	      dispatch(invalidatePalette());
+
+	      return dispatch(fetchColorFromPaletteIfNeeded(colors)).then(function (color) {
+	        dispatch(changeColor(color));
+	      }).then(function () {
+	        dispatch(continueOnboardingIfNeeded());
+	      });
+	    }
+	  };
+	}
+
+	function removeColorIfValid() {
+	  return function (dispatch, getState) {
+	    var _getState4 = getState();
+
+	    var colors = _getState4.colors;
+	    var onboardingStep = _getState4.onboardingStep;
+
+
+	    if (colors.length > 1 && onboardingStep >= 3) {
+	      dispatch(invalidatePalette());
+	      dispatch(removeColor.apply(undefined, _toConsumableArray(colors.slice(-1))));
+	      dispatch(continueOnboardingIfNeeded());
 	    }
 	  };
 	}
@@ -23680,7 +23680,8 @@
 	};
 
 	InterfaceTheme.propTypes = {
-	  color: _react.PropTypes.string.isRequired
+	  color: _react.PropTypes.string.isRequired,
+	  children: _react.PropTypes.node
 	};
 
 	exports.default = InterfaceTheme;
@@ -25368,21 +25369,10 @@
 	      var _props = this.props;
 	      var colors = _props.colors;
 	      var isFetching = _props.isFetching;
-	      var onAnimateColor = _props.onAnimateColor;
-	      var onTextChangeSubmit = _props.onTextChangeSubmit;
-	      var onTextEdit = _props.onTextEdit;
-	      var onColorNameReset = _props.onColorNameReset;
 	      var onToggleColorPicker = _props.onToggleColorPicker;
 
 	      var colorItems = colors.map(function (color) {
-	        return _react2.default.createElement(_ColorItem2.default, {
-	          key: color.id,
-	          color: color,
-	          onAnimateColor: onAnimateColor,
-	          onColorNameReset: onColorNameReset,
-	          onTextChangeSubmit: onTextChangeSubmit,
-	          onTextEdit: onTextEdit,
-	          onToggleColorPicker: onToggleColorPicker });
+	        return _react2.default.createElement(_ColorItem2.default, { key: color.id, color: color, onToggleColorPicker: onToggleColorPicker });
 	      });
 
 	      var containerClassName = isFetching ? 'searching color-list' : 'color-list';
@@ -25405,7 +25395,8 @@
 
 	ColorList.propTypes = {
 	  colors: _react.PropTypes.array.isRequired,
-	  isFetching: _react.PropTypes.bool.isRequired
+	  isFetching: _react.PropTypes.bool.isRequired,
+	  onToggleColorPicker: _react.PropTypes.func.isRequired
 	};
 
 	exports.default = ColorList;
@@ -26208,11 +26199,9 @@
 
 	var _reactAddonsCssTransitionGroup2 = _interopRequireDefault(_reactAddonsCssTransitionGroup);
 
-	var _reactColor = __webpack_require__(238);
+	var _VisibleColorName = __webpack_require__(460);
 
-	var _ColorName = __webpack_require__(450);
-
-	var _ColorName2 = _interopRequireDefault(_ColorName);
+	var _VisibleColorName2 = _interopRequireDefault(_VisibleColorName);
 
 	var _InterfaceTheme = __webpack_require__(222);
 
@@ -26222,9 +26211,6 @@
 
 	var ColorItem = function ColorItem(_ref) {
 	  var color = _ref.color;
-	  var onTextChangeSubmit = _ref.onTextChangeSubmit;
-	  var onTextEdit = _ref.onTextEdit;
-	  var onColorNameReset = _ref.onColorNameReset;
 	  var onToggleColorPicker = _ref.onToggleColorPicker;
 
 	  return _react2.default.createElement(
@@ -26238,12 +26224,7 @@
 	      _react2.default.createElement(
 	        'div',
 	        { className: 'color-container' },
-	        _react2.default.createElement(_ColorName2.default, {
-	          color: color,
-	          onColorNameReset: onColorNameReset,
-	          onTextChangeSubmit: onTextChangeSubmit,
-	          onTextEdit: onTextEdit,
-	          onToggleColorPicker: onToggleColorPicker }),
+	        _react2.default.createElement(_VisibleColorName2.default, { color: color }),
 	        _react2.default.createElement(
 	          'div',
 	          { className: 'spinner' },
@@ -26255,7 +26236,7 @@
 	      _react2.default.createElement(
 	        'div',
 	        { className: 'color-picker-icon', onClick: function onClick() {
-	            return onToggleColorPicker(color.id);
+	            return onToggleColorPicker(color);
 	          } },
 	        _react2.default.createElement(
 	          'div',
@@ -26286,7 +26267,7 @@
 	          'div',
 	          { className: 'popover' },
 	          _react2.default.createElement('div', { className: 'cover', onClick: function onClick() {
-	              return onToggleColorPicker(color.id);
+	              return onToggleColorPicker(color);
 	            } }),
 	          _react2.default.createElement(_CustomColorPicker2.default, { color: color.color, onChange: function onChange(newColor) {
 	              return onTextChangeSubmit(color, newColor.hex.toUpperCase());
@@ -26298,7 +26279,8 @@
 	};
 
 	ColorItem.propTypes = {
-	  color: _react.PropTypes.object.isRequired
+	  color: _react.PropTypes.object.isRequired,
+	  onToggleColorPicker: _react.PropTypes.func.isRequired
 	};
 
 	exports.default = ColorItem;
@@ -26360,7 +26342,7 @@
 	        ),
 	        _react2.default.createElement(
 	          'div',
-	          { className: 'flexbox-fix controls' },
+	          { className: 'controls' },
 	          _react2.default.createElement(
 	            'div',
 	            { className: 'sliders' },
@@ -69371,28 +69353,28 @@
 	  var color = _ref.color;
 	  var onTextChangeSubmit = _ref.onTextChangeSubmit;
 	  var onTextEdit = _ref.onTextEdit;
-	  var onColorNameReset = _ref.onColorNameReset;
-	  var onToggleColorPicker = _ref.onToggleColorPicker;
-
-	  // FIXME: Passing these callback functions WAY down the tree, refactor
+	  var value = _ref.value;
 
 	  return _react2.default.createElement(
 	    'div',
 	    null,
 	    _react2.default.createElement('input', { type: 'text',
 	      className: 'color-text',
-	      value: color.editedColor || color.color,
+	      value: value,
 	      onChange: function onChange(e) {
-	        return onTextEdit(color.id, e.target.value);
+	        return onTextEdit(color, e.target.value);
 	      },
-	      onBlur: function onBlur(e) {
-	        return onTextChangeSubmit(color.id, color.editedColor);
+	      onBlur: function onBlur() {
+	        return onTextChangeSubmit(color, color.editedColor);
 	      } })
 	  );
 	};
 
 	ColorName.propTypes = {
-	  color: _react.PropTypes.object.isRequired
+	  color: _react.PropTypes.object.isRequired,
+	  value: _react.PropTypes.string.isRequired,
+	  onTextEdit: _react.PropTypes.func.isRequired,
+	  onTextChangeSubmit: _react.PropTypes.func.isRequired
 	};
 
 	exports.default = ColorName;
@@ -69436,13 +69418,9 @@
 	var Onboarding = function Onboarding(_ref) {
 	  var colors = _ref.colors;
 	  var onboardingStep = _ref.onboardingStep;
-
-	  // Logic in reducer?
-
-	  var steps = [_react2.default.createElement(_StepOne2.default, null), _react2.default.createElement(_StepTwo2.default, null), _react2.default.createElement(_StepThree2.default, null)];
-	  var step = steps[onboardingStep] || false;
 	  var color = colors[colors.length - 1].color;
-	  var onboardingCompleted = onboardingStep > 2;
+
+	  var onboardingCompleted = onboardingStep > 3;
 
 	  return _react2.default.createElement(
 	    'div',
@@ -69453,14 +69431,10 @@
 	      _react2.default.createElement('div', { className: 'cover onboarding' }),
 	      _react2.default.createElement(
 	        _reactAddonsCssTransitionGroup2.default,
-	        {
-	          className: 'onboarding-container',
-	          transitionName: 'onboarding-animation',
-	          transitionEnterTimeout: 300,
-	          transitionLeaveTimeout: 350 },
-	        onboardingStep === 0 && _react2.default.createElement(_StepOne2.default, null),
-	        onboardingStep === 1 && _react2.default.createElement(_StepTwo2.default, null),
-	        onboardingStep === 2 && _react2.default.createElement(_StepThree2.default, null)
+	        { className: 'onboarding-container', transitionName: 'onboarding-animation', transitionEnterTimeout: 150, transitionLeaveTimeout: 150 },
+	        onboardingStep === 1 && _react2.default.createElement(_StepOne2.default, null),
+	        onboardingStep === 2 && _react2.default.createElement(_StepTwo2.default, null),
+	        onboardingStep === 3 && _react2.default.createElement(_StepThree2.default, null)
 	      )
 	    )
 	  );
@@ -69778,7 +69752,7 @@
 	        color: action.text,
 	        editedColor: ''
 	      });
-	    case RESET_COLOR_NAME:
+	    case _ActionTypes.RESET_COLOR_NAME:
 	      return _extends({}, state, {
 	        editedColor: ''
 	      });
@@ -69802,6 +69776,126 @@
 	      return state;
 	  }
 	}
+
+/***/ },
+/* 459 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Footer = function (_React$Component) {
+	  _inherits(Footer, _React$Component);
+
+	  function Footer() {
+	    _classCallCheck(this, Footer);
+
+	    return _possibleConstructorReturn(this, Object.getPrototypeOf(Footer).apply(this, arguments));
+	  }
+
+	  _createClass(Footer, [{
+	    key: 'handleClick',
+	    value: function handleClick() {
+	      var text = 'Check out this search engine for color palettes made by @whynotdostuff: ';
+	      var url = 'http://palettable.alecortega.com';
+
+	      open('http://twitter.com/intent/tweet?text=' + text + '&url=' + url, 'tshare', 'height=400,width=550,resizable=1, toolbar=0,menubar=0,status=0, location=0');
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'footer-bar' },
+	        _react2.default.createElement('a', { className: 'footer-icon', onClick: this.handleClick.bind(this) }),
+	        _react2.default.createElement(
+	          'p',
+	          { className: 'footer-text' },
+	          'Made By',
+	          _react2.default.createElement(
+	            'a',
+	            { href: 'http://www.alecortega.com/', className: 'footer-name' },
+	            ' Alec Ortega'
+	          )
+	        )
+	      );
+	    }
+	  }]);
+
+	  return Footer;
+	}(_react2.default.Component);
+
+	exports.default = Footer;
+
+/***/ },
+/* 460 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _reactRedux = __webpack_require__(170);
+
+	var _actions = __webpack_require__(201);
+
+	var _ColorName = __webpack_require__(450);
+
+	var _ColorName2 = _interopRequireDefault(_ColorName);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var mapStateToProps = function mapStateToProps(state, ownProps) {
+	  var _ownProps$color = ownProps.color;
+	  var color = _ownProps$color.color;
+	  var editedColor = _ownProps$color.editedColor;
+
+	  return {
+	    value: editedColor || color
+	  };
+	};
+
+	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+	  return {
+	    onTextChangeSubmit: function onTextChangeSubmit(color, text) {
+	      var regex = /^#?([a-fA-F0-9]{6}|[a-fA-F0-9]{3})$/;
+	      var colorText = /#/.test(text) ? text : '#' + text;
+
+	      if (regex.test(colorText)) {
+	        dispatch((0, _actions.invalidatePalette)());
+	        dispatch((0, _actions.changeColorText)(color, colorText));
+	      } else {
+	        dispatch((0, _actions.resetColorName)(color));
+	      }
+	    },
+	    onTextEdit: function onTextEdit(color, text) {
+	      dispatch((0, _actions.editColorText)(color, text));
+	    }
+	  };
+	};
+
+	var VisibleColorName = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_ColorName2.default);
+
+	exports.default = VisibleColorName;
 
 /***/ }
 /******/ ]);
