@@ -1,9 +1,9 @@
 import React, { PropTypes } from 'react'
 import InterfaceTheme from './InterfaceTheme'
 
-const Title = ({shownColors}) => {
+const Title = ({colors}) => {
   return (
-    <InterfaceTheme color={shownColors[0].color}>
+    <InterfaceTheme color={colors[0].color}>
       <a className='title' href='/'>
         <h1>PALETTABLE</h1>
       </a>
@@ -12,7 +12,7 @@ const Title = ({shownColors}) => {
 }
 
 Title.propTypes = {
-  shownColors: PropTypes.array.isRequired
+  colors: PropTypes.array.isRequired
 }
 
 export default Title

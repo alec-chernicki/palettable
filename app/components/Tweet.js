@@ -11,7 +11,7 @@ class Tweet extends Component {
   }
   render () {
     return (
-      <InterfaceTheme color={this.props.shownColors[0].color}>
+      <InterfaceTheme color={this.props.colors[0].color}>
         <a className='tweet' onClick={this.handleClick.bind(this)}>
           TWEET
         </a>
@@ -21,7 +21,7 @@ class Tweet extends Component {
 }
 
 Tweet.propTypes = {
-  shownColors: PropTypes.array.isRequired
+  colors: PropTypes.array.isRequired
 }
 
 export default Tweet

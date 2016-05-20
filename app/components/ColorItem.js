@@ -7,7 +7,7 @@ import InterfaceTheme from './InterfaceTheme';
 
 const ColorItem = ({color, onTextChangeSubmit, onTextEdit, onColorNameReset, onToggleColorPicker}) => {
   return (
-    <li style={{backgroundColor: color.color }}
+    <li style={{ backgroundColor: color.color }}
       className='color'
       key={ color.id }>
       <InterfaceTheme color={ color.color }>
@@ -24,7 +24,7 @@ const ColorItem = ({color, onTextChangeSubmit, onTextEdit, onColorNameReset, onT
             <div className="bounce3"></div>
           </div>
         </div>
-        <div className='color-picker-icon' onClick={() => onToggleColorPicker(color)}>
+        <div className='color-picker-icon' onClick={() => onToggleColorPicker(color.id)}>
           <div className='line-container'>
             <div className='line' />
             <div className='circle' />
@@ -43,7 +43,7 @@ const ColorItem = ({color, onTextChangeSubmit, onTextEdit, onColorNameReset, onT
           transitionEnterTimeout={175}
           transitionLeaveTimeout={175} >
           { color.pickerActive ? <div className="popover">
-            <div className="cover" onClick={() => onToggleColorPicker(color)}/>
+            <div className="cover" onClick={() => onToggleColorPicker(color.id)}/>
             <CustomColorPicker color={ color.color } onChange={(newColor) => onTextChangeSubmit(color, newColor.hex.toUpperCase())}/>
           </div> : null }
         </ReactCSSTransitionGroup>

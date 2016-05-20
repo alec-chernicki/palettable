@@ -5,12 +5,12 @@ import StepTwo from './StepTwo';
 import StepThree from './StepThree';
 import InterfaceTheme from '../InterfaceTheme';
 
-const Onboarding = ({shownColors, onboardingStep}) => {
+const Onboarding = ({colors, onboardingStep}) => {
   // Logic in reducer?
 
   const steps = [<StepOne/>, <StepTwo/>, <StepThree/>];
   const step = steps[onboardingStep] || false;
-  const color = shownColors[shownColors.length - 1].color
+  const color = colors[colors.length - 1].color
   const onboardingCompleted = onboardingStep > 2;
 
   return (
@@ -33,7 +33,7 @@ const Onboarding = ({shownColors, onboardingStep}) => {
 
 Onboarding.propTypes = {
   onboardingStep: PropTypes.number.isRequired,
-  shownColors: PropTypes.array.isRequired
+  colors: PropTypes.array.isRequired
 }
 
 export default Onboarding

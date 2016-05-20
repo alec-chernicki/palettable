@@ -8,8 +8,8 @@ const ColorName = ({color, onTextChangeSubmit, onTextEdit, onColorNameReset, onT
       <input type="text"
         className='color-text'
         value={color.editedColor || color.color}
-        onChange={(e) => onTextEdit(color, e.target.value)}
-        onBlur={(e) => onTextChangeSubmit(color, color.editedColor)}/>
+        onChange={(e) => onTextEdit(color.id, e.target.value)}
+        onBlur={(e) => onTextChangeSubmit(color.id, color.editedColor)}/>
     </div>
   )
 }

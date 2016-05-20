@@ -5,8 +5,8 @@ import ColorItem from './ColorItem'
 
 class ColorList extends React.Component {
   render () {
-    const { shownColors, isFetching, onAnimateColor, onTextChangeSubmit, onTextEdit, onColorNameReset, onToggleColorPicker } = this.props
-    const colorItems = shownColors.map(color => {
+    const { colors, isFetching, onAnimateColor, onTextChangeSubmit, onTextEdit, onColorNameReset, onToggleColorPicker } = this.props
+    const colorItems = colors.map(color => {
       return (
         <ColorItem
           key={color.id}
@@ -35,7 +35,7 @@ class ColorList extends React.Component {
 }
 
 ColorList.propTypes = {
-  shownColors: PropTypes.array.isRequired,
+  colors: PropTypes.array.isRequired,
   isFetching: PropTypes.bool.isRequired
 }
 

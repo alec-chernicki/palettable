@@ -17,7 +17,7 @@ class App extends Component {
     super(props);
   }
   componentDidMount () {
-    this.props.onAddColor(this.props.shownColors)
+    this.props.onAddColor(this.props.colors)
 
     document.addEventListener('keydown', this.handleKeydown.bind(this))
     document.onkeydown = this.suppressBackspace.bind(this)
@@ -35,13 +35,13 @@ class App extends Component {
     document.removeListener('keydown', this.handleKeydown);
   }
   handleKeydown (e) {
-    const { shownColors, isFetching, onContinueOnboarding, onboardingStep } = this.props
+    const { colors, isFetching, onContinueOnboarding, onboardingStep } = this.props
     const tag = e.target.tagName.toLowerCase();
 
     // TODO: Refactor this complex checking logic into an action creator
     if(!isFetching && tag != 'input') {
-      if (e.which === 76 && shownColors.length < 5 && (onboardingStep === 0 || onboardingStep > 2)) {
-        this.props.onAddColor(shownColors)
+      if (e.which === 76 && colors.length < 5 && (onboardingStep === 0 || onboardingStep > 2)) {
+        this.props.onAddColor(colors)
           .then(() => {
             //FIXME: This check should not be here
             if (onboardingStep <= 2) {
@@ -51,7 +51,7 @@ class App extends Component {
 
       }
       else if (e.which === 68 && (onboardingStep === 1 || onboardingStep > 2)) {
-        this.props.onChangeColor(shownColors)
+        this.props.onChangeColor(colors)
           .then(() => {
             //FIXME: This check should not be here
             if (onboardingStep <= 2) {
@@ -59,8 +59,8 @@ class App extends Component {
             }
           })
       }
-      else if (e.which === 8 && shownColors.length > 1 && onboardingStep >= 2) {
-        this.props.onRemoveColor(shownColors)
+      else if (e.which === 8 && colors.length > 1 && onboardingStep >= 2) {
+        this.props.onRemoveColor(colors)
           .then(() => {
             //FIXME: This check should not be here
             if (onboardingStep <= 2) {
@@ -71,8 +71,8 @@ class App extends Component {
     }
   }
   render () {
-    const { shownColors, isFetching, onboardingStep, onTextChangeSubmit, onTextEdit, onColorNameReset, onToggleColorPicker } = this.props
-    if (shownColors.length === 0) {
+    const { colors, isFetching, onboardingStep, onTextChangeSubmit, onTextEdit, onColorNameReset, onToggleColorPicker } = this.props
+    if (colors.length === 0) {
       return (
         <div className='loading-cotainer'>
           <h1 className='loading'>Loading</h1>
@@ -82,14 +82,14 @@ class App extends Component {
 
     return (
       <div>
-        <Title shownColors={shownColors} />
+        <Title colors={colors} />
         <Onboarding
-          shownColors={shownColors}
+          colors={colors}
           onboardingStep={onboardingStep} />
         <div className='main-container'>
           <ColorList
             onAnimateColor={animateColorStatus}
-            shownColors={shownColors}
+            colors={colors}
             isFetching={isFetching}
             onColorNameReset={onColorNameReset}
             onTextEdit={onTextEdit}
@@ -109,9 +109,9 @@ class App extends Component {
 }
 
 const mapStateToProps = (state) => {
-  const { shownColors, onboardingStep, fetchedPalette } = state;
+  const { colors, onboardingStep, fetchedPalette } = state;
   return {
-    shownColors,
+    colors,
     onboardingStep,
     isFetching: fetchedPalette.isFetching
   }
@@ -137,28 +137,28 @@ const mapDispatchToProps= (dispatch, ownProps) => {
       }
     },
     // FIXME: Refactor into redux-thunk to avoid passing as param to make more composable
-    onAddColor (shownColors) {
+    onAddColor (colors) {
       return dispatch(
-        fetchColorFromPaletteIfNeeded(shownColors)
+        fetchColorFromPaletteIfNeeded(colors)
       ).then(color => {
         dispatch(addColor(color))
       })
     },
-    onChangeColor (shownColors) {
+    onChangeColor (colors) {
       // FIXME: Possible race condition here
       dispatch(invalidatePalette())
 
       return dispatch(
-        fetchColorFromPaletteIfNeeded(shownColors)
+        fetchColorFromPaletteIfNeeded(colors)
       ).then(color => {
         dispatch(changeColor(color))
       })
     },
-    onRemoveColor (shownColors) {
+    onRemoveColor (colors) {
       // FIXME: Possible race condition here
       dispatch(invalidatePalette())
 
-      dispatch(removeColor(...shownColors.slice(-1)))
+      dispatch(removeColor(...colors.slice(-1)))
 
       // TODO: Returning promise since the others return a promisified AJAX call,
       // Is there a better way to do this than to just return a promise resolve

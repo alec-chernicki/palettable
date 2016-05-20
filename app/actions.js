@@ -1,23 +1,11 @@
 import axios from 'axios'
-import { removeDuplicatesFrom } from './utils/helpers'
-
-export const CONTINUE_ONBOARDING = 'CONTINUE_ONBOARDING'
-
-export const ADD_COLOR = 'ADD_COLOR'
-export const CHANGE_COLOR = 'CHANGE_COLOR'
-export const REMOVE_COLOR = 'REMOVE_COLOR'
-
-export const CHANGE_COLOR_TEXT = 'CHANGE_COLOR_TEXT'
-export const EDIT_COLOR_TEXT = 'EDIT_COLOR_TEXT'
-export const RESET_COLOR_NAME = 'RESET_COLOR_NAME'
-export const TOGGLE_COLOR_PICKER = 'TOGGLE_COLOR_PICKER'
-
-
-export const TOGGLE_COLOR_ANIMATION = 'TOGGLE_COLOR_ANIMATION'
-
-export const REQUEST_PALETTE = 'REQUEST_PALETTE'
-export const RECEIVE_PALETTE = 'RECEIVE_PALETTE'
-export const INVALIDATE_PALETTE = 'INVALIDATE_PALETTE'
+import { removeDuplicatesFrom } from '../utils/helpers'
+import {
+  CONTINUE_ONBOARDING, TOGGLE_COLOR_ANIMATION,
+  CHANGE_COLOR_TEXT, EDIT_COLOR_TEXT, RESET_COLOR_NAME, TOGGLE_COLOR_PICKER,
+  ADD_COLOR, REMOVE_COLOR, CHANGE_COLOR,
+  REQUEST_PALETTE, RECEIVE_PALETTE, INVALIDATE_PALETTE
+} from './constants/ActionTypes'
 
 export function continueOnboarding () {
   return {
@@ -105,11 +93,11 @@ export function invalidatePalette(palette) {
   }
 }
 
-function fetchPalette(shownColors) {
+function fetchPalette(colors) {
   return dispatch => {
-    dispatch(requestPalette(shownColors))
-    const apiURL = shownColors.length <= 1 ? '/api/random' : '/api/change'
-    const requestColors = shownColors.map(color => color.color)
+    dispatch(requestPalette(colors))
+    const apiURL = colors.length <= 1 ? '/api/random' : '/api/change'
+    const requestColors = colors.map(color => color.color)
     return axios
       .get(apiURL, {
         params: {
@@ -123,8 +111,8 @@ function fetchPalette(shownColors) {
 
 function shouldFetchPalette(state) {
   // FIXME: State tree feels weird here with double fetchedPalette
-  const { fetchedPalette, isFetching, didInvalidate } = state.fetchedPalette
-  if (fetchedPalette.length === 0) {
+  const { colors, isFetching, didInvalidate } = state.fetchedPalette
+  if (colors.length === 0) {
     return true
   } else if (isFetching) {
     return false
@@ -133,22 +121,21 @@ function shouldFetchPalette(state) {
   }
 }
 
-export function fetchColorFromPaletteIfNeeded(shownColors) {
+export function fetchColorFromPaletteIfNeeded(colors) {
   return (dispatch, getState) => {
     const state = getState()
-    // FIXME: State tree feels weird here with double fetchedPalette
-    const getFetchedPalette = () => getState().fetchedPalette.fetchedPalette
+    const getFetchedPalette = () => getState().fetchedPalette.colors
 
     if (shouldFetchPalette(state)) {
       return dispatch(
-        fetchPalette(shownColors)
+        fetchPalette(colors)
       ).then(() => {
-        const color = removeDuplicatesFrom(shownColors, getFetchedPalette())
+        const color = removeDuplicatesFrom(colors, getFetchedPalette())
         return Promise.resolve(color)
       })
     }
     else {
-      const color = removeDuplicatesFrom(shownColors, getFetchedPalette())
+      const color = removeDuplicatesFrom(colors, getFetchedPalette())
       return Promise.resolve(color)
     }
   }
