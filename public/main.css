@@ -385,15 +385,46 @@ Color Picker
 **********************************/
 
 .picker {
-  width: 225px;
+  width: 230px;
   padding: 10px 10px 0;
-  box-sizing: initial;
   background: #fff;
-  margin: 0 auto;
+  left: 50%;
+  margin-left: -115px;
+  margin-right: auto;
   border-radius: 4px;
   position: relative;
   z-index: 1100;
-  box-shadow: 0 0 0 1px rgba(0,0,0,.15), 0 8px 16px rgba(0,0,0,.15);
+}
+
+.popover:before {
+  content: '';
+  box-shadow: 0 8px 16px rgba(0,0,0,.15);
+  height: 100%;
+  width: 230px;
+  top: 0;
+  left:0;
+  right: 0;
+  margin: 0 auto;
+  border-radius: 4px;
+  position: absolute;
+  z-index: 800;
+}
+
+.popover:after {
+  content: '';
+  -webkit-filter: drop-shadow(0 8px 16px rgba(0,0,0,.15));
+  filter: drop-shadow(0 8px 16px rgba(0,0,0,.15));
+  position: absolute;
+  top: -15px;
+  width: 0;
+  height: 0;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  border-left: 15px solid transparent;
+  border-right: 15px solid transparent;
+  border-bottom: 15px solid #FFF;
+  z-index: 900;
 }
 
 .saturation {
@@ -403,7 +434,6 @@ Color Picker
   overflow: hidden;
   border-radius: 3px;
 }
-
 
 .saturation-main {
   border-radius: 3px;
@@ -419,7 +449,7 @@ Color Picker
   z-index: 2;
   left: 0;
   right: 0;
-  margin: 0 auto;
+  margin: 15px auto 0;
 }
 .cover {
   cursor: pointer;

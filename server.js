@@ -66,7 +66,7 @@ app.get('/api/random', function(req, res, next) {
         }
       })
       .catch(error => {
-        return next(new Error('Error changing exact palettes'));
+        return next(new Error('Error fetching random palette'));
       })
   }
   getRandom();
@@ -84,17 +84,18 @@ function getPalettes (colors) {
 
 app.get('/api/change', function(req, res, next) {
   const currentColors = req.query.colors.map(color => color.replace(/#/g, ''));
+  console.log(currentColors);
   const dislikedColor = currentColors[currentColors.length - 1];
   const searchColor = currentColors[currentColors.length - 2];
 
   getPalettes(searchColor)
     .then(palettes => {
       let palettesWithoutDisliked = palettes.filter(palette => palette.colors.indexOf(dislikedColor) === -1);
+      let uniquePalettes = palettesWithoutDisliked.length ? palettesWithoutDisliked : palettes
       let newColors = filterDuplicatesFromData(currentColors, palettesWithoutDisliked);
       res.json(newColors)
     })
     .catch(e => {
       console.log(e)
-      res.end()
     })
 });
