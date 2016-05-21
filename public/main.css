@@ -207,6 +207,26 @@ Onboarding Container
 
 .helper-text {
   font-weight: 400;
+  animation: fade-in 500ms cubic-bezier(.17,.89,.56,1.22);
+  opacity: 0.85;
+}
+
+.instructions {
+  animation: fade-in 500ms cubic-bezier(.17,.89,.56,1.22);
+  animation-delay: 450ms;
+  animation-fill-mode: backwards;
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+
+  100% {
+    opacity: 0.85;
+    transform: translateY(0px);
+  }
 }
 
 .step {

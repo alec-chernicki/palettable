@@ -2,15 +2,8 @@
 /**
  * Initialize middleware
  */
-const path = require('path')
 const axios = require('axios')
-const request = require('request')
-const baseRequest = request.defaults({
-  baseUrl: 'http://www.colourlovers.com/api/palettes',
-  qs: {
-    format: 'json'
-  }
-});
+const colornamer = require('color-namer')
 axios.defaults.baseURL = 'http://www.colourlovers.com/api/palettes'
 axios.defaults.params = { format: 'json' }
 
@@ -25,10 +18,7 @@ app.set('port', process.env.PORT || 3000)
 
 app.use(express.static(__dirname + '/public'))
 
-/**
- * Setup server for Socket.io
- */
-var server = app.listen(app.get('port'))
+app.listen(app.get('port'))
 
 function randomIndexOf (arr) {
   let randomIndex = Math.floor(Math.random() * arr.length)
@@ -69,17 +59,21 @@ app.get('/api/random', function(req, res, next) {
         return next(new Error('Error fetching random palette'))
       })
   }
-  getRandom();
-});
+  getRandom()
+})
 
-function getPalettes (colors) {
-  return axios.get('/', { params: { hex: colors }})
-    .then(request => {
-      return request.data
-    })
-    .catch(e => {
+function getPalettes(params, next) {
+  return axios.get('/', { params: params })
+    .then(request => request.data)
+    .catch(() => {
       return next(new Error('Error fetching palettes'))
     })
+}
+
+function getNewColorsFromData (palettes, dislikedColor, currentColors) {
+  const palettesWithoutDisliked = palettes.filter(palette => palette.colors.indexOf(dislikedColor) === -1)
+  const uniquePalettes = palettesWithoutDisliked.length ? palettesWithoutDisliked : palettes
+  return filterDuplicatesFromData(currentColors, uniquePalettes)
 }
 
 app.get('/api/change', function(req, res, next) {
@@ -87,14 +81,31 @@ app.get('/api/change', function(req, res, next) {
   const dislikedColor = currentColors[currentColors.length - 1]
   const searchColor = currentColors[currentColors.length - 2]
 
-  getPalettes(searchColor)
+  getPalettes({ hex: searchColor }, next)
     .then(palettes => {
-      const palettesWithoutDisliked = palettes.filter(palette => palette.colors.indexOf(dislikedColor) === -1)
-      const uniquePalettes = palettesWithoutDisliked.length ? palettesWithoutDisliked : palettes
-      const newColors = filterDuplicatesFromData(currentColors, uniquePalettes)
+      if (!palettes.length) {
+        return Promise.resolve(true)
+      }
+      const newColors = getNewColorsFromData(palettes, dislikedColor, currentColors)
       res.json(newColors)
+      return Promise.resolve(false)
+    })
+    .then(failedSearchByHex => {
+      // FIXME: This is SUPER hacky control flow, ask someone how to do this with Promises
+      if (failedSearchByHex) {
+        const searchTerm = colornamer(searchColor).html[0].hex
+        getPalettes({ hex: searchTerm }, next)
+          .then(palettes => {
+            console.log(palettes);
+            const newColors = getNewColorsFromData(palettes, dislikedColor, currentColors)
+            res.json(newColors)
+          })
+          .catch(e => {
+            console.log(e)
+          })
+      }
     })
     .catch(e => {
       console.log(e)
     })
-});
+})

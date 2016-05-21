@@ -69417,7 +69417,11 @@
 	      _react2.default.createElement('div', { className: 'cover onboarding' }),
 	      _react2.default.createElement(
 	        _reactAddonsCssTransitionGroup2.default,
-	        { className: 'onboarding-container', transitionName: 'onboarding-animation', transitionEnterTimeout: 150, transitionLeaveTimeout: 150 },
+	        {
+	          className: 'onboarding-container',
+	          transitionName: 'onboarding-animation',
+	          transitionEnterTimeout: 150,
+	          transitionLeaveTimeout: 150 },
 	        onboardingStep === 1 && _react2.default.createElement(_StepOne2.default, null),
 	        onboardingStep === 2 && _react2.default.createElement(_StepTwo2.default, null),
 	        onboardingStep === 3 && _react2.default.createElement(_StepThree2.default, null)
@@ -69460,7 +69464,7 @@
 	    ),
 	    _react2.default.createElement(
 	      'p',
-	      null,
+	      { className: 'instructions' },
 	      ' Press ',
 	      _react2.default.createElement(
 	        'span',
@@ -69501,7 +69505,7 @@
 	    ),
 	    _react2.default.createElement(
 	      'p',
-	      null,
+	      { className: 'instructions' },
 	      ' Press ',
 	      _react2.default.createElement(
 	        'span',
@@ -69542,7 +69546,7 @@
 	    ),
 	    _react2.default.createElement(
 	      'p',
-	      null,
+	      { className: 'instructions' },
 	      'Press ',
 	      _react2.default.createElement(
 	        'span',

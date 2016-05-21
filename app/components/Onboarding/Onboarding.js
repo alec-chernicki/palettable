@@ -13,7 +13,11 @@ const Onboarding = ({ colors, onboardingStep }) => {
     <div>
       {!onboardingCompleted && <InterfaceTheme color={color}>
         <div className="cover onboarding"/>
-        <ReactCSSTransitionGroup className='onboarding-container' transitionName={'onboarding-animation'} transitionEnterTimeout={150} transitionLeaveTimeout={150}>
+        <ReactCSSTransitionGroup
+          className='onboarding-container'
+          transitionName={'onboarding-animation'}
+          transitionEnterTimeout={150}
+          transitionLeaveTimeout={150}>
           {onboardingStep === 1 && <StepOne/>}
           {onboardingStep === 2 && <StepTwo/>}
           {onboardingStep === 3 && <StepThree/>}
