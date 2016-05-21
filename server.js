@@ -96,7 +96,6 @@ app.get('/api/change', function(req, res, next) {
         const searchTerm = colornamer(searchColor).html[0].hex
         getPalettes({ hex: searchTerm }, next)
           .then(palettes => {
-            console.log(palettes);
             const newColors = getNewColorsFromData(palettes, dislikedColor, currentColors)
             res.json(newColors)
           })

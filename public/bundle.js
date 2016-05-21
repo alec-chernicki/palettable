@@ -22077,6 +22077,7 @@
 	      var isFetching = _props2.isFetching;
 	      var onboardingStep = _props2.onboardingStep;
 
+
 	      if (colors.length === 0) {
 	        return _react2.default.createElement(
 	          'div',
@@ -22088,9 +22089,10 @@
 	          )
 	        );
 	      }
+	      console.log(onboardingStep);
 	      return _react2.default.createElement(
 	        'div',
-	        null,
+	        { className: onboardingStep <= 3 && 'onboarding-active' },
 	        _react2.default.createElement(_Title2.default, { colors: colors }),
 	        _react2.default.createElement(_Onboarding2.default, { colors: colors, onboardingStep: onboardingStep }),
 	        _react2.default.createElement(
@@ -22270,7 +22272,7 @@
 	function fetchPalette(colors) {
 	  return function (dispatch) {
 	    dispatch(requestPalette(colors));
-	    var apiURL = colors.length <= 1 ? '/api/random' : '/api/change';
+	    var apiURL = colors.length === 0 ? '/api/random' : '/api/change';
 	    var requestColors = colors.map(function (color) {
 	      return color.color;
 	    });
@@ -69341,19 +69343,15 @@
 	  var onTextEdit = _ref.onTextEdit;
 	  var colorValue = _ref.colorValue;
 
-	  return _react2.default.createElement(
-	    'div',
-	    null,
-	    _react2.default.createElement('input', { type: 'text',
-	      className: 'color-text',
-	      value: colorValue,
-	      onChange: function onChange(e) {
-	        return onTextEdit(color, e.target.value);
-	      },
-	      onBlur: function onBlur() {
-	        return onTextChangeSubmit(color, color.editedColor);
-	      } })
-	  );
+	  return _react2.default.createElement('input', { type: 'text',
+	    className: 'color-text',
+	    value: colorValue,
+	    onChange: function onChange(e) {
+	      return onTextEdit(color, e.target.value);
+	    },
+	    onBlur: function onBlur() {
+	      return onTextChangeSubmit(color, color.editedColor);
+	    } });
 	};
 
 	ColorName.propTypes = {
@@ -69812,8 +69810,8 @@
 	    key: 'render',
 	    value: function render() {
 	      return _react2.default.createElement(
-	        'div',
-	        { className: 'footer-bar' },
+	        'footer',
+	        null,
 	        _react2.default.createElement('a', { className: 'footer-icon', onClick: this.handleClick.bind(this) }),
 	        _react2.default.createElement(
 	          'p',

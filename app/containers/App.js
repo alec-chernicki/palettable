@@ -1,8 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
-import {
-  toggleColorPicker, addColorIfValid, removeColorIfValid, changeColorIfValid
-} from '../actions'
+import { addColorIfValid, removeColorIfValid, changeColorIfValid } from '../actions'
 
 import Title from '../components/Title'
 import Footer from '../components/Footer'
@@ -46,6 +44,7 @@ class App extends Component {
   }
   render () {
     const { colors, isFetching, onboardingStep } = this.props
+
     if (colors.length === 0) {
       return (
         <div className='loading-cotainer'>
@@ -53,8 +52,9 @@ class App extends Component {
         </div>
       )
     }
+    console.log(onboardingStep);
     return (
-      <div>
+      <div className={onboardingStep <= 3 && 'onboarding-active'}>
         <Title colors={ colors } />
         <Onboarding colors={ colors } onboardingStep={ onboardingStep } />
         <div className='main-container'>

@@ -99,7 +99,6 @@ li {
   justify-content: center;
   align-items: center;
   position: relative;
-  overflow: hidden;
 }
 
 .color-container {
@@ -184,9 +183,10 @@ Onboarding Container
   width: 100%;
   position: absolute;
   height: 180px;
-  bottom: 50px;
+  top: 62%;
+  margin-top: -90px;
   min-width: 650px;
-  z-index: 1000;
+  z-index: 1100;
 }
 
 .onboarding-container p,
@@ -208,12 +208,12 @@ Onboarding Container
 .helper-text {
   font-weight: 400;
   animation: fade-in 500ms cubic-bezier(.17,.89,.56,1.22);
-  opacity: 0.85;
+  opacity: 0.8;
 }
 
 .instructions {
   animation: fade-in 500ms cubic-bezier(.17,.89,.56,1.22);
-  animation-delay: 450ms;
+  animation-delay: 425ms;
   animation-fill-mode: backwards;
 }
 
@@ -224,7 +224,7 @@ Onboarding Container
   }
 
   100% {
-    opacity: 0.85;
+    opacity: 0.8;
     transform: translateY(0px);
   }
 }
@@ -272,11 +272,15 @@ Onboarding Animation
 /**********************************
 Color Picker Icon
 **********************************/
+.onboarding-active .color-picker-icon {
+  opacity: 0;
+}
+
 .color-picker-icon {
   cursor: pointer;
   width: 40px;
   margin: 65px auto 0;
-  opacity: 0.4;
+  opacity: 0.35;
   position: relative;
   z-index: 1000;
   transition: opacity 0.25s ease-in-out;
@@ -348,7 +352,7 @@ Color Name Container
 }
 
 .color-text {
-  opacity: 0.4;
+  opacity: 0.7;
   background: transparent;
   border: none;
   outline: none;
@@ -357,6 +361,7 @@ Color Name Container
   font-size: 30px;
   transition: opacity 0.25s ease-in-out;
   font-weight: 400;
+  width: 100%
 }
 
 .color-text:hover,
@@ -422,9 +427,9 @@ Color Picker
   height: 100%;
   width: 230px;
   top: 0;
-  left:0;
+  left: 50%;
   right: 0;
-  margin: 0 auto;
+  margin-left: -115px;
   border-radius: 4px;
   position: absolute;
   z-index: 800;
@@ -539,7 +544,7 @@ Tweet Link
   height: 100vh;
 }
 
-.footer-bar {
+footer {
   width: 100%;
   color: #444;
   padding: 10px 25px;

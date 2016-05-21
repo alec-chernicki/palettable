@@ -96,7 +96,7 @@ export function invalidatePalette() {
 function fetchPalette(colors) {
   return dispatch => {
     dispatch(requestPalette(colors))
-    const apiURL = colors.length <= 1 ? '/api/random' : '/api/change'
+    const apiURL = colors.length === 0 ? '/api/random' : '/api/change'
     const requestColors = colors.map(color => color.color)
     return axios
       .get(apiURL, {

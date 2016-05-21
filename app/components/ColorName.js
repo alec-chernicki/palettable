@@ -2,13 +2,11 @@ import React, { PropTypes } from 'react'
 
 const ColorName = ({ color, onTextChangeSubmit, onTextEdit, colorValue }) => {
   return (
-    <div>
-      <input type="text"
-        className='color-text'
-        value={colorValue}
-        onChange={(e) => onTextEdit(color, e.target.value)}
-        onBlur={() => onTextChangeSubmit(color, color.editedColor)}/>
-    </div>
+    <input type="text"
+      className='color-text'
+      value={colorValue}
+      onChange={(e) => onTextEdit(color, e.target.value)}
+      onBlur={() => onTextChangeSubmit(color, color.editedColor)}/>
   )
 }
 

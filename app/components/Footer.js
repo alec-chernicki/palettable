@@ -10,7 +10,7 @@ class Footer extends React.Component {
   }
   render () {
     return (
-      <div className='footer-bar'>
+      <footer>
         <a className='footer-icon' onClick={this.handleClick.bind(this)} />
         <p className='footer-text'>
           Made By
@@ -18,7 +18,7 @@ class Footer extends React.Component {
             &nbsp;Alec Ortega
           </a>
         </p>
-      </div>
+      </footer>
     )
   }
 }
