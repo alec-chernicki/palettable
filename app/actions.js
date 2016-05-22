@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { removeDuplicatesFrom } from '../utils/helpers'
 import {
-  CONTINUE_ONBOARDING, TOGGLE_COLOR_ANIMATION,
+  CONTINUE_ONBOARDING, TOGGLE_COLOR_ANIMATION, DISLIKE_COLOR,
   CHANGE_COLOR_TEXT, EDIT_COLOR_TEXT, RESET_COLOR_NAME, TOGGLE_COLOR_PICKER,
   ADD_COLOR, REMOVE_COLOR, CHANGE_COLOR,
   REQUEST_PALETTE, RECEIVE_PALETTE, INVALIDATE_PALETTE
@@ -31,6 +31,13 @@ export function changeColor(color) {
   return {
     type: CHANGE_COLOR,
     color
+  }
+}
+
+export function dislikeColor(color) {
+  return {
+    type: DISLIKE_COLOR,
+    color: color.color
   }
 }
 
@@ -93,15 +100,16 @@ export function invalidatePalette() {
   }
 }
 
-function fetchPalette(colors) {
+function fetchPalette(colors, dislikedColors) {
   return dispatch => {
     dispatch(requestPalette(colors))
-    const apiURL = colors.length === 0 ? '/api/random' : '/api/change'
-    const requestColors = colors.map(color => color.color)
+    const apiURL = colors.length <= 1 ? '/api/random' : '/api/change'
+    const flattenedColors = colors.map(color => color.color)
     return axios
       .get(apiURL, {
         params: {
-          colors: requestColors
+          colors: flattenedColors,
+          dislikedColors: dislikedColors
         }
       })
       .then(({ data }) => dispatch(receivePalette(data)))
@@ -119,14 +127,14 @@ function shouldFetchPalette(state) {
   }
 }
 
-export function fetchColorFromPaletteIfNeeded(colors) {
+export function fetchColorFromPaletteIfNeeded(colors, dislikedColors) {
   return (dispatch, getState) => {
     const state = getState()
     const getFetchedPalette = () => getState().fetchedPalette.colors
 
     if (shouldFetchPalette(state)) {
       return dispatch(
-        fetchPalette(colors)
+        fetchPalette(colors, dislikedColors)
       ).then(() => {
         const color = removeDuplicatesFrom(colors, getFetchedPalette())
         return Promise.resolve(color)
@@ -152,10 +160,10 @@ export function continueOnboardingIfNeeded() {
 export function addColorIfValid () {
   return (dispatch, getState) => {
     const { shownPalette, onboardingStep } = getState()
-    const { colors } = shownPalette
+    const { colors, dislikedColors } = shownPalette
     if ((onboardingStep <= 1 || onboardingStep > 3) && colors.length < 5) {
       return dispatch(
-        fetchColorFromPaletteIfNeeded(colors)
+        fetchColorFromPaletteIfNeeded(colors, dislikedColors)
       ).then(color => {
         dispatch(addColor(color))
       }).then(() => {
@@ -169,12 +177,12 @@ export function changeColorIfValid () {
   return (dispatch, getState) => {
     const { shownPalette, onboardingStep } = getState()
     const { colors } = shownPalette
-
     if (onboardingStep === 2 || onboardingStep > 3) {
       dispatch(invalidatePalette())
-
+      dispatch(dislikeColor(colors[colors.length - 1]))
       return dispatch(
-        fetchColorFromPaletteIfNeeded(colors)
+        // FIXME: eww grabbing the store way too much because it got stale
+        fetchColorFromPaletteIfNeeded(colors, getState().shownPalette.dislikedColors)
       ).then(color => {
         dispatch(changeColor(color))
       }).then(() => {

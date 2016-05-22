@@ -20,18 +20,6 @@ app.use(express.static(__dirname + '/public'))
 
 app.listen(app.get('port'))
 
-function randomIndexOf (arr) {
-  let randomIndex = Math.floor(Math.random() * arr.length)
-  return arr[randomIndex]
-}
-
-function filterDuplicatesFromData (currentColors, data) {
-  let newColors = randomIndexOf(data).colors
-  let uniqueColors = newColors.filter((value) => currentColors.indexOf(value) === -1)
-
-  return uniqueColors
-}
-
 /**
  * Assign routes
  */
@@ -43,50 +31,66 @@ app.get('/api/random', function(req, res, next) {
   // Continue calling API until palette that's 5 colors long (which is most of
   // them) returns. This is because the API doesn't allow you to search by
   // palette length and doesn't standardize this on their platform.
-  function getRandom () {
-    axios.get('/random')
-      .then(response => {
-        let colors = response.data[0].colors
-
-        if (colors.length < 5) {
-          getRandom()
-        }
-        else {
-          res.json(colors)
-        }
-      })
-      .catch(() => {
-        return next(new Error('Error fetching random palette'))
-      })
-  }
   getRandom()
+    .then(colors => res.json(colors))
+    .catch(() => {
+      return next(new Error('Error fetching random palette'))
+    })
 })
 
-function getPalettes(params, next) {
-  return axios.get('/', { params: params })
-    .then(request => request.data)
-    .catch(() => {
-      return next(new Error('Error fetching palettes'))
+function getRandom () {
+  return axios.get('/random')
+    .then(response => {
+      let colors = response.data[0].colors
+
+      if (colors.length < 5) {
+        getRandom()
+      }
+      else {
+        return colors
+      }
     })
 }
 
-function getNewColorsFromData (palettes, dislikedColor, currentColors) {
-  const palettesWithoutDisliked = palettes.filter(palette => palette.colors.indexOf(dislikedColor) === -1)
-  const uniquePalettes = palettesWithoutDisliked.length ? palettesWithoutDisliked : palettes
-  return filterDuplicatesFromData(currentColors, uniquePalettes)
+function getPalettes(params) {
+  return axios.get('/', { params: params })
+    .then(request => request.data)
+}
+
+function getNewColorsFromData (palettes, dislikedColors, currentColors) {
+  const colorsWithoutDisliked = palettes
+    .reduce((a, b) => {
+      // Normalize the data into a flattened array of colors
+      return (a).concat(b.colors)
+    }, palettes[0].colors)
+    .filter(color => {
+      // Remove the hash since the API returns strings without it
+      const dislikedColorsWithoutHash = dislikedColors.map(color => color.replace(/#/g, ''))
+
+      // Remove all colors that have already been disliked or already shown
+      return dislikedColorsWithoutHash.indexOf(color) === -1 && currentColors.indexOf(color) === -1
+    })
+  // Return a palette containing the first 5 in the array
+  // It doesn't matter that it's not random since the colors are unique anyways
+  return colorsWithoutDisliked.slice(0, 5)
 }
 
 app.get('/api/change', function(req, res, next) {
   const currentColors = req.query.colors.map(color => color.replace(/#/g, ''))
-  const dislikedColor = currentColors[currentColors.length - 1]
+  const dislikedColors = req.query.dislikedColors || []
   const searchColor = currentColors[currentColors.length - 2]
 
-  getPalettes({ hex: searchColor }, next)
+  getPalettes({ hex: searchColor })
     .then(palettes => {
       if (!palettes.length) {
         return Promise.resolve(true)
       }
-      const newColors = getNewColorsFromData(palettes, dislikedColor, currentColors)
+      
+      const newColors = getNewColorsFromData(palettes, dislikedColors, currentColors)
+      if (!newColors.length) {
+        return Promise.resolve(true)
+      }
+
       res.json(newColors)
       return Promise.resolve(false)
     })
@@ -96,15 +100,15 @@ app.get('/api/change', function(req, res, next) {
         const searchTerm = colornamer(searchColor).html[0].hex
         getPalettes({ hex: searchTerm }, next)
           .then(palettes => {
-            const newColors = getNewColorsFromData(palettes, dislikedColor, currentColors)
+            const newColors = getNewColorsFromData(palettes, dislikedColors, currentColors)
             res.json(newColors)
           })
-          .catch(e => {
-            console.log(e)
+          .catch(() => {
+            return next(new Error('Error fetching palettes'))
           })
       }
     })
-    .catch(e => {
-      console.log(e)
+    .catch(() => {
+      return next(new Error('Error fetching palettes'))
     })
 })
