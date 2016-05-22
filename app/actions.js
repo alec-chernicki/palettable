@@ -151,8 +151,8 @@ export function continueOnboardingIfNeeded() {
 
 export function addColorIfValid () {
   return (dispatch, getState) => {
-    const { colors, onboardingStep } = getState()
-
+    const { shownPalette, onboardingStep } = getState()
+    const { colors } = shownPalette
     if ((onboardingStep <= 1 || onboardingStep > 3) && colors.length < 5) {
       return dispatch(
         fetchColorFromPaletteIfNeeded(colors)
@@ -167,7 +167,8 @@ export function addColorIfValid () {
 
 export function changeColorIfValid () {
   return (dispatch, getState) => {
-    const { colors, onboardingStep } = getState()
+    const { shownPalette, onboardingStep } = getState()
+    const { colors } = shownPalette
 
     if (onboardingStep === 2 || onboardingStep > 3) {
       dispatch(invalidatePalette())
@@ -185,7 +186,8 @@ export function changeColorIfValid () {
 
 export function removeColorIfValid () {
   return (dispatch, getState) => {
-    const { colors, onboardingStep } = getState()
+    const { shownPalette, onboardingStep } = getState()
+    const { colors } = shownPalette
 
     if (colors.length > 1 && onboardingStep >= 3) {
       dispatch(invalidatePalette())

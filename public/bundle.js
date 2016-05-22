@@ -21940,11 +21940,14 @@
 
 	var _fetchedPalette = __webpack_require__(456);
 
+	var _shownPalette = __webpack_require__(463);
+
 	var _colors = __webpack_require__(457);
 
 	var rootReducer = (0, _redux.combineReducers)({
-	  colors: _colors.colors,
 	  onboardingStep: _onboardingStep.onboardingStep,
+	  // shownPalette,
+	  shownPalette: _shownPalette.shownPalette,
 	  fetchedPalette: _fetchedPalette.fetchedPalette
 	});
 
@@ -22032,7 +22035,7 @@
 	  _createClass(App, [{
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
-	      this.props.addColor();
+	      this.props.dispatch((0, _actions.addColorIfValid)());
 
 	      document.addEventListener('keydown', this.handleKeydown.bind(this));
 	      document.onkeydown = this.suppressBackspace.bind(this);
@@ -22053,19 +22056,17 @@
 	    value: function handleKeydown(e) {
 	      var _props = this.props;
 	      var isFetching = _props.isFetching;
-	      var addColor = _props.addColor;
-	      var changeColor = _props.changeColor;
-	      var removeColor = _props.removeColor;
+	      var dispatch = _props.dispatch;
 
 	      var tag = e.target.tagName.toLowerCase();
 
 	      if (!isFetching && tag != 'input') {
 	        if (e.which === 76) {
-	          addColor();
+	          dispatch((0, _actions.addColorIfValid)());
 	        } else if (e.which === 68) {
-	          changeColor();
+	          dispatch((0, _actions.changeColorIfValid)());
 	        } else if (e.which === 8) {
-	          removeColor();
+	          dispatch((0, _actions.removeColorIfValid)());
 	        }
 	      }
 	    }
@@ -22089,7 +22090,6 @@
 	          )
 	        );
 	      }
-	      console.log(onboardingStep);
 	      return _react2.default.createElement(
 	        'div',
 	        { className: onboardingStep <= 3 && 'onboarding-active' },
@@ -22109,41 +22109,24 @@
 	}(_react.Component);
 
 	App.propTypes = {
-	  addColor: _react.PropTypes.func.isRequired,
-	  changeColor: _react.PropTypes.func.isRequired,
-	  removeColor: _react.PropTypes.func.isRequired,
 	  colors: _react.PropTypes.array.isRequired,
 	  isFetching: _react.PropTypes.bool.isRequired,
 	  onboardingStep: _react.PropTypes.number.isRequired
 	};
 
 	var mapStateToProps = function mapStateToProps(state) {
-	  var colors = state.colors;
 	  var onboardingStep = state.onboardingStep;
+	  var shownPalette = state.shownPalette;
 	  var fetchedPalette = state.fetchedPalette;
 
 	  return {
-	    colors: colors,
+	    colors: shownPalette.colors,
 	    onboardingStep: onboardingStep,
 	    isFetching: fetchedPalette.isFetching
 	  };
 	};
 
-	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
-	  return {
-	    addColor: function addColor() {
-	      return dispatch((0, _actions.addColorIfValid)());
-	    },
-	    changeColor: function changeColor() {
-	      return dispatch((0, _actions.changeColorIfValid)());
-	    },
-	    removeColor: function removeColor() {
-	      return dispatch((0, _actions.removeColorIfValid)());
-	    }
-	  };
-	};
-
-	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(App);
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, null)(App);
 
 /***/ },
 /* 201 */
@@ -22338,9 +22321,9 @@
 	  return function (dispatch, getState) {
 	    var _getState2 = getState();
 
-	    var colors = _getState2.colors;
+	    var shownPalette = _getState2.shownPalette;
 	    var onboardingStep = _getState2.onboardingStep;
-
+	    var colors = shownPalette.colors;
 
 	    if ((onboardingStep <= 1 || onboardingStep > 3) && colors.length < 5) {
 	      return dispatch(fetchColorFromPaletteIfNeeded(colors)).then(function (color) {
@@ -22356,8 +22339,9 @@
 	  return function (dispatch, getState) {
 	    var _getState3 = getState();
 
-	    var colors = _getState3.colors;
+	    var shownPalette = _getState3.shownPalette;
 	    var onboardingStep = _getState3.onboardingStep;
+	    var colors = shownPalette.colors;
 
 
 	    if (onboardingStep === 2 || onboardingStep > 3) {
@@ -22376,8 +22360,9 @@
 	  return function (dispatch, getState) {
 	    var _getState4 = getState();
 
-	    var colors = _getState4.colors;
+	    var shownPalette = _getState4.shownPalette;
 	    var onboardingStep = _getState4.onboardingStep;
+	    var colors = shownPalette.colors;
 
 
 	    if (colors.length > 1 && onboardingStep >= 3) {
@@ -69724,7 +69709,7 @@
 	        }, -1) + 1,
 	        color: action.color
 	      };
-	    // TODO: These action names feel weird, mrefactor into seperate reducer and combine
+	    // TODO: These action names feel weird, refactor into seperate reducer and combine
 	    case _ActionTypes.EDIT_COLOR_TEXT:
 	      if (state.id !== action.id) {
 	        return state;
@@ -69937,6 +69922,61 @@
 	var SyncedColor = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_ColorItem2.default);
 
 	exports.default = SyncedColor;
+
+/***/ },
+/* 463 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+	exports.shownPalette = shownPalette;
+
+	var _colors = __webpack_require__(457);
+
+	var _ActionTypes = __webpack_require__(199);
+
+	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+	// FIXME: This feels super weird
+	var initialState = {
+	  colors: [],
+	  dislikedColors: []
+	};
+
+	function shownPalette() {
+	  var state = arguments.length <= 0 || arguments[0] === undefined ? initialState : arguments[0];
+	  var action = arguments[1];
+
+	  switch (action.type) {
+	    case _ActionTypes.ADD_COLOR:
+	    case _ActionTypes.CHANGE_COLOR_TEXT:
+	    case _ActionTypes.EDIT_COLOR_TEXT:
+	    case _ActionTypes.RESET_COLOR_NAME:
+	    case _ActionTypes.TOGGLE_COLOR_PICKER:
+	    case _ActionTypes.TOGGLE_COLOR_ANIMATION:
+	      return _extends({}, state, {
+	        colors: (0, _colors.colors)(state.colors, action)
+	      });
+	    case _ActionTypes.REMOVE_COLOR:
+	      return _extends({}, state, {
+	        colors: (0, _colors.colors)(state.colors, action),
+	        dislikedColors: []
+	      });
+	    case _ActionTypes.CHANGE_COLOR:
+	      return _extends({}, state, {
+	        colors: (0, _colors.colors)(state.colors, action),
+	        dislikedColors: [].concat(_toConsumableArray(state.dislikedColors), [action.color])
+	      });
+	    default:
+	      return state;
+	  }
+	}
 
 /***/ }
 /******/ ]);

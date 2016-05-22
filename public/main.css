@@ -156,6 +156,7 @@ li {
 
 .color-animation-enter {
   width: 0.01%;
+  overflow: hidden;
 }
 
 .color-animation-enter.color-animation-enter-active {
@@ -165,6 +166,7 @@ li {
 
 .color-animation-leave {
   width: 100%;
+  overflow: hidden;
 }
 
 .color-animation-leave.color-animation-leave-active {

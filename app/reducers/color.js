@@ -1,10 +1,6 @@
 import {
-  ADD_COLOR,
-  CHANGE_COLOR,
-  EDIT_COLOR_TEXT,
-  CHANGE_COLOR_TEXT,
-  RESET_COLOR_NAME,
-  TOGGLE_COLOR_PICKER,
+  ADD_COLOR, CHANGE_COLOR, EDIT_COLOR_TEXT,
+  CHANGE_COLOR_TEXT, RESET_COLOR_NAME, TOGGLE_COLOR_PICKER,
   TOGGLE_COLOR_ANIMATION
 } from '../constants/ActionTypes'
 
@@ -28,7 +24,7 @@ export function color(state = initialState, action) {
       id: state.reduce((maxId, color) => Math.max(color.id, maxId), -1) + 1,
       color: action.color
     }
-    // TODO: These action names feel weird, mrefactor into seperate reducer and combine
+    // TODO: These action names feel weird, refactor into seperate reducer and combine
   case EDIT_COLOR_TEXT:
     if (state.id !== action.id) {
       return state

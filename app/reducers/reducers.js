@@ -1,11 +1,14 @@
 import { combineReducers } from 'redux'
 import { onboardingStep } from './onboardingStep'
 import { fetchedPalette } from './fetchedPalette'
-import { colors } from './colors'
+import { shownPalette } from './shownPalette'
+
+import {colors} from './colors'
 
 const rootReducer = combineReducers({
-  colors,
   onboardingStep,
+  // shownPalette,
+  shownPalette,
   fetchedPalette
 })
 

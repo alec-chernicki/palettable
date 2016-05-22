@@ -1,5 +1,4 @@
 import { color } from './color'
-
 import {
   ADD_COLOR, CHANGE_COLOR, REMOVE_COLOR,
   CHANGE_COLOR_TEXT, EDIT_COLOR_TEXT, RESET_COLOR_NAME,

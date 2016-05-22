@@ -12,7 +12,7 @@ class App extends Component {
     super(props)
   }
   componentDidMount () {
-    this.props.addColor()
+    this.props.dispatch(addColorIfValid())
 
     document.addEventListener('keydown', this.handleKeydown.bind(this))
     document.onkeydown = this.suppressBackspace.bind(this)
@@ -27,18 +27,18 @@ class App extends Component {
     }
   }
   handleKeydown (e) {
-    const { isFetching, addColor, changeColor, removeColor } = this.props
+    const { isFetching, dispatch } = this.props
     const tag = e.target.tagName.toLowerCase()
 
     if(!isFetching && tag != 'input') {
       if (e.which === 76) {
-        addColor()
+        dispatch(addColorIfValid())
       }
       else if (e.which === 68) {
-        changeColor()
+        dispatch(changeColorIfValid())
       }
       else if (e.which === 8) {
-        removeColor()
+        dispatch(removeColorIfValid())
       }
     }
   }
@@ -52,7 +52,6 @@ class App extends Component {
         </div>
       )
     }
-    console.log(onboardingStep);
     return (
       <div className={onboardingStep <= 3 && 'onboarding-active'}>
         <Title colors={ colors } />
@@ -67,35 +66,18 @@ class App extends Component {
 }
 
 App.propTypes = {
-  addColor: PropTypes.func.isRequired,
-  changeColor: PropTypes.func.isRequired,
-  removeColor: PropTypes.func.isRequired,
   colors: PropTypes.array.isRequired,
   isFetching: PropTypes.bool.isRequired,
   onboardingStep: PropTypes.number.isRequired
 }
 
 const mapStateToProps = state => {
-  const { colors, onboardingStep, fetchedPalette } = state
+  const { onboardingStep, shownPalette, fetchedPalette } = state
   return {
-    colors,
+    colors: shownPalette.colors,
     onboardingStep,
     isFetching: fetchedPalette.isFetching
   }
 }
 
-const mapDispatchToProps = dispatch => {
-  return {
-    addColor () {
-      return dispatch(addColorIfValid())
-    },
-    changeColor () {
-      return dispatch(changeColorIfValid())
-    },
-    removeColor () {
-      return dispatch(removeColorIfValid())
-    }
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(App)
+export default connect(mapStateToProps, null)(App)
