@@ -22567,11 +22567,13 @@
 	    if (shouldFetchPalette(state)) {
 	      return dispatch(fetchPalette(colors, dislikedColors)).then(function () {
 	        var color = getFetchedPalette()[0];
+	        // console.log('first', color);
 	        return Promise.resolve(color);
 	      });
 	    } else {
 	      // FIXME: Redo this without this weird helper function
 	      var color = (0, _helpers.removeDuplicatesFrom)(colors, getFetchedPalette());
+	      // console.log('second', color);
 	      return Promise.resolve(color);
 	    }
 	  };
@@ -23838,7 +23840,7 @@
 /* 225 */
 /***/ function(module, exports) {
 
-	"use strict";
+	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
@@ -23851,11 +23853,18 @@
 	}
 
 	function removeDuplicatesFrom(arrOne, arrTwo) {
+	  var flattenedArr = arrOne.map(function (value) {
+	    return value.color;
+	  });
+
+	  console.log('flattened', flattenedArr);
+	  console.log('dataarr:', arrTwo);
 	  var uniqueArr = arrTwo.filter(function (value) {
 	    return arrOne.map(function (value) {
 	      return value.color;
 	    }).indexOf(value) === -1;
 	  });
+	  // console.log(uniqueArr, arrOne, arrTwo);
 	  return randomIndexOf(uniqueArr);
 	}
 

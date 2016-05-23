@@ -4,6 +4,7 @@
  */
 const axios = require('axios')
 const colornamer = require('color-namer')
+const _ = require('lodash')
 axios.defaults.baseURL = 'http://www.colourlovers.com/api/palettes'
 axios.defaults.params = { format: 'json' }
 
@@ -73,7 +74,7 @@ function getNewColorsFromData (palettes, dislikedColors, currentColors) {
     })
   // Return a palette containing the first 5 in the array
   // It doesn't matter that it's not random since the colors are unique anyways
-  return colorsWithoutDisliked.slice(0, 5)
+  return _.uniq(colorsWithoutDisliked).slice(0, 5)
 }
 
 app.get('/api/change', function(req, res, next) {

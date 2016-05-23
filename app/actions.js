@@ -139,12 +139,14 @@ export function fetchColorFromPaletteIfNeeded(colors, dislikedColors) {
         fetchPalette(colors, dislikedColors)
       ).then(() => {
         const color = getFetchedPalette()[0]
+        // console.log('first', color);
         return Promise.resolve(color)
       })
     }
     else {
       // FIXME: Redo this without this weird helper function
       const color = removeDuplicatesFrom(colors, getFetchedPalette())
+      // console.log('second', color);
       return Promise.resolve(color)
     }
   }
