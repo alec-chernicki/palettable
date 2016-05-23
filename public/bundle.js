@@ -22535,7 +22535,9 @@
 	      }
 	    }).then(function (_ref) {
 	      var data = _ref.data;
-	      return dispatch(receivePalette(data));
+
+	      console.log(data);
+	      dispatch(receivePalette(data));
 	    });
 	  };
 	}
@@ -22564,10 +22566,11 @@
 
 	    if (shouldFetchPalette(state)) {
 	      return dispatch(fetchPalette(colors, dislikedColors)).then(function () {
-	        var color = (0, _helpers.removeDuplicatesFrom)(colors, getFetchedPalette());
+	        var color = getFetchedPalette()[0];
 	        return Promise.resolve(color);
 	      });
 	    } else {
+	      // FIXME: Redo this without this weird helper function
 	      var color = (0, _helpers.removeDuplicatesFrom)(colors, getFetchedPalette());
 	      return Promise.resolve(color);
 	    }
@@ -25624,7 +25627,8 @@
 	      return _react2.default.createElement(
 	        'footer',
 	        null,
-	        _react2.default.createElement('a', { className: 'footer-icon', onClick: this.handleClick.bind(this) }),
+	        _react2.default.createElement('a', { className: 'footer-icon twitter', onClick: this.handleClick.bind(this) }),
+	        _react2.default.createElement('a', { className: 'footer-icon github', href: 'https://github.com/alecortega' }),
 	        _react2.default.createElement(
 	          'p',
 	          { className: 'footer-text' },

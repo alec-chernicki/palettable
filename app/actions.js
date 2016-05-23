@@ -112,7 +112,9 @@ function fetchPalette(colors, dislikedColors) {
           dislikedColors: dislikedColors
         }
       })
-      .then(({ data }) => dispatch(receivePalette(data)))
+      .then(({ data }) => {
+        console.log(data);
+        dispatch(receivePalette(data))})
   }
 }
 
@@ -136,11 +138,12 @@ export function fetchColorFromPaletteIfNeeded(colors, dislikedColors) {
       return dispatch(
         fetchPalette(colors, dislikedColors)
       ).then(() => {
-        const color = removeDuplicatesFrom(colors, getFetchedPalette())
+        const color = getFetchedPalette()[0]
         return Promise.resolve(color)
       })
     }
     else {
+      // FIXME: Redo this without this weird helper function
       const color = removeDuplicatesFrom(colors, getFetchedPalette())
       return Promise.resolve(color)
     }

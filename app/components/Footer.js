@@ -11,7 +11,8 @@ class Footer extends React.Component {
   render () {
     return (
       <footer>
-        <a className='footer-icon' onClick={this.handleClick.bind(this)} />
+        <a className='footer-icon twitter' onClick={this.handleClick.bind(this)} />
+        <a className='footer-icon github' href='https://github.com/alecortega' />
         <p className='footer-text'>
           Made By
           <a href='http://www.alecortega.com/' className='footer-name'>

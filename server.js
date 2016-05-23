@@ -28,12 +28,10 @@ app.get('/', function (req, res){
 })
 
 app.get('/api/random', function(req, res, next) {
-  // Continue calling API until palette that's 5 colors long (which is most of
-  // them) returns. This is because the API doesn't allow you to search by
-  // palette length and doesn't standardize this on their platform.
   getRandom()
     .then(colors => res.json(colors))
-    .catch(() => {
+    .catch((e) => {
+      console.log(e)
       return next(new Error('Error fetching random palette'))
     })
 })
@@ -44,7 +42,10 @@ function getRandom () {
       let colors = response.data[0].colors
 
       if (colors.length < 5) {
-        getRandom()
+        // Continue calling API until palette that's 5 colors long (which is most of
+        // them) returns. This is because the API doesn't allow you to search by
+        // palette length and doesn't standardize this on their platform.
+        return getRandom()
       }
       else {
         return colors
@@ -85,9 +86,9 @@ app.get('/api/change', function(req, res, next) {
       if (!palettes.length) {
         return Promise.resolve(true)
       }
-      
       const newColors = getNewColorsFromData(palettes, dislikedColors, currentColors)
-      if (!newColors.length) {
+
+      if (newColors.length < 5) {
         return Promise.resolve(true)
       }
 
@@ -101,10 +102,29 @@ app.get('/api/change', function(req, res, next) {
         getPalettes({ hex: searchTerm }, next)
           .then(palettes => {
             const newColors = getNewColorsFromData(palettes, dislikedColors, currentColors)
+
+            if (newColors.length < 5) {
+              return Promise.resolve(true)
+            }
+
             res.json(newColors)
+            return Promise.resolve(false)
           })
           .catch(() => {
             return next(new Error('Error fetching palettes'))
+          })
+      }
+    })
+    .then(failedSearchByHex => {
+      // FIXME: This constant checking is causing SERIOUS latency
+      // refactor into a better architecture, maybe passing back a flag back
+      // that the client can use to know what request to send next?
+      if (failedSearchByHex) {
+        getRandom()
+          .then(colors => res.json(colors))
+          .catch((e) => {
+            console.log(e)
+            return next(new Error('Error fetching random palette'))
           })
       }
     })
