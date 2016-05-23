@@ -22536,7 +22536,6 @@
 	    }).then(function (_ref) {
 	      var data = _ref.data;
 
-	      console.log(data);
 	      dispatch(receivePalette(data));
 	    });
 	  };
@@ -69941,7 +69940,7 @@
 	    _react2.default.createElement(
 	      'p',
 	      { className: 'helper-text' },
-	      'We\'ll use the colors you like and search thousands of palettes to find more that match.'
+	      'We\'ll use the colors you like and search millions of palettes to find more that match.'
 	    ),
 	    _react2.default.createElement(
 	      'p',

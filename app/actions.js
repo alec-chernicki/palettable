@@ -113,7 +113,6 @@ function fetchPalette(colors, dislikedColors) {
         }
       })
       .then(({ data }) => {
-        console.log(data);
         dispatch(receivePalette(data))})
   }
 }
