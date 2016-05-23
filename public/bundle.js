@@ -23937,7 +23937,7 @@
 	  var children = _ref.children;
 
 	  var luminosity = (0, _color2.default)(color).luminosity();
-	  var themeClass = luminosity < 0.6 ? 'theme-light' : 'theme-dark';
+	  var themeClass = luminosity < 0.55 ? 'theme-light' : 'theme-dark';
 
 	  return _react2.default.createElement(
 	    'div',

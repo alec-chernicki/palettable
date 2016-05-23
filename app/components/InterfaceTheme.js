@@ -3,7 +3,7 @@ import Color from 'color'
 
 const InterfaceTheme = ({color, children}) => {
   const luminosity = Color(color).luminosity()
-  const themeClass = luminosity < 0.6 ? 'theme-light' : 'theme-dark'
+  const themeClass = luminosity < 0.55 ? 'theme-light' : 'theme-dark'
 
   return (
     <div className={ themeClass }>
