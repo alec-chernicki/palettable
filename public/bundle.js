@@ -22318,6 +22318,7 @@
 	      var _props = this.props;
 	      var isFetching = _props.isFetching;
 	      var dispatch = _props.dispatch;
+	      var colors = _props.colors;
 
 	      var tag = e.target.tagName.toLowerCase();
 
@@ -22328,6 +22329,8 @@
 	          dispatch((0, _actions.changeColorIfValid)());
 	        } else if (e.which === 8) {
 	          dispatch((0, _actions.removeColorIfValid)());
+	        } else {
+	          dispatch((0, _actions.animateColorStatus)(colors[colors.length - 1]));
 	        }
 	      }
 	    }
@@ -22536,6 +22539,7 @@
 	    }).then(function (_ref) {
 	      var data = _ref.data;
 
+	      console.log(data);
 	      dispatch(receivePalette(data));
 	    });
 	  };
@@ -22566,13 +22570,11 @@
 	    if (shouldFetchPalette(state)) {
 	      return dispatch(fetchPalette(colors, dislikedColors)).then(function () {
 	        var color = getFetchedPalette()[0];
-	        // console.log('first', color);
 	        return Promise.resolve(color);
 	      });
 	    } else {
-	      // FIXME: Redo this without this weird helper function
+	      // TODO: Can this be done without a helper function?
 	      var color = (0, _helpers.removeDuplicatesFrom)(colors, getFetchedPalette());
-	      // console.log('second', color);
 	      return Promise.resolve(color);
 	    }
 	  };
@@ -23839,7 +23841,7 @@
 /* 225 */
 /***/ function(module, exports) {
 
-	'use strict';
+	"use strict";
 
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
@@ -23852,12 +23854,6 @@
 	}
 
 	function removeDuplicatesFrom(arrOne, arrTwo) {
-	  var flattenedArr = arrOne.map(function (value) {
-	    return value.color;
-	  });
-
-	  console.log('flattened', flattenedArr);
-	  console.log('dataarr:', arrTwo);
 	  var uniqueArr = arrTwo.filter(function (value) {
 	    return arrOne.map(function (value) {
 	      return value.color;
@@ -26650,6 +26646,38 @@
 	              return onTextChangeSubmit(color, newColor.hex.toUpperCase());
 	            } })
 	        ) : null
+	      ),
+	      _react2.default.createElement(
+	        'div',
+	        { className: 'color-footer' },
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'instructions-container dislike' },
+	          _react2.default.createElement(
+	            'span',
+	            { className: 'keyboard-button' },
+	            'D'
+	          ),
+	          _react2.default.createElement(
+	            'span',
+	            { className: 'keyboard-text' },
+	            'Disike'
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'instructions-container like' },
+	          _react2.default.createElement(
+	            'span',
+	            { className: 'keyboard-button' },
+	            'L'
+	          ),
+	          _react2.default.createElement(
+	            'span',
+	            { className: 'keyboard-text' },
+	            'Like'
+	          )
+	        )
 	      )
 	    )
 	  );
@@ -69899,7 +69927,7 @@
 	    _react2.default.createElement(
 	      'p',
 	      { className: 'helper-text' },
-	      'With Palettable, you can create beautiful color palettes with no prior design knowledge.'
+	      'With Palettable, you can create color palettes with no prior design knowledge. Try it out!'
 	    ),
 	    _react2.default.createElement(
 	      'p',

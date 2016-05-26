@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
-import { addColorIfValid, removeColorIfValid, changeColorIfValid } from '../actions'
+import { addColorIfValid, removeColorIfValid, changeColorIfValid, animateColorStatus } from '../actions'
 
 import Title from '../components/Title'
 import Footer from '../components/Footer'
@@ -27,7 +27,7 @@ class App extends Component {
     }
   }
   handleKeydown (e) {
-    const { isFetching, dispatch } = this.props
+    const { isFetching, dispatch, colors } = this.props
     const tag = e.target.tagName.toLowerCase()
 
     if(!isFetching && tag != 'input') {
@@ -39,6 +39,9 @@ class App extends Component {
       }
       else if (e.which === 8) {
         dispatch(removeColorIfValid())
+      }
+      else {
+        dispatch(animateColorStatus(colors[colors.length - 1]))
       }
     }
   }

@@ -1,3 +1,4 @@
+
 * {
   box-sizing: border-box;
 }
@@ -159,14 +160,27 @@ li {
   overflow: hidden;
 }
 
+.color-animation-enter.color-animation-enter-active .color-footer {
+  animation-play-state: paused !important;
+}
+
 .color-animation-enter.color-animation-enter-active {
   width: 100%;
   transition: width 300ms linear;
 }
 
+
 .color-animation-leave {
   width: 100%;
   overflow: hidden;
+}
+
+.color-animation-leave .color-footer {
+  animation-delay: 250ms;
+}
+
+.color-animation-leave .color-footer {
+  display: none;
 }
 
 .color-animation-leave.color-animation-leave-active {
@@ -201,10 +215,75 @@ Onboarding Container
   margin: 0 10px;
   display: inline-block;
   padding: 0 15px;
-  height: auto;
+  line-height: 40px;
   position: relative;
   border: solid 2px #FFF;
   border-radius: 4px;
+}
+
+.color-footer {
+  height: 70px;
+  position: absolute;
+  bottom: 25px;
+  left: 25px;
+  overflow: hidden;
+  right: 25px;
+  opacity: 0;
+  max-width: 400px;
+  margin: 0 auto;
+  animation-fill-mode: backwards;
+}
+
+.onboarding-active .color-footer {
+  display: none;
+}
+
+.color:last-child .color-footer{
+  opacity: 0.8;
+  animation: fade-in 500ms cubic-bezier(.17,.89,.56,1.22);
+  animation-fill-mode: backwards;
+}
+
+.color:first-child .color-footer {
+  animation-delay: 100ms;
+}
+
+.color:not(:first-child) .color-footer {
+  animation-fill-mode: both;
+}
+
+.instructions-container {
+  width: 45px;
+  overflow: hidden;
+  margin: 0;
+  position: absolute;
+}
+
+.instructions-container.like {
+  right: 0;
+  /*float: right;*/
+
+}
+
+.instructions-container.dislike {
+  left: 0;
+  /*float: left;*/
+}
+
+.instructions-container span{
+  display: block;
+  margin: 5px auto 0;
+  float: left;
+  clear: both;
+}
+
+.keyboard-text {
+  text-align: center;
+  width: 100%;
+}
+
+.onboarding-active .color-footer{
+  opacity: 0;
 }
 
 .helper-text {
@@ -217,6 +296,7 @@ Onboarding Container
   animation: fade-in 500ms cubic-bezier(.17,.89,.56,1.22);
   animation-delay: 425ms;
   animation-fill-mode: backwards;
+  margin: 0;
 }
 
 @keyframes fade-in {
@@ -596,14 +676,16 @@ Theming
 .theme-dark a,
 .theme-dark h1,
 .theme-dark p,
-.theme-dark input {
+.theme-dark input,
+.theme-dark span {
   color: #444;
 }
 
 .theme-light a,
 .theme-light h1,
 .theme-light p,
-.theme-light input {
+.theme-light input,
+.theme-light span {
   color: #FFF;
 }
 

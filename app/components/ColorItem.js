@@ -30,9 +30,19 @@ const ColorItem = ({
           transitionLeaveTimeout={175} >
           { color.pickerActive ? <div className="popover">
             <div className="cover" onClick={() => onToggleColorPicker(color)}/>
-            <CustomColorPicker color={ color.color } onChange={(newColor) => onTextChangeSubmit(color, newColor.hex.toUpperCase())}/>
-          </div> : null }
-        </ReactCSSTransitionGroup>
+              <CustomColorPicker color={ color.color } onChange={(newColor) => onTextChangeSubmit(color, newColor.hex.toUpperCase())}/>
+              </div> : null }
+              </ReactCSSTransitionGroup>
+              <div className='color-footer'>
+                <div className='instructions-container dislike'>
+                  <span className='keyboard-button'>D</span>
+                  <span className='keyboard-text'>Disike</span>
+                </div>
+                <div className='instructions-container like'>
+                  <span className='keyboard-button'>L</span>
+                  <span className='keyboard-text'>Like</span>
+                </div>
+              </div>
       </InterfaceTheme>
     </li>
   )
