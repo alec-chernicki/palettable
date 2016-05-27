@@ -13,10 +13,7 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onToggleColorPicker: (color) => {
-      dispatch(toggleColorPicker(color))
-    },
-    onTextChangeSubmit: (color, text) => {
+    onSubmit: (color, text) => {
       const regex = /^#?([a-fA-F0-9]{6}|[a-fA-F0-9]{3})$/
       const colorText = /#/.test(text) ? text : '#' + text
 
@@ -28,9 +25,12 @@ const mapDispatchToProps = (dispatch) => {
         dispatch(resetColorName(color))
       }
     },
-    onTextEdit: (color, text) => {
+    onChange: (color, text) => {
       dispatch(editColorText(color, text))
-    }
+    },
+    onTogglePicker: (color) => {
+      dispatch(toggleColorPicker(color))
+    },
   }
 }
 

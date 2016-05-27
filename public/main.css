@@ -161,6 +161,7 @@ li {
 }
 
 .color-animation-enter.color-animation-enter-active .color-footer {
+  display: none;
   animation-play-state: paused !important;
 }
 
@@ -176,7 +177,7 @@ li {
 }
 
 .color-animation-leave .color-footer {
-  animation-delay: 250ms;
+  animation-delay: 350ms;
 }
 
 .color-animation-leave .color-footer {
@@ -224,7 +225,7 @@ Onboarding Container
 .color-footer {
   height: 70px;
   position: absolute;
-  bottom: 25px;
+  bottom: 50px;
   left: 25px;
   overflow: hidden;
   right: 25px;
@@ -245,7 +246,7 @@ Onboarding Container
 }
 
 .color:first-child .color-footer {
-  animation-delay: 100ms;
+  animation-delay: 50ms;
 }
 
 .color:not(:first-child) .color-footer {
@@ -621,6 +622,7 @@ Color Picker Animation
 Tweet Link
 **********************************/
 .main-container {
+  overflow: hidden;
   display: flex;
   flex-direction: column;
   height: 100vh;
@@ -630,6 +632,9 @@ footer {
   width: 100%;
   color: #444;
   padding: 10px 25px;
+  position: relative;
+  z-index: 100000000;
+  background: #FFF;
 }
 
 .footer-icon {
