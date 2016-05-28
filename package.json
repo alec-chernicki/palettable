@@ -2,10 +2,10 @@
   "name": "Palettable",
   "version": "1.0.0",
   "description": "A search engine for user-generated color palettes.",
-  "main": "server.js",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "start": "node app.js"
   },
   "author": "",
   "license": "ISC",

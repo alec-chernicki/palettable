@@ -16,7 +16,7 @@ class Footer extends React.Component {
         <p className='footer-text'>
           Made By
           <a href='http://www.alecortega.com/' className='footer-name'>
-            Alec Ortega
+            &nbsp;Alec Ortega
           </a>
         </p>
       </footer>
