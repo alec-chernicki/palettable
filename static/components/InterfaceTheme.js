@@ -1,20 +1,20 @@
-import React, { PropTypes } from 'react'
-import Color from 'color'
+import React, { PropTypes } from 'react';
+import colorInterpreter from 'color';
 
-const InterfaceTheme = ({color, children}) => {
-  const luminosity = Color(color).luminosity()
-  const themeClass = luminosity < 0.55 ? 'theme-light' : 'theme-dark'
+const InterfaceTheme = ({ color, children }) => {
+  const luminosity = colorInterpreter(color).luminosity();
+  const themeClass = luminosity < 0.55 ? 'theme-light' : 'theme-dark';
 
   return (
-    <div className={ themeClass }>
-      { children }
+    <div className={themeClass}>
+      {children}
     </div>
-  )
-}
+  );
+};
 
 InterfaceTheme.propTypes = {
   color: PropTypes.string.isRequired,
-  children: PropTypes.node
-}
+  children: PropTypes.node,
+};
 
-export default InterfaceTheme
+export default InterfaceTheme;

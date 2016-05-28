@@ -1,26 +1,24 @@
-import React, { PropTypes } from 'react'
+import React, { PropTypes } from 'react';
 
-const SliderIcon = ({onToggle}) => {
-  return (
-    <div className='color-picker-icon' onClick={onToggle}>
-      <div className='line-container'>
-        <div className='line' />
-        <div className='circle' />
-      </div>
-      <div className='line-container'>
-        <div className='line' />
-        <div className='circle' />
-      </div>
-      <div className='line-container'>
-        <div className='line' />
-        <div className='circle' />
-      </div>
+const SliderIcon = ({ onToggle }) => (
+  <div className="color-picker-icon" onClick={onToggle}>
+    <div className="line-container">
+      <div className="line" />
+      <div className="circle" />
     </div>
-  )
-}
+    <div className="line-container">
+      <div className="line" />
+      <div className="circle" />
+    </div>
+    <div className="line-container">
+      <div className="line" />
+      <div className="circle" />
+    </div>
+  </div>
+);
 
 SliderIcon.propTypes = {
-  onToggle: PropTypes.func.isRequired
-}
+  onToggle: PropTypes.func.isRequired,
+};
 
-export default SliderIcon
+export default SliderIcon;

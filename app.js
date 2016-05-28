@@ -14,8 +14,8 @@ app.use(express.static(__dirname + '/public'))
 app.listen(app.get('port'))
 
 // Controllers
-const randomController = require('./controllers/randomController');
-const changeController = require('./controllers/changeController');
+const randomController = require('./controllers/randomController')
+const changeController = require('./controllers/changeController')
 
 // Assign Routes and Controllers
 app.get('/', function (req, res){

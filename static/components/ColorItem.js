@@ -1,25 +1,23 @@
-import React, { PropTypes, Component } from 'react'
-import CustomColorPicker from './CustomColorPicker'
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
-import ColorName from './ColorName'
-import SliderIcon from './SliderIcon'
-import InterfaceTheme from './InterfaceTheme'
+import React, { PropTypes, Component } from 'react';
+import ColorPicker from './ColorPicker';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
+import ColorName from './ColorName';
+import SliderIcon from './SliderIcon';
+import InterfaceTheme from './InterfaceTheme';
 
 class ColorItem extends Component {
   handlePickerToggle() {
-    this.props.onTogglePicker(this.props.color)
+    this.props.onTogglePicker(this.props.color);
   }
-  render () {
-    const {
-      color, colorValue, onTogglePicker, onSubmit, onChange
-    } = this.props
+  render() {
+    const { color, colorValue, onSubmit, onChange } = this.props;
     return (
-      <li key={ color.id } style={{ backgroundColor: color.color }} className='color'>
-        <InterfaceTheme color={ color.color }>
-          <div className='color-container'>
+      <li key={color.id} style={{ backgroundColor: color.color }} className="color">
+        <InterfaceTheme color={color.color}>
+          <div className="color-container">
             <ColorName
-              color={ color }
-              colorValue= {colorValue}
+              color={color}
+              colorValue={colorValue}
               onChange={onChange}
               onSubmit={onSubmit}
             />
@@ -29,34 +27,30 @@ class ColorItem extends Component {
               <div className="bounce3"></div>
             </div>
           </div>
-          <SliderIcon onToggle={this.handlePickerToggle.bind(this)}/>
+          <SliderIcon onToggle={this.handlePickerToggle.bind(this)} />
           <ReactCSSTransitionGroup
-            transitionName={ 'color-picker-animation' }
+            transitionName={"color-picker-animation"}
             transitionEnterTimeout={175}
             transitionLeaveTimeout={175}
           >
-            { color.pickerActive ? <div className="popover">
-              <div className="cover" onClick={this.handlePickerToggle.bind(this)}/>
-                <CustomColorPicker
-                  color={ color.color }
-                  onChange={onChange}
-                />
-              </div> : null
+            {color.pickerActive ?
+              <ColorPicker color={color.color} onChange={onChange} />
+              : null
             }
           </ReactCSSTransitionGroup>
-          <div className='color-footer'>
-            <div className='instructions-container dislike'>
-              <span className='keyboard-button'>D</span>
-              <span className='keyboard-text'>Disike</span>
+          <div className="color-footer">
+            <div className="instructions-container dislike">
+              <span className="keyboard-button">D</span>
+              <span className="keyboard-text">Disike</span>
             </div>
-            <div className='instructions-container like'>
-              <span className='keyboard-button'>L</span>
-              <span className='keyboard-text'>Like</span>
+            <div className="instructions-container like">
+              <span className="keyboard-button">L</span>
+              <span className="keyboard-text">Like</span>
             </div>
           </div>
         </InterfaceTheme>
       </li>
-    )
+    );
   }
 }
 
@@ -65,7 +59,7 @@ ColorItem.propTypes = {
   colorValue: PropTypes.string.isRequired,
   onTogglePicker: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
-  onChange: PropTypes.func.isRequired
-}
+  onChange: PropTypes.func.isRequired,
+};
 
-export default ColorItem
+export default ColorItem;
