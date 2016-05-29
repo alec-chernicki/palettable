@@ -10,7 +10,6 @@ import InterfaceTheme from '../InterfaceTheme/InterfaceTheme';
 const Onboarding = ({ colors, onboardingStep }) => {
   const { color } = colors[colors.length - 1];
   const onboardingCompleted = onboardingStep > 3;
-
   return (
     <div>
       {!onboardingCompleted &&
