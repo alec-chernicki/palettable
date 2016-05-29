@@ -1,13 +1,15 @@
+const express = require('express');
+const compress = require('compression');
 const axios = require('axios');
 axios.defaults.baseURL = 'http://www.colourlovers.com/api/palettes';
 axios.defaults.params = { format: 'json' };
 
 // Create Express App
-const express = require('express');
 const app = express();
 
 // Initialize Middleware
 app.set('port', process.env.PORT || 3000);
+app.use(compress());
 app.use(express.static(`${__dirname}/public`));
 app.listen(app.get('port'));
 

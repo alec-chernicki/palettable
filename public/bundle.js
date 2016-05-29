@@ -70550,7 +70550,7 @@
 	    _react2.default.createElement(
 	      "p",
 	      { className: "helper-text" },
-	      "All you need to do is like or dislike what we find for you, it's that simple!"
+	      "All you need to do is like or dislike the colors we find for you, it's that simple!"
 	    ),
 	    _react2.default.createElement(
 	      "p",
