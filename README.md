@@ -28,6 +28,7 @@ I tried to make the components are modular as possible so this will be a high le
 
 #### Redux State Tree:
 ![alt tag](http://i.imgur.com/60dsrvo.png)
+![alt tag](http://gifyu.com/images/palettable.gif)
 
 ### Server
 Tech Used: Express
