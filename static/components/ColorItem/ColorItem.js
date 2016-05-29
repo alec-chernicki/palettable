@@ -1,9 +1,11 @@
+import './ColorItem.scss';
+
 import React, { PropTypes, Component } from 'react';
-import ColorPicker from './ColorPicker';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
-import ColorName from './ColorName';
-import SliderIcon from './SliderIcon';
-import InterfaceTheme from './InterfaceTheme';
+import ColorName from '../ColorName/ColorName';
+import ColorPicker from '../ColorPicker/ColorPicker';
+import SliderIcon from '../SliderIcon/SliderIcon';
+import InterfaceTheme from '../InterfaceTheme/InterfaceTheme';
 
 class ColorItem extends Component {
   handlePickerToggle() {
@@ -34,7 +36,12 @@ class ColorItem extends Component {
             transitionLeaveTimeout={175}
           >
             {color.pickerActive ?
-              <ColorPicker color={color.color} onChange={onChange} />
+              <ColorPicker
+                onChange={onChange}
+                onToggle={this.handlePickerToggle.bind(this)}
+                color={color.color}
+                currentColor={color}
+              />
               : null
             }
           </ReactCSSTransitionGroup>

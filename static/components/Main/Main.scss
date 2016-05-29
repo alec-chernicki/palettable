@@ -1,0 +1,55 @@
+* {
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  margin: 0;
+  padding: 0;
+  color: #FFF;
+  height: 100%;
+  font-family: 'Asap';
+  -webkit-font-smoothing: antialiased;
+  font-weight: 700;
+  overflow: hidden;
+  min-width: 725px;
+}
+
+h1 {
+  margin: 0;
+}
+
+span, p {
+  -webkit-font-smoothing: antialiased;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+}
+
+a, a:visited, a:active {
+  color: #FFF;
+  text-decoration: none;
+}
+
+li {
+  list-style: none;
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  100% {
+    opacity: 0.8;
+    transform: translateY(0px);
+  }
+}
+
+.main-container {
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}

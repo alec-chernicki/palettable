@@ -1,3 +1,5 @@
+import './SliderIcon.scss';
+
 import React, { PropTypes } from 'react';
 
 const SliderIcon = ({ onToggle }) => (

@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import {
   invalidatePalette, changeColorText, resetColorName, editColorText, toggleColorPicker,
 } from '../actions';
-import ColorItem from '../components/ColorItem';
+import ColorItem from '../components/ColorItem/ColorItem';
 
 const mapStateToProps = (state, ownProps) => {
   const { color, editedColor } = ownProps.color;

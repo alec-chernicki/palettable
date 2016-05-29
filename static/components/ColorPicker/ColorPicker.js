@@ -1,15 +1,17 @@
+import './ColorPicker.scss';
+
 import React, { PropTypes, Component } from 'react';
 import { CustomPicker } from 'react-color';
 import { Hue, Saturation } from 'react-color/lib/components/common';
 
 class ColorPicker extends Component {
-  handleChange(data) {
-    this.props.onChange(data);
+  handleChange(color, newColor) {
+    this.props.onChange(this.props.currentColor, newColor);
   }
   render() {
     return (
       <div className="popover">
-        <div className="cover" onClick={this.handlePickerToggle.bind(this)} />
+        <div className="cover" onClick={this.props.onToggle} />
         <div className="picker">
           <div className="saturation">
             <Saturation
@@ -36,6 +38,7 @@ class ColorPicker extends Component {
 
 ColorPicker.propTypes = {
   onChange: PropTypes.func.isRequired,
+  currentColor: PropTypes.object.isRequired,
 };
 
 export default CustomPicker(ColorPicker);

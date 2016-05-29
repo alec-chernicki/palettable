@@ -1,6 +1,8 @@
-import React, { PropTypes } from 'react';
+import './ColorName.scss';
 
-class ColorName extends React.Component {
+import React, { Component, PropTypes } from 'react';
+
+class ColorName extends Component {
   handleChange(e) {
     this.props.onChange(this.props.color, e.target.value);
   }

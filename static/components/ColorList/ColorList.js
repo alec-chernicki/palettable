@@ -1,6 +1,8 @@
+import './ColorList.scss';
+
 import React, { PropTypes } from 'react';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
-import SyncedColor from '../containers/SyncedColor';
+import SyncedColor from '../../containers/SyncedColor';
 
 const ColorList = ({ colors, isFetching }) => {
   const colorItems = colors.map(color => (

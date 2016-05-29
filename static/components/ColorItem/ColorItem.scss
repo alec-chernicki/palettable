@@ -1,0 +1,169 @@
+.color {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  position: relative;
+  transition: all 0.2s;
+  transition: width 300ms ease-in;
+  width: 100%;
+}
+
+.color-container {
+  height: auto;
+  font-size: 30px;
+  position: relative;
+}
+
+.color-footer {
+  height: 70px;
+  position: absolute;
+  bottom: 50px;
+  left: 25px;
+  overflow: hidden;
+  right: 25px;
+  opacity: 0;
+  max-width: 400px;
+  margin: 0 auto;
+  animation-fill-mode: backwards;
+
+  .color:last-of-type & {
+    opacity: 0.8;
+    animation: fade-in 500ms cubic-bezier(.17,.89,.56,1.22);
+    animation-fill-mode: backwards;
+  }
+
+  .color:first-of-type & {
+    animation-delay: 50ms;
+  }
+
+  .color:not(:first-child) & {
+    animation-fill-mode: both;
+  }
+
+  .color-animation-leave & {
+    animation-delay: 350ms;
+  }
+
+  .color-animation-leave & {
+    display: none;
+  }
+
+  .color-animation-enter.color-animation-enter-active & {
+    display: none;
+    animation-play-state: paused !important;
+  }
+
+  .onboarding-active & {
+    display: none;
+  }
+}
+
+.instructions-container {
+  width: 45px;
+  overflow: hidden;
+  margin: 0;
+  position: absolute;
+
+  &.dislike {
+    left: 0;
+  }
+
+  &.like {
+    right: 0;
+  }
+
+  span {
+    display: block;
+    margin: 5px auto 0;
+    float: left;
+    clear: both;
+  }
+}
+
+.keyboard-button {
+  margin: 0 10px;
+  display: inline-block;
+  padding: 0 15px;
+  line-height: 40px;
+  position: relative;
+  border: solid 2px #FFF;
+  border-radius: 4px;
+}
+
+.keyboard-text {
+  text-align: center;
+  width: 100%;
+}
+
+.spinner {
+  margin: 0 auto;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -40px;
+  display: none;
+  width: 100px;
+  text-align: center;
+
+  & > div {
+    width: 14px;
+    height: 14px;
+    margin: 0 8px;
+    text-align: justify;
+    border-radius: 100%;
+    display: inline-block;
+    animation: sk-bouncedelay 1.4s infinite ease-in-out both;
+  }
+
+  .bounce1 {
+    animation-delay: -0.32s;
+  }
+
+  .bounce2 {
+    animation-delay: -0.16s;
+  }
+
+  .searching li:last-of-type & {
+    display: block;
+  }
+}
+
+.color-animation-enter {
+  width: 0.01%;
+  overflow: hidden;
+
+  &.color-animation-enter-active {
+    width: 100%;
+    transition: width 300ms linear;
+  }
+}
+
+.color-animation-leave {
+  width: 100%;
+  overflow: hidden;
+
+  &.color-animation-leave-active {
+    width: 0.01%;
+    transition: width 300ms linear;
+  }
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  100% {
+    opacity: 0.8;
+    transform: translateY(0px);
+  }
+}
+
+@keyframes sk-bouncedelay {
+  0%, 80%, 100% {
+    transform: scale(0);
+  }
+  40% {
+    transform: scale(1.0);
+  }
+}

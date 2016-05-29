@@ -1,5 +1,7 @@
+import './Title.scss';
+
 import React, { PropTypes } from 'react';
-import InterfaceTheme from './InterfaceTheme';
+import InterfaceTheme from '../InterfaceTheme/InterfaceTheme';
 
 const Title = ({ colors }) => (
   <InterfaceTheme color={colors[0].color}>

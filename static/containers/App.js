@@ -1,13 +1,9 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
+import Main from '../components/Main/Main';
 import {
   addColorIfValid, removeColorIfValid, changeColorIfValid, animateColorStatus,
 } from '../actions';
-
-import Title from '../components/Title';
-import Footer from '../components/Footer';
-import ColorList from '../components/ColorList';
-import Onboarding from '../components/Onboarding/Onboarding';
 
 class App extends Component {
   componentDidMount() {
@@ -44,34 +40,24 @@ class App extends Component {
   }
   render() {
     const { colors, isFetching, onboardingStep } = this.props;
-
-    if (colors.length === 0) {
-      return (
-        <div className="loading-cotainer">
-          <h1 className="loading">Loading</h1>
-        </div>
-      );
-    }
     return (
-      <div className={onboardingStep <= 3 && 'onboarding-active'}>
-        <Title colors={colors} />
-        <Onboarding colors={colors} onboardingStep={onboardingStep} />
-        <div className="main-container">
-          <ColorList colors={colors} isFetching={isFetching} />
-          <Footer />
-        </div>
-      </div>
+      <Main
+        colors={colors}
+        isFetching={isFetching}
+        onboardingStep={onboardingStep}
+      />
     );
   }
 }
 
 App.propTypes = {
   colors: PropTypes.array.isRequired,
+  dispatch: PropTypes.func.isRequired,
   isFetching: PropTypes.bool.isRequired,
   onboardingStep: PropTypes.number.isRequired,
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   const { onboardingStep, shownPalette, fetchedPalette } = state;
   return {
     colors: shownPalette.colors,
@@ -80,4 +66,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps, null)(App);
+export default connect(mapStateToProps)(App);

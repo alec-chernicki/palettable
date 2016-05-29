@@ -1,9 +1,11 @@
+import './Onboarding.scss';
+
 import React, { PropTypes } from 'react';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import StepOne from './StepOne';
 import StepTwo from './StepTwo';
 import StepThree from './StepThree';
-import InterfaceTheme from '../InterfaceTheme';
+import InterfaceTheme from '../InterfaceTheme/InterfaceTheme';
 
 const Onboarding = ({ colors, onboardingStep }) => {
   const { color } = colors[colors.length - 1];

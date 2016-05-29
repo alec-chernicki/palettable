@@ -100,9 +100,20 @@ export function invalidatePalette() {
   };
 }
 
+export function continueOnboardingIfNeeded() {
+  return (dispatch, getState) => {
+    const { onboardingStep } = getState();
+    // FIXME: This checking logic is scattered around and gross
+    if (onboardingStep <= 3 && onboardingStep >= 0) {
+      dispatch(continueOnboarding());
+    }
+  };
+}
+
 function fetchPalette(colors, dislikedColors) {
   return dispatch => {
     dispatch(requestPalette(colors));
+    // If the app is loading up or there's only one then query for a random new palette
     const apiURL = colors.length <= 1 ? '/api/random' : '/api/change';
     const flattenedColors = colors.map(color => color.color);
     return axios
@@ -128,43 +139,34 @@ function shouldFetchPalette(state) {
   return didInvalidate;
 }
 
-export function fetchColorFromPaletteIfNeeded(colors, dislikedColors) {
+export function fetchColorFromPaletteIfNeeded() {
   return (dispatch, getState) => {
     const state = getState();
-    const getFetchedPalette = () => getState().fetchedPalette.colors;
+    const { dislikedColors, colors } = state.shownPalette;
 
+    // Calls the server for a new palette if current one has been invalidated
     if (shouldFetchPalette(state)) {
       return dispatch(
         fetchPalette(colors, dislikedColors)
       ).then(() => {
-        const color = getFetchedPalette()[0];
+        const color = getState().fetchedPalette.colors[0];
         return Promise.resolve(color);
       });
     }
-    // TODO: Can this be done without a helper function?
-    const color = removeDuplicatesFrom(colors, getFetchedPalette());
+
+    // Otherwise pulls from the last fetched palette that has been cached
+    const color = removeDuplicatesFrom(colors, getState().fetchedPalette.colors);
     return Promise.resolve(color);
-  };
-}
-
-
-export function continueOnboardingIfNeeded() {
-  return (dispatch, getState) => {
-    const { onboardingStep } = getState();
-    // FIXME: This checking logic is scattered around and gross
-    if (onboardingStep <= 3 && onboardingStep >= 0) {
-      dispatch(continueOnboarding());
-    }
   };
 }
 
 export function addColorIfValid() {
   return (dispatch, getState) => {
     const { shownPalette, onboardingStep } = getState();
-    const { colors, dislikedColors } = shownPalette;
+    const { colors } = shownPalette;
     if ((onboardingStep <= 1 || onboardingStep > 3) && colors.length < 5) {
       return dispatch(
-        fetchColorFromPaletteIfNeeded(colors, dislikedColors)
+        fetchColorFromPaletteIfNeeded()
       ).then(color => {
         dispatch(addColor(color));
       }).then(() => {
@@ -182,9 +184,9 @@ export function changeColorIfValid() {
     if (onboardingStep === 2 || onboardingStep > 3) {
       dispatch(invalidatePalette());
       dispatch(dislikeColor(colors[colors.length - 1]));
+
       return dispatch(
-        // FIXME: eww grabbing the store way too much because it got stale
-        fetchColorFromPaletteIfNeeded(colors, getState().shownPalette.dislikedColors)
+        fetchColorFromPaletteIfNeeded()
       )
       .then(color => dispatch(changeColor(color)))
       .then(() => {

@@ -9,7 +9,6 @@ const initialState = [];
 
 export function colors(state = initialState, action) {
   switch (action.type) {
-    // FIXME: refactor into combine reducers
     case ADD_COLOR:
       return [
         ...state,

@@ -5,7 +5,6 @@ import {
   TOGGLE_COLOR_PICKER, TOGGLE_COLOR_ANIMATION,
 } from '../constants/ActionTypes';
 
-// FIXME: This feels super weird
 const initialState = {
   colors: [],
   dislikedColors: [],

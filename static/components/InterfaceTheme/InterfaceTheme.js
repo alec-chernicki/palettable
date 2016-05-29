@@ -1,3 +1,5 @@
+import './InterfaceTheme.scss';
+
 import React, { PropTypes } from 'react';
 import colorInterpreter from 'color';
 
