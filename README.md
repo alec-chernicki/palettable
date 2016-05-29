@@ -1,7 +1,7 @@
 # Palettable
-Generate beautiful color palettes even with no prior design experience.
+Generate beautiful color palettes, even with no prior design experience.
 
-**Full Website: https://palettable.io**
+**Full Website: http://palettable.io**
 
 ![alt tag](http://i.imgur.com/U1ImIj1.png)
 
@@ -34,7 +34,7 @@ Tech Used: Express
 
 1. Initial call to server is at the `/api/random` endpoint where it will fetch a new random palette from Colourlovers
 
-2. All subsequent calls are made to the `/api/change` endpoint where it will conditionally return a unique array of colors that will be cached on the client. 
+2. All subsequent calls are made to the `/api/change` endpoint where it will conditionally return a unique array of colors that will be cached on the client.
 
 #### Challenges and Improvements:
 
