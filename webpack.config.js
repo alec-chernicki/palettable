@@ -36,5 +36,5 @@ module.exports = {
       allChunks: true,
     }),
   ],
-  postcss: () => [cssnano, autoprefixer],
+  postcss: () => [autoprefixer],
 };

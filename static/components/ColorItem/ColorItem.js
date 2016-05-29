@@ -11,6 +11,9 @@ class ColorItem extends Component {
   handlePickerToggle() {
     this.props.onTogglePicker(this.props.color);
   }
+  handleColorChange(newColor) {
+    this.props.onSubmit(this.props.color, newColor.hex.toUpperCase());
+  }
   render() {
     const { color, colorValue, onSubmit, onChange } = this.props;
     return (
@@ -37,10 +40,9 @@ class ColorItem extends Component {
           >
             {color.pickerActive ?
               <ColorPicker
-                onChange={onChange}
+                onChange={this.handleColorChange.bind(this)}
                 onToggle={this.handlePickerToggle.bind(this)}
                 color={color.color}
-                currentColor={color}
               />
               : null
             }

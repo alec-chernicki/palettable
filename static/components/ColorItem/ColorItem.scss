@@ -17,7 +17,7 @@
 .color-footer {
   height: 70px;
   position: absolute;
-  bottom: 50px;
+  bottom: 35px;
   left: 25px;
   overflow: hidden;
   right: 25px;
@@ -26,6 +26,9 @@
   margin: 0 auto;
   animation-fill-mode: backwards;
 
+  .color:nth-of-type(5) & .like {
+    opacity: 0;
+  }
   .color:last-of-type & {
     opacity: 0.8;
     animation: fade-in 500ms cubic-bezier(.17,.89,.56,1.22);
@@ -36,15 +39,8 @@
     animation-delay: 50ms;
   }
 
-  .color:not(:first-child) & {
-    animation-fill-mode: both;
-  }
-
   .color-animation-leave & {
     animation-delay: 350ms;
-  }
-
-  .color-animation-leave & {
     display: none;
   }
 
@@ -60,7 +56,6 @@
 
 .instructions-container {
   width: 45px;
-  overflow: hidden;
   margin: 0;
   position: absolute;
 

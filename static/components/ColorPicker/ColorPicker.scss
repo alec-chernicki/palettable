@@ -64,6 +64,7 @@
     z-index: 900;
   }
 }
+
 .cover {
   cursor: pointer;
   position: fixed;
@@ -73,7 +74,7 @@
   z-index: 900;
   left: 0;
 
-  .onboarding {
+  &.onboarding {
     z-index: 1100;
     cursor: auto;
   }

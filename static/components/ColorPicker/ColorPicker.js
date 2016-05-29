@@ -1,12 +1,12 @@
 import './ColorPicker.scss';
 
-import React, { PropTypes, Component } from 'react';
+import React, { Component, PropTypes } from 'react'
 import { CustomPicker } from 'react-color';
 import { Hue, Saturation } from 'react-color/lib/components/common';
 
 class ColorPicker extends Component {
-  handleChange(color, newColor) {
-    this.props.onChange(this.props.currentColor, newColor);
+  handleChange(colorData) {
+    this.props.onChange(colorData);
   }
   render() {
     return (
@@ -16,7 +16,6 @@ class ColorPicker extends Component {
           <div className="saturation">
             <Saturation
               {...this.props}
-              className="saturation-main"
               onChange={this.handleChange.bind(this)}
             />
           </div>
@@ -38,6 +37,7 @@ class ColorPicker extends Component {
 
 ColorPicker.propTypes = {
   onChange: PropTypes.func.isRequired,
+  onToggle: PropTypes.func.isRequired,
   currentColor: PropTypes.object.isRequired,
 };
 
