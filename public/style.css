@@ -212,9 +212,10 @@ footer {
   -webkit-animation-fill-mode: backwards;
   animation-fill-mode: backwards; }
   .color:nth-of-type(5) .color-footer .like {
-    opacity: 0; }
+    opacity: 0;
+    display: none; }
   .color:last-of-type .color-footer {
-    opacity: 0.8;
+    opacity: 1;
     -webkit-animation: fade-in 500ms cubic-bezier(0.17, 0.89, 0.56, 1.22);
     animation: fade-in 500ms cubic-bezier(0.17, 0.89, 0.56, 1.22);
     -webkit-animation-fill-mode: backwards;
@@ -222,7 +223,8 @@ footer {
   .color:first-of-type .color-footer {
     -webkit-animation-delay: 50ms;
     animation-delay: 50ms; }
-  .color-animation-leave .color-footer {
+  l
+.color-animation-leave .color-footer {
     -webkit-animation-delay: 350ms;
     animation-delay: 350ms;
     display: none; }
@@ -236,7 +238,17 @@ footer {
 .instructions-container {
   width: 45px;
   margin: 0;
-  position: absolute; }
+  opacity: 0.8;
+  position: absolute;
+  cursor: pointer; }
+  .instructions-container:hover {
+    opacity: 1; }
+  .theme-light .instructions-container:hover .keyboard-button {
+    background-color: #FFF;
+    color: #444; }
+  .theme-dark .instructions-container:hover .keyboard-button {
+    background-color: #444;
+    color: #FFF; }
   .instructions-container.dislike {
     left: 0; }
   .instructions-container.like {
@@ -254,7 +266,9 @@ footer {
   line-height: 40px;
   position: relative;
   border: solid 2px #FFF;
-  border-radius: 4px; }
+  border-radius: 4px;
+  -webkit-transition: all 400ms cubic-bezier(0.17, 0.89, 0.56, 1.22);
+  transition: all 400ms cubic-bezier(0.17, 0.89, 0.56, 1.22); }
 
 .keyboard-text {
   text-align: center;

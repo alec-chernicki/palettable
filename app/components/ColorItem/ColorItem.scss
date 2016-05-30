@@ -28,9 +28,10 @@
 
   .color:nth-of-type(5) & .like {
     opacity: 0;
+    display: none;
   }
   .color:last-of-type & {
-    opacity: 0.8;
+    opacity: 1;
     animation: fade-in 500ms cubic-bezier(.17,.89,.56,1.22);
     animation-fill-mode: backwards;
   }
@@ -38,7 +39,7 @@
   .color:first-of-type & {
     animation-delay: 50ms;
   }
-
+l
   .color-animation-leave & {
     animation-delay: 350ms;
     display: none;
@@ -57,7 +58,24 @@
 .instructions-container {
   width: 45px;
   margin: 0;
+  opacity: 0.8;
   position: absolute;
+  cursor: pointer;
+
+  &:hover {
+    opacity: 1;
+  }
+
+  .theme-light &:hover .keyboard-button {
+    background-color: #FFF;
+    color: #444;
+  }
+
+  .theme-dark &:hover .keyboard-button {
+    background-color: #444;
+    color: #FFF;
+  }
+
 
   &.dislike {
     left: 0;
@@ -83,6 +101,7 @@
   position: relative;
   border: solid 2px #FFF;
   border-radius: 4px;
+  transition: all 400ms cubic-bezier(.17,.89,.56,1.22);
 }
 
 .keyboard-text {

@@ -27037,8 +27037,7 @@
 	  onChange: _react.PropTypes.func.isRequired,
 	  onLike: _react.PropTypes.func.isRequired,
 	  onDislike: _react.PropTypes.func.isRequired,
-	  onTogglePicker: _react.PropTypes.func.isRequired,
-	  onToggleAndClosePicker: _react.PropTypes.func.isRequired
+	  onTogglePicker: _react.PropTypes.func.isRequired
 	};
 
 	exports.default = ColorItem;

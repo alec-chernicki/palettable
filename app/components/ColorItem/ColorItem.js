@@ -72,7 +72,6 @@ ColorItem.propTypes = {
   onLike: PropTypes.func.isRequired,
   onDislike: PropTypes.func.isRequired,
   onTogglePicker: PropTypes.func.isRequired,
-  onToggleAndClosePicker: PropTypes.func.isRequired,
 };
 
 export default ColorItem;
