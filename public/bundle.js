@@ -22617,25 +22617,49 @@
 	      )
 	    );
 	  }
+	  // TODO: Can add classnames module to clean this up a bit
+	  var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 	  return _react2.default.createElement(
 	    'div',
-	    { className: onboardingStep <= 3 && 'onboarding-active' },
+	    { className: isMobile ? 'is-mobile root-container' : 'root-container' },
 	    _react2.default.createElement(
 	      'div',
-	      { className: 'on-mobile' },
+	      { className: onboardingStep <= 3 && 'onboarding-active' },
 	      _react2.default.createElement(
-	        'p',
-	        null,
-	        'Unfortunately Palettable isn\'t compatible on mobile devices...yet! Please, visit palettable.io on your desktop browser.'
+	        'div',
+	        { className: 'mobile-notice' },
+	        _react2.default.createElement(
+	          'h1',
+	          null,
+	          'Uh, oh.'
+	        ),
+	        _react2.default.createElement(
+	          'p',
+	          null,
+	          'Palettable isn\'t available on mobile devices...yet! Please, visit palettable.io on your desktop browser.'
+	        ),
+	        _react2.default.createElement(
+	          'p',
+	          null,
+	          'Follow for updates:'
+	        ),
+	        _react2.default.createElement(
+	          'a',
+	          {
+	            className: 'twitter-follow-button',
+	            href: 'https://twitter.com/whynotdostuff'
+	          },
+	          'Follow @whynotdostuff'
+	        )
+	      ),
+	      _react2.default.createElement(_Title2.default, { colors: colors }),
+	      _react2.default.createElement(_Onboarding2.default, { colors: colors, onboardingStep: onboardingStep }),
+	      _react2.default.createElement(
+	        'div',
+	        { className: 'main-container' },
+	        _react2.default.createElement(_ColorList2.default, { colors: colors, isFetching: isFetching }),
+	        _react2.default.createElement(_Footer2.default, null)
 	      )
-	    ),
-	    _react2.default.createElement(_Title2.default, { colors: colors }),
-	    _react2.default.createElement(_Onboarding2.default, { colors: colors, onboardingStep: onboardingStep }),
-	    _react2.default.createElement(
-	      'div',
-	      { className: 'main-container' },
-	      _react2.default.createElement(_ColorList2.default, { colors: colors, isFetching: isFetching }),
-	      _react2.default.createElement(_Footer2.default, null)
 	    )
 	  );
 	};

@@ -1,7 +1,7 @@
 * {
   box-sizing: border-box; }
 
-html, body, #root {
+html, body {
   margin: 0;
   padding: 0;
   color: #FFF;
@@ -9,7 +9,9 @@ html, body, #root {
   font-family: 'Asap';
   -webkit-font-smoothing: antialiased;
   font-weight: 700;
-  overflow: hidden;
+  overflow: hidden; }
+
+.root-container {
   min-width: 725px; }
 
 h1 {
@@ -60,35 +62,53 @@ li {
   flex-direction: column;
   height: 100vh; }
 
-.on-mobile {
+.mobile-notice {
   display: none; }
 
-@media only screen and (min-device-width: 320px) and (max-device-width: 480px) and (-webkit-min-device-pixel-ratio: 2) {
-  .on-mobile {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-pack: center;
-    -ms-flex-pack: center;
-    justify-content: center;
-    -webkit-box-align: center;
-    -ms-flex-align: center;
-    align-items: center;
-    z-index: 100000000;
-    background: #FFF; }
-    .on-mobile p {
-      color: #444;
-      max-width: 450px;
-      width: 100%;
-      line-height: 30px;
-      text-align: center; }
-  .main-container {
-    display: none; } }
+.is-mobile .mobile-notice {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  z-index: 100000000;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  background: #FFF; }
+  .is-mobile .mobile-notice h1 {
+    color: #444; }
+  .is-mobile .mobile-notice p {
+    color: #999;
+    max-width: 450px;
+    width: 100%;
+    font-weight: 400;
+    padding: 0 15px;
+    line-height: 30px;
+    text-align: center; }
+  .is-mobile .mobile-notice .twitter-follow-button {
+    color: #FFF;
+    border-radius: 3px;
+    padding: 10px 15px;
+    background-color: #1B95E0; }
+
+.is-mobile .main-container,
+.is-mobile .theme-light *,
+.is-mobile .theme-dark * {
+  display: none; }
+
+.is-mobile.root-container {
+  min-width: 0; }
 .title {
   margin: 0;
   position: absolute;

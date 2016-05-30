@@ -2,7 +2,7 @@
   box-sizing: border-box;
 }
 
-html, body, #root {
+html, body {
   margin: 0;
   padding: 0;
   color: #FFF;
@@ -11,6 +11,9 @@ html, body, #root {
   -webkit-font-smoothing: antialiased;
   font-weight: 700;
   overflow: hidden;
+}
+
+.root-container {
   min-width: 725px;
 }
 
@@ -54,16 +57,12 @@ li {
   height: 100vh;
 }
 
-.on-mobile {
+.mobile-notice {
   display: none;
 }
 
-@media only screen
-  and (min-device-width: 320px)
-  and (max-device-width: 480px)
-  and (-webkit-min-device-pixel-ratio: 2) {
-
-  .on-mobile {
+.is-mobile {
+  .mobile-notice {
     position: fixed;
     top: 0;
     left: 0;
@@ -73,18 +72,38 @@ li {
     justify-content: center;
     align-items: center;
     z-index: 100000000;
+    flex-direction: column;
     background: #FFF;
 
-    p {
+    h1 {
       color: #444;
+    }
+
+    p {
+      color: #999;
       max-width: 450px;
       width: 100%;
+      font-weight: 400;
+      padding: 0 15px;
       line-height: 30px;
       text-align: center;
     }
+
+    .twitter-follow-button {
+      color: #FFF;
+      border-radius: 3px;
+      padding: 10px 15px;
+      background-color: #1B95E0;
+    }
   }
 
-  *:not(.on-mobile) {
+  .main-container,
+  .theme-light *,
+  .theme-dark *, {
     display: none;
+  }
+
+  &.root-container {
+    min-width: 0;
   }
 }
