@@ -1,10 +1,9 @@
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const autoprefixer = require('autoprefixer');
-const cssnano = require('cssnano');
 
 module.exports = {
   entry: [
-    './static/index.js',
+    './app/index.js',
   ],
   output: {
     path: './public',

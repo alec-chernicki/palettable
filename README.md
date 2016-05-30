@@ -1,6 +1,6 @@
 # <img src='http://i.imgur.com/580vPI2.png' height='50'></a>
 
-Generate beautiful color palettes, even with no prior design experience.
+Generate beautiful color palettes, even with no prior design knowledge.
 
 **Full Website: http://palettable.io**
 
@@ -17,7 +17,7 @@ I tried to make the components are modular as possible so this will be a high le
 
 2. While the user goes through the tutorial, the keyboard events are conditionally blocked based on the current onboarding step using middleware from `redux-thunk`. Aka, they can't dislike a color when the tutorial is telling them to like a color.
 
-3. Once the tutorial is over, the actions `CHANGE_COLOR`, `ADD_COLOR`, and `REMOVE_COLOR` are dispatched based on the key that the user presses.
+3. Once the tutorial is over, the actions `CHANGE_COLOR`, `ADD_COLOR`, and `REMOVE_COLOR` are dispatched based on the key that the user presses. The reducers handle these actions and update the state of `shownPalette` accordingly. 
 
 4. Since the actions are asynchronous, the actions `REQUEST_PALETTE` and `RECEIVED_PALLETE` are dispatched when server is called. The request action blocks all key events and kicks off the searching animation. When received, key events are re-enabled and searching disappears.
 

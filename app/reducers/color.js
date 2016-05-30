@@ -49,9 +49,11 @@ export function color(state = initialState, action) {
       };
     case TOGGLE_COLOR_PICKER:
       if (state.id !== action.id) {
-        return state;
+        return {
+          ...state,
+          pickerActive: false,
+        };
       }
-
       return {
         ...state,
         pickerActive: !state.pickerActive,
@@ -64,7 +66,6 @@ export function color(state = initialState, action) {
         ...state,
         animating: !state.animating,
       };
-
     default:
       return state;
   }

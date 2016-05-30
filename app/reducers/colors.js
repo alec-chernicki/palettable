@@ -2,7 +2,7 @@ import { color } from './color';
 import {
   ADD_COLOR, CHANGE_COLOR, REMOVE_COLOR,
   CHANGE_COLOR_TEXT, EDIT_COLOR_TEXT, RESET_COLOR_NAME,
-  TOGGLE_COLOR_PICKER, TOGGLE_COLOR_ANIMATION,
+  TOGGLE_COLOR_PICKER, TOGGLE_COLOR_ANIMATION, CLOSE_ALL_COLOR_PICKERS,
 } from '../constants/ActionTypes';
 
 const initialState = [];
@@ -24,6 +24,7 @@ export function colors(state = initialState, action) {
       return state.filter(colorItem =>
         colorItem.id !== action.id
       );
+    // TODO: This is getting a bit ugly consider redux-actions to tidy up
     case CHANGE_COLOR_TEXT:
     case EDIT_COLOR_TEXT:
     case RESET_COLOR_NAME:

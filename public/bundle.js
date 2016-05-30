@@ -22202,6 +22202,7 @@
 	var CHANGE_COLOR_TEXT = exports.CHANGE_COLOR_TEXT = 'CHANGE_COLOR_TEXT';
 	var EDIT_COLOR_TEXT = exports.EDIT_COLOR_TEXT = 'EDIT_COLOR_TEXT';
 	var RESET_COLOR_NAME = exports.RESET_COLOR_NAME = 'RESET_COLOR_NAME';
+
 	var TOGGLE_COLOR_PICKER = exports.TOGGLE_COLOR_PICKER = 'TOGGLE_COLOR_PICKER';
 
 	var TOGGLE_COLOR_ANIMATION = exports.TOGGLE_COLOR_ANIMATION = 'TOGGLE_COLOR_ANIMATION';
@@ -22295,6 +22296,7 @@
 	    case _ActionTypes.RESET_COLOR_NAME:
 	    case _ActionTypes.TOGGLE_COLOR_PICKER:
 	    case _ActionTypes.TOGGLE_COLOR_ANIMATION:
+	    case _ActionTypes.CLOSE_ALL_COLOR_PICKERS:
 	    case _ActionTypes.CHANGE_COLOR:
 	      return _extends({}, state, {
 	        colors: (0, _colors.colors)(state.colors, action)
@@ -22347,6 +22349,7 @@
 	      return state.filter(function (colorItem) {
 	        return colorItem.id !== action.id;
 	      });
+	    // TODO: This is getting a bit ugly consider redux-actions to tidy up
 	    case _ActionTypes.CHANGE_COLOR_TEXT:
 	    case _ActionTypes.EDIT_COLOR_TEXT:
 	    case _ActionTypes.RESET_COLOR_NAME:
@@ -22425,9 +22428,10 @@
 	      });
 	    case _ActionTypes.TOGGLE_COLOR_PICKER:
 	      if (state.id !== action.id) {
-	        return state;
+	        return _extends({}, state, {
+	          pickerActive: false
+	        });
 	      }
-
 	      return _extends({}, state, {
 	        pickerActive: !state.pickerActive
 	      });
@@ -22438,7 +22442,6 @@
 	      return _extends({}, state, {
 	        animating: !state.animating
 	      });
-
 	    default:
 	      return state;
 	  }
@@ -22617,8 +22620,9 @@
 	      )
 	    );
 	  }
+	  var userAgentRegex = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i;
+	  var isMobile = userAgentRegex.test(navigator.userAgent);
 	  // TODO: Can add classnames module to clean this up a bit
-	  var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 	  return _react2.default.createElement(
 	    'div',
 	    { className: isMobile ? 'is-mobile root-container' : 'root-container' },
@@ -25385,6 +25389,12 @@
 	    },
 	    onTogglePicker: function onTogglePicker(color) {
 	      dispatch((0, _actions.toggleColorPicker)(color));
+	    },
+	    onLike: function onLike() {
+	      dispatch((0, _actions.addColorIfValid)());
+	    },
+	    onDislike: function onDislike() {
+	      dispatch((0, _actions.changeColorIfValid)());
 	    }
 	  };
 	};
@@ -26937,6 +26947,8 @@
 	      var colorValue = _props.colorValue;
 	      var onSubmit = _props.onSubmit;
 	      var onChange = _props.onChange;
+	      var onLike = _props.onLike;
+	      var onDislike = _props.onDislike;
 
 	      return _react2.default.createElement(
 	        'li',
@@ -26980,7 +26992,7 @@
 	            { className: 'color-footer' },
 	            _react2.default.createElement(
 	              'div',
-	              { className: 'instructions-container dislike' },
+	              { className: 'instructions-container dislike', onClick: onDislike },
 	              _react2.default.createElement(
 	                'span',
 	                { className: 'keyboard-button' },
@@ -26994,7 +27006,7 @@
 	            ),
 	            _react2.default.createElement(
 	              'div',
-	              { className: 'instructions-container like' },
+	              { className: 'instructions-container like', onClick: onLike },
 	              _react2.default.createElement(
 	                'span',
 	                { className: 'keyboard-button' },
@@ -27015,12 +27027,18 @@
 	  return ColorItem;
 	}(_react.Component);
 
+	// TODO: This component might be getting too much responsibility, consider refactor
+
+
 	ColorItem.propTypes = {
 	  color: _react.PropTypes.object.isRequired,
 	  colorValue: _react.PropTypes.string.isRequired,
-	  onTogglePicker: _react.PropTypes.func.isRequired,
 	  onSubmit: _react.PropTypes.func.isRequired,
-	  onChange: _react.PropTypes.func.isRequired
+	  onChange: _react.PropTypes.func.isRequired,
+	  onLike: _react.PropTypes.func.isRequired,
+	  onDislike: _react.PropTypes.func.isRequired,
+	  onTogglePicker: _react.PropTypes.func.isRequired,
+	  onToggleAndClosePicker: _react.PropTypes.func.isRequired
 	};
 
 	exports.default = ColorItem;
@@ -27195,8 +27213,7 @@
 
 	ColorPicker.propTypes = {
 	  onChange: _react.PropTypes.func.isRequired,
-	  onToggle: _react.PropTypes.func.isRequired,
-	  currentColor: _react.PropTypes.object.isRequired
+	  onToggle: _react.PropTypes.func.isRequired
 	};
 
 	exports.default = (0, _reactColor.CustomPicker)(ColorPicker);

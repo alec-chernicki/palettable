@@ -14,8 +14,9 @@ const Main = ({ colors, isFetching, onboardingStep }) => {
       </div>
     );
   }
+  const userAgentRegex = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i;
+  const isMobile = userAgentRegex.test(navigator.userAgent);
   // TODO: Can add classnames module to clean this up a bit
-  const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
   return (
     <div className={isMobile ? 'is-mobile root-container' : 'root-container'}>
       <div className={onboardingStep <= 3 && 'onboarding-active'}>

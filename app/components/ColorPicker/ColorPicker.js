@@ -38,7 +38,6 @@ class ColorPicker extends Component {
 ColorPicker.propTypes = {
   onChange: PropTypes.func.isRequired,
   onToggle: PropTypes.func.isRequired,
-  currentColor: PropTypes.object.isRequired,
 };
 
 export default CustomPicker(ColorPicker);

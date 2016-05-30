@@ -2,7 +2,7 @@ import { colors } from './colors';
 import {
   ADD_COLOR, CHANGE_COLOR, REMOVE_COLOR, DISLIKE_COLOR,
   CHANGE_COLOR_TEXT, EDIT_COLOR_TEXT, RESET_COLOR_NAME,
-  TOGGLE_COLOR_PICKER, TOGGLE_COLOR_ANIMATION,
+  TOGGLE_COLOR_PICKER, TOGGLE_COLOR_ANIMATION, CLOSE_ALL_COLOR_PICKERS,
 } from '../constants/ActionTypes';
 
 const initialState = {
@@ -18,6 +18,7 @@ export function shownPalette(state = initialState, action) {
     case RESET_COLOR_NAME:
     case TOGGLE_COLOR_PICKER:
     case TOGGLE_COLOR_ANIMATION:
+    case CLOSE_ALL_COLOR_PICKERS:
     case CHANGE_COLOR:
       return {
         ...state,

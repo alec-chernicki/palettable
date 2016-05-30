@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
 import {
   invalidatePalette, changeColorText, resetColorName, editColorText, toggleColorPicker,
+  addColorIfValid, changeColorIfValid, closeAllColorPickers,
 } from '../actions';
 import ColorItem from '../components/ColorItem/ColorItem';
 
@@ -28,6 +29,12 @@ const mapDispatchToProps = (dispatch) => ({
   },
   onTogglePicker: (color) => {
     dispatch(toggleColorPicker(color));
+  },
+  onLike: () => {
+    dispatch(addColorIfValid());
+  },
+  onDislike: () => {
+    dispatch(changeColorIfValid());
   },
 });
 

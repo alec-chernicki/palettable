@@ -15,7 +15,7 @@ class ColorItem extends Component {
     this.props.onSubmit(this.props.color, newColor.hex.toUpperCase());
   }
   render() {
-    const { color, colorValue, onSubmit, onChange } = this.props;
+    const { color, colorValue, onSubmit, onChange, onLike, onDislike } = this.props;
     return (
       <li key={color.id} style={{ backgroundColor: color.color }} className="color">
         <InterfaceTheme color={color.color}>
@@ -48,11 +48,11 @@ class ColorItem extends Component {
             }
           </ReactCSSTransitionGroup>
           <div className="color-footer">
-            <div className="instructions-container dislike">
+            <div className="instructions-container dislike" onClick={onDislike}>
               <span className="keyboard-button">D</span>
               <span className="keyboard-text">Disike</span>
             </div>
-            <div className="instructions-container like">
+            <div className="instructions-container like" onClick={onLike}>
               <span className="keyboard-button">L</span>
               <span className="keyboard-text">Like</span>
             </div>
@@ -63,12 +63,16 @@ class ColorItem extends Component {
   }
 }
 
+// TODO: This component might be getting too much responsibility, consider refactor
 ColorItem.propTypes = {
   color: PropTypes.object.isRequired,
   colorValue: PropTypes.string.isRequired,
-  onTogglePicker: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
+  onLike: PropTypes.func.isRequired,
+  onDislike: PropTypes.func.isRequired,
+  onTogglePicker: PropTypes.func.isRequired,
+  onToggleAndClosePicker: PropTypes.func.isRequired,
 };
 
 export default ColorItem;
