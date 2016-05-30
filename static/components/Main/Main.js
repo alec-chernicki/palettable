@@ -25,7 +25,7 @@ const Main = ({ colors, isFetching, onboardingStep }) => {
             Palettable isn't available on mobile devices...yet!
             Please, visit palettable.io on your desktop browser.
           </p>
-          <p>Follow for updates:</p>
+          <p>For updates:</p>
           <a
             className="twitter-follow-button"
             href="https://twitter.com/whynotdostuff"

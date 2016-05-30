@@ -16,7 +16,7 @@ class Footer extends Component {
     return (
       <footer>
         <a className="footer-icon twitter" onClick={this.handleClick} />
-        <a className="footer-icon github" href="https://github.com/alecortega" />
+        <a className="footer-icon github" href="https://github.com/alecortega/palettable" />
         <p className="footer-text">
           Made By
           <a href="http://www.alecortega.com/" className="footer-name">

@@ -22641,7 +22641,7 @@
 	        _react2.default.createElement(
 	          'p',
 	          null,
-	          'Follow for updates:'
+	          'For updates:'
 	        ),
 	        _react2.default.createElement(
 	          'a',
@@ -24463,7 +24463,7 @@
 	        'footer',
 	        null,
 	        _react2.default.createElement('a', { className: 'footer-icon twitter', onClick: this.handleClick }),
-	        _react2.default.createElement('a', { className: 'footer-icon github', href: 'https://github.com/alecortega' }),
+	        _react2.default.createElement('a', { className: 'footer-icon github', href: 'https://github.com/alecortega/palettable' }),
 	        _react2.default.createElement(
 	          'p',
 	          { className: 'footer-text' },

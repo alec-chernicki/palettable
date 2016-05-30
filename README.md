@@ -1,4 +1,5 @@
-# Palettable
+# <img src='http://i.imgur.com/580vPI2.png' height='50'></a>
+
 Generate beautiful color palettes, even with no prior design experience.
 
 **Full Website: http://palettable.io**
