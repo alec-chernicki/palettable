@@ -22620,6 +22620,15 @@
 	  return _react2.default.createElement(
 	    'div',
 	    { className: onboardingStep <= 3 && 'onboarding-active' },
+	    _react2.default.createElement(
+	      'div',
+	      { className: 'on-mobile' },
+	      _react2.default.createElement(
+	        'p',
+	        null,
+	        'Unfortunately Palettable isn\'t compatible on mobile devices...yet! Please, visit palettable.io on your desktop browser.'
+	      )
+	    ),
 	    _react2.default.createElement(_Title2.default, { colors: colors }),
 	    _react2.default.createElement(_Onboarding2.default, { colors: colors, onboardingStep: onboardingStep }),
 	    _react2.default.createElement(
@@ -70408,7 +70417,6 @@
 	  var color = colors[colors.length - 1].color;
 
 	  var onboardingCompleted = onboardingStep > 3;
-
 	  return _react2.default.createElement(
 	    'div',
 	    null,

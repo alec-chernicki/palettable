@@ -53,3 +53,38 @@ li {
   flex-direction: column;
   height: 100vh;
 }
+
+.on-mobile {
+  display: none;
+}
+
+@media only screen
+  and (min-device-width: 320px)
+  and (max-device-width: 480px)
+  and (-webkit-min-device-pixel-ratio: 2) {
+
+  .on-mobile {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100000000;
+    background: #FFF;
+
+    p {
+      color: #444;
+      max-width: 450px;
+      width: 100%;
+      line-height: 30px;
+      text-align: center;
+    }
+  }
+
+  *:not(.on-mobile) {
+    display: none;
+  }
+}

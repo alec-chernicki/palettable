@@ -16,6 +16,12 @@ const Main = ({ colors, isFetching, onboardingStep }) => {
   }
   return (
     <div className={onboardingStep <= 3 && 'onboarding-active'}>
+      <div className="on-mobile">
+        <p>
+          Unfortunately Palettable isn't compatible on mobile devices...yet!
+          Please, visit palettable.io on your desktop browser.
+        </p>
+      </div>
       <Title colors={colors} />
       <Onboarding colors={colors} onboardingStep={onboardingStep} />
       <div className="main-container">
