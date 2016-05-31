@@ -38,7 +38,10 @@ class ColorItem extends Component {
               <div className="bounce3"></div>
             </div>
           </div>
-          <SliderIcon onToggle={this.handlePickerToggle.bind(this)} />
+          <SliderIcon
+            toggled={color.pickerActive}
+            onToggle={this.handlePickerToggle.bind(this)}
+          />
           <ReactCSSTransitionGroup
             transitionName={"color-picker-animation"}
             transitionEnterTimeout={175}
@@ -78,6 +81,7 @@ ColorItem.propTypes = {
   onLike: PropTypes.func.isRequired,
   onDislike: PropTypes.func.isRequired,
   onTogglePicker: PropTypes.func.isRequired,
+  onCloseAllPickers: PropTypes.func.isRequired,
 };
 
 export default ColorItem;

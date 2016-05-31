@@ -26996,7 +26996,10 @@
 	              _react2.default.createElement('div', { className: 'bounce3' })
 	            )
 	          ),
-	          _react2.default.createElement(_SliderIcon2.default, { onToggle: this.handlePickerToggle.bind(this) }),
+	          _react2.default.createElement(_SliderIcon2.default, {
+	            toggled: color.pickerActive,
+	            onToggle: this.handlePickerToggle.bind(this)
+	          }),
 	          _react2.default.createElement(
 	            _reactAddonsCssTransitionGroup2.default,
 	            {
@@ -27060,7 +27063,8 @@
 	  onChange: _react.PropTypes.func.isRequired,
 	  onLike: _react.PropTypes.func.isRequired,
 	  onDislike: _react.PropTypes.func.isRequired,
-	  onTogglePicker: _react.PropTypes.func.isRequired
+	  onTogglePicker: _react.PropTypes.func.isRequired,
+	  onCloseAllPickers: _react.PropTypes.func.isRequired
 	};
 
 	exports.default = ColorItem;
@@ -70400,34 +70404,41 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+	// TODO: Clean up with classnames module
 	var SliderIcon = function SliderIcon(_ref) {
 	  var onToggle = _ref.onToggle;
+	  var toggled = _ref.toggled;
 	  return _react2.default.createElement(
 	    'div',
-	    { className: 'color-picker-icon', onClick: onToggle },
+	    { className: toggled && 'active' },
 	    _react2.default.createElement(
 	      'div',
-	      { className: 'line-container' },
-	      _react2.default.createElement('div', { className: 'line' }),
-	      _react2.default.createElement('div', { className: 'circle' })
-	    ),
-	    _react2.default.createElement(
-	      'div',
-	      { className: 'line-container' },
-	      _react2.default.createElement('div', { className: 'line' }),
-	      _react2.default.createElement('div', { className: 'circle' })
-	    ),
-	    _react2.default.createElement(
-	      'div',
-	      { className: 'line-container' },
-	      _react2.default.createElement('div', { className: 'line' }),
-	      _react2.default.createElement('div', { className: 'circle' })
+	      { className: 'color-picker-icon', onClick: onToggle },
+	      _react2.default.createElement(
+	        'div',
+	        { className: 'line-container' },
+	        _react2.default.createElement('div', { className: 'line' }),
+	        _react2.default.createElement('div', { className: 'circle' })
+	      ),
+	      _react2.default.createElement(
+	        'div',
+	        { className: 'line-container' },
+	        _react2.default.createElement('div', { className: 'line' }),
+	        _react2.default.createElement('div', { className: 'circle' })
+	      ),
+	      _react2.default.createElement(
+	        'div',
+	        { className: 'line-container' },
+	        _react2.default.createElement('div', { className: 'line' }),
+	        _react2.default.createElement('div', { className: 'circle' })
+	      )
 	    )
 	  );
 	};
 
 	SliderIcon.propTypes = {
-	  onToggle: _react.PropTypes.func.isRequired
+	  onToggle: _react.PropTypes.func.isRequired,
+	  toggled: _react.PropTypes.bool.isRequired
 	};
 
 	exports.default = SliderIcon;

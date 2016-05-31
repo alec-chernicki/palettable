@@ -7,7 +7,7 @@
   width: 40px;
   z-index: 1000;
 
-  &:hover {
+  &:hover, .active & {
     opacity: 1;
 
     .line-container {

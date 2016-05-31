@@ -490,15 +490,15 @@ footer {
   transition: opacity 0.25s ease-in-out;
   width: 40px;
   z-index: 1000; }
-  .color-picker-icon:hover {
+  .color-picker-icon:hover, .active .color-picker-icon {
     opacity: 1; }
-    .color-picker-icon:hover .line-container:nth-child(1) .circle {
+    .color-picker-icon:hover .line-container:nth-child(1) .circle, .active .color-picker-icon .line-container:nth-child(1) .circle {
       -webkit-transform: translateX(-23px);
       transform: translateX(-23px); }
-    .color-picker-icon:hover .line-container:nth-child(2) .circle {
+    .color-picker-icon:hover .line-container:nth-child(2) .circle, .active .color-picker-icon .line-container:nth-child(2) .circle {
       -webkit-transform: translateX(23px);
       transform: translateX(23px); }
-    .color-picker-icon:hover .line-container:nth-child(3) .circle {
+    .color-picker-icon:hover .line-container:nth-child(3) .circle, .active .color-picker-icon .line-container:nth-child(3) .circle {
       -webkit-transform: translateX(-5px);
       transform: translateX(-5px); }
   .onboarding-active .color-picker-icon {
