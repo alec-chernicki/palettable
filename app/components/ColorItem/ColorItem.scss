@@ -22,12 +22,14 @@
   overflow: hidden;
   right: 25px;
   opacity: 0;
+  display: none;
   max-width: 400px;
   margin: 0 auto;
   animation-fill-mode: backwards;
 
   .color:last-of-type & {
     opacity: 1;
+    display: block;
     animation: fade-in 500ms cubic-bezier(.17,.89,.56,1.22);
     animation-fill-mode: backwards;
   }
@@ -39,7 +41,7 @@
   .onboarding-active &,
   .color-animation-leave &,
   .color:nth-of-type(5) & .like, {
-    display: none;
+    display: none !important;
   }
 
   .color-animation-enter.color-animation-enter-active & {

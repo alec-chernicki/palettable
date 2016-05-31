@@ -207,12 +207,14 @@ footer {
   overflow: hidden;
   right: 25px;
   opacity: 0;
+  display: none;
   max-width: 400px;
   margin: 0 auto;
   -webkit-animation-fill-mode: backwards;
   animation-fill-mode: backwards; }
   .color:last-of-type .color-footer {
     opacity: 1;
+    display: block;
     -webkit-animation: fade-in 500ms cubic-bezier(0.17, 0.89, 0.56, 1.22);
     animation: fade-in 500ms cubic-bezier(0.17, 0.89, 0.56, 1.22);
     -webkit-animation-fill-mode: backwards;
@@ -223,7 +225,7 @@ footer {
   .onboarding-active .color-footer,
   .color-animation-leave .color-footer,
   .color:nth-of-type(5) .color-footer .like {
-    display: none; }
+    display: none !important; }
   .color-animation-enter.color-animation-enter-active .color-footer {
     display: none;
     -webkit-animation-play-state: paused !important;
