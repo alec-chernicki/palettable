@@ -30,6 +30,9 @@ const mapDispatchToProps = (dispatch) => ({
   onTogglePicker: (color) => {
     dispatch(toggleColorPicker(color));
   },
+  onCloseAllPickers: () => {
+    dispatch(closeAllColorPickers());
+  },
   onLike: () => {
     dispatch(addColorIfValid());
   },

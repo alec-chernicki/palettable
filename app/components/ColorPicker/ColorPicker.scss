@@ -11,11 +11,12 @@
 }
 
 .saturation {
-  width: 100%;
+  border-radius: 3px;
+  cursor: pointer;
+  overflow: hidden;
   padding-bottom: 60%;
   position: relative;
-  overflow: hidden;
-  border-radius: 3px;
+  width: 100%;
 }
 
 .saturation-main {
@@ -66,7 +67,6 @@
 }
 
 .cover {
-  cursor: pointer;
   position: fixed;
   top: 0;
   right: 0;
@@ -90,6 +90,7 @@
   height: 15px;
   border-radius: 3px;
   overflow: hidden;
+  cursor: pointer;
 
   * {
     height: 95% !important;

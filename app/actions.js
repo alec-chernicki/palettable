@@ -48,6 +48,12 @@ export function toggleColorPicker(color) {
   };
 }
 
+export function closeAllColorPickers() {
+  return {
+    type: CLOSE_ALL_COLOR_PICKERS,
+  }
+}
+
 // TODO: Fix these weird names
 export function changeColorText(color, text) {
   return {

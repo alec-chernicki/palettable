@@ -26,10 +26,6 @@
   margin: 0 auto;
   animation-fill-mode: backwards;
 
-  .color:nth-of-type(5) & .like {
-    opacity: 0;
-    display: none;
-  }
   .color:last-of-type & {
     opacity: 1;
     animation: fade-in 500ms cubic-bezier(.17,.89,.56,1.22);
@@ -39,19 +35,16 @@
   .color:first-of-type & {
     animation-delay: 50ms;
   }
-l
-  .color-animation-leave & {
-    animation-delay: 350ms;
+
+  .onboarding-active &,
+  .color-animation-leave &,
+  .color:nth-of-type(5) & .like, {
     display: none;
   }
 
   .color-animation-enter.color-animation-enter-active & {
     display: none;
     animation-play-state: paused !important;
-  }
-
-  .onboarding-active & {
-    display: none;
   }
 }
 
@@ -126,7 +119,7 @@ l
     text-align: justify;
     border-radius: 100%;
     display: inline-block;
-    animation: sk-bouncedelay 1.4s infinite ease-in-out both;
+    animation: bounce-with-delay 1.2s infinite ease-in-out both;
   }
 
   .bounce1 {
@@ -173,11 +166,13 @@ l
   }
 }
 
-@keyframes sk-bouncedelay {
+@keyframes bounce-with-delay {
   0%, 80%, 100% {
     transform: scale(0);
+    opacity: 0.3;
   }
   40% {
     transform: scale(1.0);
+    opacity: 1;
   }
 }

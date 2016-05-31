@@ -30,6 +30,7 @@ export function colors(state = initialState, action) {
     case RESET_COLOR_NAME:
     case TOGGLE_COLOR_ANIMATION:
     case TOGGLE_COLOR_PICKER:
+    case CLOSE_ALL_COLOR_PICKERS:
       return state.map(c =>
         color(c, action)
       );

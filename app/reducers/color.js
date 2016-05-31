@@ -1,7 +1,7 @@
 import {
   ADD_COLOR, CHANGE_COLOR, EDIT_COLOR_TEXT,
   CHANGE_COLOR_TEXT, RESET_COLOR_NAME, TOGGLE_COLOR_PICKER,
-  TOGGLE_COLOR_ANIMATION,
+  TOGGLE_COLOR_ANIMATION, CLOSE_ALL_COLOR_PICKERS,
 } from '../constants/ActionTypes';
 
 const initialState = {
@@ -57,6 +57,11 @@ export function color(state = initialState, action) {
       return {
         ...state,
         pickerActive: !state.pickerActive,
+      };
+    case CLOSE_ALL_COLOR_PICKERS:
+      return {
+        ...state,
+        pickerActive: false,
       };
     case TOGGLE_COLOR_ANIMATION:
       if (state.id !== action.id) {

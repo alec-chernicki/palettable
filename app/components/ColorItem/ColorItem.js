@@ -11,11 +11,16 @@ class ColorItem extends Component {
   handlePickerToggle() {
     this.props.onTogglePicker(this.props.color);
   }
+  handleCloseAllPickers() {
+    this.props.onCloseAll
+  }
   handleColorChange(newColor) {
     this.props.onSubmit(this.props.color, newColor.hex.toUpperCase());
   }
   render() {
-    const { color, colorValue, onSubmit, onChange, onLike, onDislike } = this.props;
+    const {
+      color, colorValue, onSubmit, onChange, onLike, onDislike, onCloseAllPickers
+    } = this.props;
     return (
       <li key={color.id} style={{ backgroundColor: color.color }} className="color">
         <InterfaceTheme color={color.color}>
@@ -25,6 +30,7 @@ class ColorItem extends Component {
               colorValue={colorValue}
               onChange={onChange}
               onSubmit={onSubmit}
+              onFocus={onCloseAllPickers}
             />
             <div className="spinner">
               <div className="bounce1"></div>

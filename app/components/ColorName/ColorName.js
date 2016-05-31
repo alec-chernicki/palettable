@@ -15,6 +15,7 @@ class ColorName extends Component {
         type="text"
         className="color-text"
         value={this.props.colorValue}
+        onFocus={this.props.onFocus}
         onChange={this.handleChange.bind(this)}
         onBlur={this.handleSubmit.bind(this)}
       />
@@ -26,6 +27,7 @@ ColorName.propTypes = {
   color: PropTypes.object.isRequired,
   colorValue: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
+  onFocus: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
 };
 

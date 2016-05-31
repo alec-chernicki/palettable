@@ -22204,6 +22204,7 @@
 	var RESET_COLOR_NAME = exports.RESET_COLOR_NAME = 'RESET_COLOR_NAME';
 
 	var TOGGLE_COLOR_PICKER = exports.TOGGLE_COLOR_PICKER = 'TOGGLE_COLOR_PICKER';
+	var CLOSE_ALL_COLOR_PICKERS = exports.CLOSE_ALL_COLOR_PICKERS = 'CLOSE_ALL_COLOR_PICKERS';
 
 	var TOGGLE_COLOR_ANIMATION = exports.TOGGLE_COLOR_ANIMATION = 'TOGGLE_COLOR_ANIMATION';
 
@@ -22355,6 +22356,7 @@
 	    case _ActionTypes.RESET_COLOR_NAME:
 	    case _ActionTypes.TOGGLE_COLOR_ANIMATION:
 	    case _ActionTypes.TOGGLE_COLOR_PICKER:
+	    case _ActionTypes.CLOSE_ALL_COLOR_PICKERS:
 	      return state.map(function (c) {
 	        return (0, _color.color)(c, action);
 	      });
@@ -22434,6 +22436,10 @@
 	      }
 	      return _extends({}, state, {
 	        pickerActive: !state.pickerActive
+	      });
+	    case _ActionTypes.CLOSE_ALL_COLOR_PICKERS:
+	      return _extends({}, state, {
+	        pickerActive: false
 	      });
 	    case _ActionTypes.TOGGLE_COLOR_ANIMATION:
 	      if (state.id !== action.id) {
@@ -25390,6 +25396,9 @@
 	    onTogglePicker: function onTogglePicker(color) {
 	      dispatch((0, _actions.toggleColorPicker)(color));
 	    },
+	    onCloseAllPickers: function onCloseAllPickers() {
+	      dispatch((0, _actions.closeAllColorPickers)());
+	    },
 	    onLike: function onLike() {
 	      dispatch((0, _actions.addColorIfValid)());
 	    },
@@ -25418,6 +25427,7 @@
 	exports.changeColor = changeColor;
 	exports.dislikeColor = dislikeColor;
 	exports.toggleColorPicker = toggleColorPicker;
+	exports.closeAllColorPickers = closeAllColorPickers;
 	exports.changeColorText = changeColorText;
 	exports.editColorText = editColorText;
 	exports.resetColorName = resetColorName;
@@ -25480,6 +25490,12 @@
 	  return {
 	    type: _ActionTypes.TOGGLE_COLOR_PICKER,
 	    id: color.id
+	  };
+	}
+
+	function closeAllColorPickers() {
+	  return {
+	    type: _ActionTypes.CLOSE_ALL_COLOR_PICKERS
 	  };
 	}
 
@@ -26935,6 +26951,11 @@
 	      this.props.onTogglePicker(this.props.color);
 	    }
 	  }, {
+	    key: 'handleCloseAllPickers',
+	    value: function handleCloseAllPickers() {
+	      this.props.onCloseAll;
+	    }
+	  }, {
 	    key: 'handleColorChange',
 	    value: function handleColorChange(newColor) {
 	      this.props.onSubmit(this.props.color, newColor.hex.toUpperCase());
@@ -26949,6 +26970,7 @@
 	      var onChange = _props.onChange;
 	      var onLike = _props.onLike;
 	      var onDislike = _props.onDislike;
+	      var onCloseAllPickers = _props.onCloseAllPickers;
 
 	      return _react2.default.createElement(
 	        'li',
@@ -26963,7 +26985,8 @@
 	              color: color,
 	              colorValue: colorValue,
 	              onChange: onChange,
-	              onSubmit: onSubmit
+	              onSubmit: onSubmit,
+	              onFocus: onCloseAllPickers
 	            }),
 	            _react2.default.createElement(
 	              'div',
@@ -27100,6 +27123,7 @@
 	        type: 'text',
 	        className: 'color-text',
 	        value: this.props.colorValue,
+	        onFocus: this.props.onFocus,
 	        onChange: this.handleChange.bind(this),
 	        onBlur: this.handleSubmit.bind(this)
 	      });
@@ -27113,6 +27137,7 @@
 	  color: _react.PropTypes.object.isRequired,
 	  colorValue: _react.PropTypes.string.isRequired,
 	  onChange: _react.PropTypes.func.isRequired,
+	  onFocus: _react.PropTypes.func.isRequired,
 	  onSubmit: _react.PropTypes.func.isRequired
 	};
 
