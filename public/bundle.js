@@ -70437,8 +70437,7 @@
 	};
 
 	SliderIcon.propTypes = {
-	  onToggle: _react.PropTypes.func.isRequired,
-	  toggled: _react.PropTypes.bool.isRequired
+	  onToggle: _react.PropTypes.func.isRequired
 	};
 
 	exports.default = SliderIcon;

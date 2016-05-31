@@ -24,7 +24,6 @@ const SliderIcon = ({ onToggle, toggled }) => (
 
 SliderIcon.propTypes = {
   onToggle: PropTypes.func.isRequired,
-  toggled: PropTypes.bool.isRequired,
 };
 
 export default SliderIcon;
