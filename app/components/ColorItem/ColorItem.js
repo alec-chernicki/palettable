@@ -11,15 +11,12 @@ class ColorItem extends Component {
   handlePickerToggle() {
     this.props.onTogglePicker(this.props.color);
   }
-  handleCloseAllPickers() {
-    this.props.onCloseAll
-  }
   handleColorChange(newColor) {
     this.props.onSubmit(this.props.color, newColor.hex.toUpperCase());
   }
   render() {
     const {
-      color, colorValue, onSubmit, onChange, onLike, onDislike, onCloseAllPickers
+      color, colorValue, onSubmit, onChange, onLike, onDislike, onCloseAllPickers,
     } = this.props;
     return (
       <li key={color.id} style={{ backgroundColor: color.color }} className="color">

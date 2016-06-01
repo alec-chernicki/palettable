@@ -3,7 +3,8 @@ import React from 'react';
 const StepThree = () => (
   <div className="step step-three">
     <p className="helper-text">
-      All you need to do is like or dislike the colors we find for you, it's that simple!
+      No more guessing random colors, all you need to
+      do is like or dislike what we find for you!
     </p>
     <p className="instructions">
       Press

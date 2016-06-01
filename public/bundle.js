@@ -24462,7 +24462,7 @@
 	  _createClass(Footer, [{
 	    key: 'handleClick',
 	    value: function handleClick() {
-	      var text = 'Check out this search engine for color palettes made by @whynotdostuff: ';
+	      var text = 'Palettable: Generate beautiful color palettes, even with no prior design knowledge. Made by @whynotdostuff.';
 	      var url = 'http://palettable.io';
 	      open('http://twitter.com/intent/tweet?text=' + text + '&url=' + url, 'thsare', 'height=400,width=550,resizable=1, toolbar=0,menubar=0,status=0, location=0');
 	    }
@@ -26949,11 +26949,6 @@
 	    key: 'handlePickerToggle',
 	    value: function handlePickerToggle() {
 	      this.props.onTogglePicker(this.props.color);
-	    }
-	  }, {
-	    key: 'handleCloseAllPickers',
-	    value: function handleCloseAllPickers() {
-	      this.props.onCloseAll;
 	    }
 	  }, {
 	    key: 'handleColorChange',
@@ -70592,7 +70587,7 @@
 	    _react2.default.createElement(
 	      "p",
 	      { className: "helper-text" },
-	      "We'll use the colors you like and search millions of palettes to find more that match."
+	      "We handle the decision making by searching millions of colors to find more that match."
 	    ),
 	    _react2.default.createElement(
 	      "p",
@@ -70633,7 +70628,7 @@
 	    _react2.default.createElement(
 	      "p",
 	      { className: "helper-text" },
-	      "All you need to do is like or dislike the colors we find for you, it's that simple!"
+	      "No more guessing random colors, all you need to do is like or dislike what we find for you!"
 	    ),
 	    _react2.default.createElement(
 	      "p",

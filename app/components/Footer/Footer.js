@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 
 class Footer extends Component {
   handleClick() {
-    const text = 'Check out this search engine for color palettes made by @whynotdostuff: ';
+    const text = 'Palettable: Generate beautiful color palettes, even with no prior design knowledge. Made by @whynotdostuff.';
     const url = 'http://palettable.io';
     open(
       `http://twitter.com/intent/tweet?text=${text}&url=${url}`,
