@@ -2,12 +2,18 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import Main from '../components/Main/Main';
 import {
-  addColorIfValid, removeColorIfValid, changeColorIfValid, animateColorStatus,
+  addColorIfValid, removeColorIfValid, changeColorIfValid, animateColorStatus, completeOnboarding,
 } from '../actions';
 
 class App extends Component {
+  componentWillMount() {
+    if (localStorage.getItem('onboardingCompletedPreviously')) {
+      this.props.dispatch(completeOnboarding());
+    }
+  }
   componentDidMount() {
     this.props.dispatch(addColorIfValid());
+    localStorage.setItem('onboardingCompletedPreviously', true);
 
     document.addEventListener('keydown', this.handleKeydown.bind(this));
     document.onkeydown = this.suppressBackspace.bind(this);
@@ -39,12 +45,12 @@ class App extends Component {
     }
   }
   render() {
-    const { colors, isFetching, onboardingStep } = this.props;
+    const { colors, isFetching, onboarding } = this.props;
     return (
       <Main
         colors={colors}
         isFetching={isFetching}
-        onboardingStep={onboardingStep}
+        onboarding={onboarding}
       />
     );
   }
@@ -54,14 +60,14 @@ App.propTypes = {
   colors: PropTypes.array.isRequired,
   dispatch: PropTypes.func.isRequired,
   isFetching: PropTypes.bool.isRequired,
-  onboardingStep: PropTypes.number.isRequired,
+  onboarding: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => {
-  const { onboardingStep, shownPalette, fetchedPalette } = state;
+  const { onboarding, shownPalette, fetchedPalette } = state;
   return {
     colors: shownPalette.colors,
-    onboardingStep,
+    onboarding,
     isFetching: fetchedPalette.isFetching,
   };
 };

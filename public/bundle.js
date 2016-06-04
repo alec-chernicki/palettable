@@ -22142,14 +22142,14 @@
 
 	var _redux = __webpack_require__(177);
 
-	var _onboardingStep = __webpack_require__(199);
+	var _onboarding = __webpack_require__(474);
 
 	var _fetchedPalette = __webpack_require__(201);
 
 	var _shownPalette = __webpack_require__(202);
 
 	var rootReducer = (0, _redux.combineReducers)({
-	  onboardingStep: _onboardingStep.onboardingStep,
+	  onboarding: _onboarding.onboarding,
 	  shownPalette: _shownPalette.shownPalette,
 	  fetchedPalette: _fetchedPalette.fetchedPalette
 	});
@@ -22157,33 +22157,7 @@
 	exports.default = rootReducer;
 
 /***/ },
-/* 199 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.onboardingStep = onboardingStep;
-
-	var _ActionTypes = __webpack_require__(200);
-
-	var initialState = 0;
-
-	function onboardingStep() {
-	  var state = arguments.length <= 0 || arguments[0] === undefined ? initialState : arguments[0];
-	  var action = arguments[1];
-
-	  switch (action.type) {
-	    case _ActionTypes.CONTINUE_ONBOARDING:
-	      return state + 1;
-	    default:
-	      return state;
-	  }
-	}
-
-/***/ },
+/* 199 */,
 /* 200 */
 /***/ function(module, exports) {
 
@@ -22193,6 +22167,7 @@
 	  value: true
 	});
 	var CONTINUE_ONBOARDING = exports.CONTINUE_ONBOARDING = 'CONTINUE_ONBOARDING';
+	var COMPLETE_ONBOARDING = exports.COMPLETE_ONBOARDING = 'COMPLETE_ONBOARDING';
 
 	var ADD_COLOR = exports.ADD_COLOR = 'ADD_COLOR';
 	var CHANGE_COLOR = exports.CHANGE_COLOR = 'CHANGE_COLOR';
@@ -22495,9 +22470,17 @@
 	  }
 
 	  _createClass(App, [{
+	    key: 'componentWillMount',
+	    value: function componentWillMount() {
+	      if (localStorage.getItem('onboardingCompletedPreviously')) {
+	        this.props.dispatch((0, _actions.completeOnboarding)());
+	      }
+	    }
+	  }, {
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
 	      this.props.dispatch((0, _actions.addColorIfValid)());
+	      localStorage.setItem('onboardingCompletedPreviously', true);
 
 	      document.addEventListener('keydown', this.handleKeydown.bind(this));
 	      document.onkeydown = this.suppressBackspace.bind(this);
@@ -22542,12 +22525,12 @@
 	      var _props2 = this.props;
 	      var colors = _props2.colors;
 	      var isFetching = _props2.isFetching;
-	      var onboardingStep = _props2.onboardingStep;
+	      var onboarding = _props2.onboarding;
 
 	      return _react2.default.createElement(_Main2.default, {
 	        colors: colors,
 	        isFetching: isFetching,
-	        onboardingStep: onboardingStep
+	        onboarding: onboarding
 	      });
 	    }
 	  }]);
@@ -22559,17 +22542,17 @@
 	  colors: _react.PropTypes.array.isRequired,
 	  dispatch: _react.PropTypes.func.isRequired,
 	  isFetching: _react.PropTypes.bool.isRequired,
-	  onboardingStep: _react.PropTypes.number.isRequired
+	  onboarding: _react.PropTypes.object.isRequired
 	};
 
 	var mapStateToProps = function mapStateToProps(state) {
-	  var onboardingStep = state.onboardingStep;
+	  var onboarding = state.onboarding;
 	  var shownPalette = state.shownPalette;
 	  var fetchedPalette = state.fetchedPalette;
 
 	  return {
 	    colors: shownPalette.colors,
-	    onboardingStep: onboardingStep,
+	    onboarding: onboarding,
 	    isFetching: fetchedPalette.isFetching
 	  };
 	};
@@ -22604,16 +22587,16 @@
 
 	var _ColorList2 = _interopRequireDefault(_ColorList);
 
-	var _Onboarding = __webpack_require__(469);
+	var _VisibleOnboarding = __webpack_require__(475);
 
-	var _Onboarding2 = _interopRequireDefault(_Onboarding);
+	var _VisibleOnboarding2 = _interopRequireDefault(_VisibleOnboarding);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var Main = function Main(_ref) {
 	  var colors = _ref.colors;
 	  var isFetching = _ref.isFetching;
-	  var onboardingStep = _ref.onboardingStep;
+	  var onboarding = _ref.onboarding;
 
 	  if (colors.length === 0) {
 	    return _react2.default.createElement(
@@ -22634,7 +22617,7 @@
 	    { className: isMobile ? 'is-mobile root-container' : 'root-container' },
 	    _react2.default.createElement(
 	      'div',
-	      { className: onboardingStep <= 3 && 'onboarding-active' },
+	      { className: !onboarding.isCompleted && 'onboarding-active' },
 	      _react2.default.createElement(
 	        'div',
 	        { className: 'mobile-notice' },
@@ -22663,7 +22646,7 @@
 	        )
 	      ),
 	      _react2.default.createElement(_Title2.default, { colors: colors }),
-	      _react2.default.createElement(_Onboarding2.default, { colors: colors, onboardingStep: onboardingStep }),
+	      _react2.default.createElement(_VisibleOnboarding2.default, null),
 	      _react2.default.createElement(
 	        'div',
 	        { className: 'main-container' },
@@ -22677,7 +22660,7 @@
 	Main.propTypes = {
 	  colors: _react.PropTypes.array.isRequired,
 	  isFetching: _react.PropTypes.bool.isRequired,
-	  onboardingStep: _react.PropTypes.number.isRequired
+	  onboarding: _react.PropTypes.object.isRequired
 	};
 
 	exports.default = Main;
@@ -25422,6 +25405,7 @@
 	  value: true
 	});
 	exports.continueOnboarding = continueOnboarding;
+	exports.completeOnboarding = completeOnboarding;
 	exports.removeColor = removeColor;
 	exports.addColor = addColor;
 	exports.changeColor = changeColor;
@@ -25451,10 +25435,18 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+	// TODO: This is getting out of hand, implement redux-actions to handle some of this
+
 
 	function continueOnboarding() {
 	  return {
 	    type: _ActionTypes.CONTINUE_ONBOARDING
+	  };
+	}
+
+	function completeOnboarding() {
+	  return {
+	    type: _ActionTypes.COMPLETE_ONBOARDING
 	  };
 	}
 
@@ -25555,11 +25547,13 @@
 	  return function (dispatch, getState) {
 	    var _getState = getState();
 
-	    var onboardingStep = _getState.onboardingStep;
+	    var step = _getState.onboarding.step;
 	    // FIXME: This checking logic is scattered around and gross
 
-	    if (onboardingStep <= 3 && onboardingStep >= 0) {
+	    if (step < 3 && step >= 0) {
 	      dispatch(continueOnboarding());
+	    } else if (step === 3) {
+	      dispatch(completeOnboarding());
 	    }
 	  };
 	}
@@ -25625,11 +25619,11 @@
 	  return function (dispatch, getState) {
 	    var _getState2 = getState();
 
-	    var shownPalette = _getState2.shownPalette;
-	    var onboardingStep = _getState2.onboardingStep;
-	    var colors = shownPalette.colors;
+	    var colors = _getState2.shownPalette.colors;
+	    var onboarding = _getState2.onboarding;
+	    // TODO: This conditional is so so gross, fix pls
 
-	    if ((onboardingStep <= 1 || onboardingStep > 3) && colors.length < 5) {
+	    if (colors.length < 5 && (onboarding.isCompleted || onboarding.step <= 1 || onboarding.step > 3)) {
 	      return dispatch(fetchColorFromPaletteIfNeeded()).then(function (color) {
 	        dispatch(addColor(color));
 	      }).then(function () {
@@ -25644,11 +25638,10 @@
 	  return function (dispatch, getState) {
 	    var _getState3 = getState();
 
-	    var shownPalette = _getState3.shownPalette;
-	    var onboardingStep = _getState3.onboardingStep;
-	    var colors = shownPalette.colors;
+	    var colors = _getState3.shownPalette.colors;
+	    var onboarding = _getState3.onboarding;
 
-	    if (onboardingStep === 2 || onboardingStep > 3) {
+	    if (onboarding.isCompleted || onboarding.step === 2 || onboarding.step > 3) {
 	      dispatch(invalidatePalette());
 	      dispatch(dislikeColor(colors[colors.length - 1]));
 
@@ -25666,12 +25659,11 @@
 	  return function (dispatch, getState) {
 	    var _getState4 = getState();
 
-	    var shownPalette = _getState4.shownPalette;
-	    var onboardingStep = _getState4.onboardingStep;
-	    var colors = shownPalette.colors;
+	    var colors = _getState4.shownPalette.colors;
+	    var onboarding = _getState4.onboarding;
 
 
-	    if (colors.length > 1 && onboardingStep >= 3) {
+	    if (colors.length > 1 && (onboarding.isCompleted || onboarding.step >= 3)) {
 	      dispatch(invalidatePalette());
 	      dispatch(removeColor.apply(undefined, _toConsumableArray(colors.slice(-1))));
 	      dispatch(continueOnboardingIfNeeded());
@@ -70482,15 +70474,13 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var Onboarding = function Onboarding(_ref) {
-	  var colors = _ref.colors;
-	  var onboardingStep = _ref.onboardingStep;
-	  var color = colors[colors.length - 1].color;
-
-	  var onboardingCompleted = onboardingStep > 3;
+	  var color = _ref.color;
+	  var isCompleted = _ref.isCompleted;
+	  var step = _ref.step;
 	  return _react2.default.createElement(
 	    'div',
 	    null,
-	    !onboardingCompleted && _react2.default.createElement(
+	    !isCompleted && _react2.default.createElement(
 	      _InterfaceTheme2.default,
 	      { color: color },
 	      _react2.default.createElement('div', { className: 'cover onboarding' }),
@@ -70502,17 +70492,18 @@
 	          transitionEnterTimeout: 150,
 	          transitionLeaveTimeout: 150
 	        },
-	        onboardingStep === 1 && _react2.default.createElement(_StepOne2.default, null),
-	        onboardingStep === 2 && _react2.default.createElement(_StepTwo2.default, null),
-	        onboardingStep === 3 && _react2.default.createElement(_StepThree2.default, null)
+	        step === 1 && _react2.default.createElement(_StepOne2.default, null),
+	        step === 2 && _react2.default.createElement(_StepTwo2.default, null),
+	        step === 3 && _react2.default.createElement(_StepThree2.default, null)
 	      )
 	    )
 	  );
 	};
 
 	Onboarding.propTypes = {
-	  onboardingStep: _react.PropTypes.number.isRequired,
-	  colors: _react.PropTypes.array.isRequired
+	  step: _react.PropTypes.number.isRequired,
+	  isCompleted: _react.PropTypes.bool.isRequired,
+	  color: _react.PropTypes.string.isRequired
 	};
 
 	exports.default = Onboarding;
@@ -70645,6 +70636,81 @@
 	};
 
 	exports.default = StepThree;
+
+/***/ },
+/* 474 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+	exports.onboarding = onboarding;
+
+	var _ActionTypes = __webpack_require__(200);
+
+	var initialState = {
+	  step: 0,
+	  isCompleted: false
+	};
+
+	function onboarding() {
+	  var state = arguments.length <= 0 || arguments[0] === undefined ? initialState : arguments[0];
+	  var action = arguments[1];
+
+	  switch (action.type) {
+	    case _ActionTypes.CONTINUE_ONBOARDING:
+	      return _extends({}, state, {
+	        step: state.step + 1
+	      });
+	    case _ActionTypes.COMPLETE_ONBOARDING:
+	      return _extends({}, state, {
+	        isCompleted: true
+	      });
+	    default:
+	      return state;
+	  }
+	}
+
+/***/ },
+/* 475 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _reactRedux = __webpack_require__(170);
+
+	var _Onboarding = __webpack_require__(469);
+
+	var _Onboarding2 = _interopRequireDefault(_Onboarding);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var mapStateToProps = function mapStateToProps(state) {
+	  var colors = state.shownPalette.colors;
+	  var _state$onboarding = state.onboarding;
+	  var step = _state$onboarding.step;
+	  var isCompleted = _state$onboarding.isCompleted;
+
+
+	  return {
+	    step: step,
+	    isCompleted: isCompleted,
+	    color: colors[colors.length - 1].color
+	  };
+	};
+
+	var SyncedColor = (0, _reactRedux.connect)(mapStateToProps)(_Onboarding2.default);
+
+	exports.default = SyncedColor;
 
 /***/ }
 /******/ ]);

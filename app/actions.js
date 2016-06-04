@@ -1,15 +1,24 @@
 import axios from 'axios';
 import { removeDuplicatesFrom } from '../utils/helpers';
+// TODO: This is getting out of hand, implement redux-actions to handle some of this
 import {
-  CONTINUE_ONBOARDING, TOGGLE_COLOR_ANIMATION, DISLIKE_COLOR,
+  CONTINUE_ONBOARDING, COMPLETE_ONBOARDING,
+  TOGGLE_COLOR_ANIMATION, DISLIKE_COLOR,
   CHANGE_COLOR_TEXT, EDIT_COLOR_TEXT, RESET_COLOR_NAME, TOGGLE_COLOR_PICKER,
   ADD_COLOR, REMOVE_COLOR, CHANGE_COLOR,
   REQUEST_PALETTE, RECEIVE_PALETTE, INVALIDATE_PALETTE, CLOSE_ALL_COLOR_PICKERS,
+
 } from './constants/ActionTypes';
 
 export function continueOnboarding() {
   return {
     type: CONTINUE_ONBOARDING,
+  };
+}
+
+export function completeOnboarding() {
+  return {
+    type: COMPLETE_ONBOARDING,
   };
 }
 
@@ -51,7 +60,7 @@ export function toggleColorPicker(color) {
 export function closeAllColorPickers() {
   return {
     type: CLOSE_ALL_COLOR_PICKERS,
-  }
+  };
 }
 
 // TODO: Fix these weird names
@@ -108,10 +117,12 @@ export function invalidatePalette() {
 
 export function continueOnboardingIfNeeded() {
   return (dispatch, getState) => {
-    const { onboardingStep } = getState();
+    const { onboarding: { step } } = getState();
     // FIXME: This checking logic is scattered around and gross
-    if (onboardingStep <= 3 && onboardingStep >= 0) {
+    if (step < 3 && step >= 0) {
       dispatch(continueOnboarding());
+    } else if (step === 3) {
+      dispatch(completeOnboarding());
     }
   };
 }
@@ -168,9 +179,9 @@ export function fetchColorFromPaletteIfNeeded() {
 
 export function addColorIfValid() {
   return (dispatch, getState) => {
-    const { shownPalette, onboardingStep } = getState();
-    const { colors } = shownPalette;
-    if ((onboardingStep <= 1 || onboardingStep > 3) && colors.length < 5) {
+    const { shownPalette: { colors }, onboarding } = getState();
+    // TODO: This conditional is so so gross, fix pls
+    if (colors.length < 5 && (onboarding.isCompleted || (onboarding.step <= 1 || onboarding.step > 3))) {
       return dispatch(
         fetchColorFromPaletteIfNeeded()
       ).then(color => {
@@ -185,9 +196,8 @@ export function addColorIfValid() {
 
 export function changeColorIfValid() {
   return (dispatch, getState) => {
-    const { shownPalette, onboardingStep } = getState();
-    const { colors } = shownPalette;
-    if (onboardingStep === 2 || onboardingStep > 3) {
+    const { shownPalette: { colors }, onboarding } = getState();
+    if (onboarding.isCompleted || (onboarding.step === 2 || onboarding.step > 3)) {
       dispatch(invalidatePalette());
       dispatch(dislikeColor(colors[colors.length - 1]));
 
@@ -205,10 +215,9 @@ export function changeColorIfValid() {
 
 export function removeColorIfValid() {
   return (dispatch, getState) => {
-    const { shownPalette, onboardingStep } = getState();
-    const { colors } = shownPalette;
+    const { shownPalette: { colors }, onboarding } = getState();
 
-    if (colors.length > 1 && onboardingStep >= 3) {
+    if (colors.length > 1 && (onboarding.isCompleted || onboarding.step >= 3)) {
       dispatch(invalidatePalette());
       dispatch(removeColor(...colors.slice(-1)));
       dispatch(continueOnboardingIfNeeded());

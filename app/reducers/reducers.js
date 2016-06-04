@@ -1,10 +1,10 @@
 import { combineReducers } from 'redux';
-import { onboardingStep } from './onboardingStep';
+import { onboarding } from './onboarding';
 import { fetchedPalette } from './fetchedPalette';
 import { shownPalette } from './shownPalette';
 
 const rootReducer = combineReducers({
-  onboardingStep,
+  onboarding,
   shownPalette,
   fetchedPalette,
 });

@@ -4,9 +4,9 @@ import React, { PropTypes } from 'react';
 import Title from '../Title/Title';
 import Footer from '../Footer/Footer';
 import ColorList from '../ColorList/ColorList';
-import Onboarding from '../Onboarding/Onboarding';
+import VisibleOnboarding from '../../containers/VisibleOnboarding';
 
-const Main = ({ colors, isFetching, onboardingStep }) => {
+const Main = ({ colors, isFetching, onboarding }) => {
   if (colors.length === 0) {
     return (
       <div className="loading-cotainer">
@@ -19,7 +19,7 @@ const Main = ({ colors, isFetching, onboardingStep }) => {
   // TODO: Can add classnames module to clean this up a bit
   return (
     <div className={isMobile ? 'is-mobile root-container' : 'root-container'}>
-      <div className={onboardingStep <= 3 && 'onboarding-active'}>
+      <div className={!onboarding.isCompleted && 'onboarding-active'}>
         <div className="mobile-notice">
           <h1>Uh, oh.</h1>
           <p>
@@ -35,7 +35,7 @@ const Main = ({ colors, isFetching, onboardingStep }) => {
           </a>
         </div>
         <Title colors={colors} />
-        <Onboarding colors={colors} onboardingStep={onboardingStep} />
+        <VisibleOnboarding />
         <div className="main-container">
           <ColorList colors={colors} isFetching={isFetching} />
           <Footer />
@@ -48,7 +48,7 @@ const Main = ({ colors, isFetching, onboardingStep }) => {
 Main.propTypes = {
   colors: PropTypes.array.isRequired,
   isFetching: PropTypes.bool.isRequired,
-  onboardingStep: PropTypes.number.isRequired,
+  onboarding: PropTypes.object.isRequired,
 };
 
 export default Main;
