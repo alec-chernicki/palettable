@@ -545,7 +545,7 @@ footer {
   width: 100%;
   position: absolute;
   height: 180px;
-  top: 62%;
+  top: 70%;
   margin-top: -90px;
   min-width: 725px;
   z-index: 1100; }
@@ -557,14 +557,18 @@ footer {
   font-weight: 400;
   -webkit-animation: fade-in 500ms cubic-bezier(0.17, 0.89, 0.56, 1.22);
   animation: fade-in 500ms cubic-bezier(0.17, 0.89, 0.56, 1.22);
-  opacity: 0.8;
+  -webkit-animation-delay: 200ms;
+  animation-delay: 200ms;
+  -webkit-animation-fill-mode: backwards;
+  animation-fill-mode: backwards;
+  opacity: 0.85;
   margin-top: 0; }
 
 .instructions {
   -webkit-animation: fade-in 500ms cubic-bezier(0.17, 0.89, 0.56, 1.22);
   animation: fade-in 500ms cubic-bezier(0.17, 0.89, 0.56, 1.22);
-  -webkit-animation-delay: 425ms;
-  animation-delay: 425ms;
+  -webkit-animation-delay: 625ms;
+  animation-delay: 625ms;
   -webkit-animation-fill-mode: backwards;
   animation-fill-mode: backwards;
   margin: 0; }

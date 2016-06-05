@@ -70578,7 +70578,7 @@
 	    _react2.default.createElement(
 	      "p",
 	      { className: "helper-text" },
-	      "We handle the decision making by searching millions of colors to find more that match."
+	      "We take care of the hard part and search millions of colors to find more that match."
 	    ),
 	    _react2.default.createElement(
 	      "p",

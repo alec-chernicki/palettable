@@ -3,7 +3,7 @@ import React from 'react';
 const StepTwo = () => (
   <div className="step step-two">
     <p className="helper-text">
-      We handle the decision making by searching
+      We take care of the hard part and search
       millions of colors to find more that match.
     </p>
     <p className="instructions">

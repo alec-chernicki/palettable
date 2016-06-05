@@ -2,7 +2,7 @@
   width: 100%;
   position: absolute;
   height: 180px;
-  top: 62%;
+  top: 70%;
   margin-top: -90px;
   min-width: 725px;
   z-index: 1100;
@@ -16,13 +16,15 @@
 .helper-text {
   font-weight: 400;
   animation: fade-in 500ms cubic-bezier(.17,.89,.56,1.22);
-  opacity: 0.8;
+  animation-delay: 200ms;
+  animation-fill-mode: backwards;
+  opacity: 0.85;
   margin-top: 0;
 }
 
 .instructions {
   animation: fade-in 500ms cubic-bezier(.17,.89,.56,1.22);
-  animation-delay: 425ms;
+  animation-delay: 625ms;
   animation-fill-mode: backwards;
   margin: 0;
 }
