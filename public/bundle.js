@@ -22142,7 +22142,7 @@
 
 	var _redux = __webpack_require__(177);
 
-	var _onboarding = __webpack_require__(474);
+	var _onboarding = __webpack_require__(199);
 
 	var _fetchedPalette = __webpack_require__(201);
 
@@ -22157,7 +22157,45 @@
 	exports.default = rootReducer;
 
 /***/ },
-/* 199 */,
+/* 199 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+	exports.onboarding = onboarding;
+
+	var _ActionTypes = __webpack_require__(200);
+
+	var initialState = {
+	  step: 0,
+	  isCompleted: false
+	};
+
+	function onboarding() {
+	  var state = arguments.length <= 0 || arguments[0] === undefined ? initialState : arguments[0];
+	  var action = arguments[1];
+
+	  switch (action.type) {
+	    case _ActionTypes.CONTINUE_ONBOARDING:
+	      return _extends({}, state, {
+	        step: state.step + 1
+	      });
+	    case _ActionTypes.COMPLETE_ONBOARDING:
+	      return _extends({}, state, {
+	        isCompleted: true
+	      });
+	    default:
+	      return state;
+	  }
+	}
+
+/***/ },
 /* 200 */
 /***/ function(module, exports) {
 
@@ -22587,7 +22625,7 @@
 
 	var _ColorList2 = _interopRequireDefault(_ColorList);
 
-	var _VisibleOnboarding = __webpack_require__(475);
+	var _VisibleOnboarding = __webpack_require__(469);
 
 	var _VisibleOnboarding2 = _interopRequireDefault(_VisibleOnboarding);
 
@@ -70445,7 +70483,43 @@
 	  value: true
 	});
 
-	__webpack_require__(470);
+	var _reactRedux = __webpack_require__(170);
+
+	var _Onboarding = __webpack_require__(470);
+
+	var _Onboarding2 = _interopRequireDefault(_Onboarding);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var mapStateToProps = function mapStateToProps(state) {
+	  var colors = state.shownPalette.colors;
+	  var _state$onboarding = state.onboarding;
+	  var step = _state$onboarding.step;
+	  var isCompleted = _state$onboarding.isCompleted;
+
+
+	  return {
+	    step: step,
+	    isCompleted: isCompleted,
+	    color: colors[colors.length - 1].color
+	  };
+	};
+
+	var SyncedColor = (0, _reactRedux.connect)(mapStateToProps)(_Onboarding2.default);
+
+	exports.default = SyncedColor;
+
+/***/ },
+/* 470 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	__webpack_require__(471);
 
 	var _react = __webpack_require__(2);
 
@@ -70455,15 +70529,15 @@
 
 	var _reactAddonsCssTransitionGroup2 = _interopRequireDefault(_reactAddonsCssTransitionGroup);
 
-	var _StepOne = __webpack_require__(471);
+	var _StepOne = __webpack_require__(472);
 
 	var _StepOne2 = _interopRequireDefault(_StepOne);
 
-	var _StepTwo = __webpack_require__(472);
+	var _StepTwo = __webpack_require__(473);
 
 	var _StepTwo2 = _interopRequireDefault(_StepTwo);
 
-	var _StepThree = __webpack_require__(473);
+	var _StepThree = __webpack_require__(474);
 
 	var _StepThree2 = _interopRequireDefault(_StepThree);
 
@@ -70509,13 +70583,13 @@
 	exports.default = Onboarding;
 
 /***/ },
-/* 470 */
+/* 471 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ },
-/* 471 */
+/* 472 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -70556,7 +70630,7 @@
 	exports.default = StepOne;
 
 /***/ },
-/* 472 */
+/* 473 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -70578,7 +70652,7 @@
 	    _react2.default.createElement(
 	      "p",
 	      { className: "helper-text" },
-	      "We take care of the hard part and search millions of colors to find more that match."
+	      "We'll handle the hard part and search millions of palettes to find more colors that match."
 	    ),
 	    _react2.default.createElement(
 	      "p",
@@ -70597,7 +70671,7 @@
 	exports.default = StepTwo;
 
 /***/ },
-/* 473 */
+/* 474 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -70636,81 +70710,6 @@
 	};
 
 	exports.default = StepThree;
-
-/***/ },
-/* 474 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-	exports.onboarding = onboarding;
-
-	var _ActionTypes = __webpack_require__(200);
-
-	var initialState = {
-	  step: 0,
-	  isCompleted: false
-	};
-
-	function onboarding() {
-	  var state = arguments.length <= 0 || arguments[0] === undefined ? initialState : arguments[0];
-	  var action = arguments[1];
-
-	  switch (action.type) {
-	    case _ActionTypes.CONTINUE_ONBOARDING:
-	      return _extends({}, state, {
-	        step: state.step + 1
-	      });
-	    case _ActionTypes.COMPLETE_ONBOARDING:
-	      return _extends({}, state, {
-	        isCompleted: true
-	      });
-	    default:
-	      return state;
-	  }
-	}
-
-/***/ },
-/* 475 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _reactRedux = __webpack_require__(170);
-
-	var _Onboarding = __webpack_require__(469);
-
-	var _Onboarding2 = _interopRequireDefault(_Onboarding);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var mapStateToProps = function mapStateToProps(state) {
-	  var colors = state.shownPalette.colors;
-	  var _state$onboarding = state.onboarding;
-	  var step = _state$onboarding.step;
-	  var isCompleted = _state$onboarding.isCompleted;
-
-
-	  return {
-	    step: step,
-	    isCompleted: isCompleted,
-	    color: colors[colors.length - 1].color
-	  };
-	};
-
-	var SyncedColor = (0, _reactRedux.connect)(mapStateToProps)(_Onboarding2.default);
-
-	exports.default = SyncedColor;
 
 /***/ }
 /******/ ]);

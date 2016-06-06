@@ -3,8 +3,8 @@ import React from 'react';
 const StepTwo = () => (
   <div className="step step-two">
     <p className="helper-text">
-      We take care of the hard part and search
-      millions of colors to find more that match.
+      We'll handle the hard part and search millions
+      of palettes to find more colors that match.
     </p>
     <p className="instructions">
       Press
