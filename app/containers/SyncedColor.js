@@ -3,6 +3,7 @@ import {
   invalidatePalette, changeColorText, resetColorName, editColorText, toggleColorPicker,
   addColorIfValid, changeColorIfValid, closeAllColorPickers,
 } from '../actions';
+import { isHex } from '../../utils/helpers';
 import ColorItem from '../components/ColorItem/ColorItem';
 
 const mapStateToProps = (state, ownProps) => {
@@ -14,10 +15,8 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch) => ({
   onSubmit: (color, text) => {
-    const regex = /^#?([a-fA-F0-9]{6}|[a-fA-F0-9]{3})$/;
     const colorText = /#/.test(text) ? text : `#${text}`;
-
-    if (regex.test(colorText)) {
+    if (isHex(colorText)) {
       dispatch(invalidatePalette());
       dispatch(changeColorText(color, colorText));
     } else {

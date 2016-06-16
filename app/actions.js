@@ -9,6 +9,7 @@ import {
   REQUEST_PALETTE, RECEIVE_PALETTE, INVALIDATE_PALETTE, CLOSE_ALL_COLOR_PICKERS,
 
 } from './constants/ActionTypes';
+import { browserHistory } from 'react-router';
 
 export function continueOnboarding() {
   return {
@@ -177,6 +178,11 @@ export function fetchColorFromPaletteIfNeeded() {
   };
 }
 
+function updateURLWith(colors) {
+  const formattedColors = colors.map(colorItem => colorItem.color.replace('#', '')).join('-');
+  browserHistory.push(`/${formattedColors}`);
+}
+
 export function addColorIfValid() {
   return (dispatch, getState) => {
     const { shownPalette: { colors }, onboarding } = getState();
@@ -187,6 +193,9 @@ export function addColorIfValid() {
       ).then(color => {
         dispatch(addColor(color));
       }).then(() => {
+        updateURLWith(getState().shownPalette.colors);
+      })
+      .then(() => {
         dispatch(continueOnboardingIfNeeded());
       });
     }
@@ -206,6 +215,9 @@ export function changeColorIfValid() {
       )
       .then(color => dispatch(changeColor(color)))
       .then(() => {
+        updateURLWith(getState().shownPalette.colors);
+      })
+      .then(() => {
         dispatch(continueOnboardingIfNeeded());
       });
     }
@@ -216,11 +228,12 @@ export function changeColorIfValid() {
 export function removeColorIfValid() {
   return (dispatch, getState) => {
     const { shownPalette: { colors }, onboarding } = getState();
-
+    updateURLWith(colors);
     if (colors.length > 1 && (onboarding.isCompleted || onboarding.step >= 3)) {
       dispatch(invalidatePalette());
       dispatch(removeColor(...colors.slice(-1)));
       dispatch(continueOnboardingIfNeeded());
+      updateURLWith(getState().shownPalette.colors);
     }
   };
 }

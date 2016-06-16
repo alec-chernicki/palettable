@@ -1,8 +1,10 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import Main from '../components/Main/Main';
+import { isHex } from '../../utils/helpers';
 import {
   addColorIfValid, removeColorIfValid, changeColorIfValid, animateColorStatus, completeOnboarding,
+  addColor,
 } from '../actions';
 
 class App extends Component {
@@ -12,12 +14,24 @@ class App extends Component {
     }
   }
   componentDidMount() {
-    this.props.dispatch(addColorIfValid());
+    const { palette } = this.props.params;
+    if (palette) {
+      this.addColorsInParams(palette);
+    } else {
+      this.props.dispatch(addColorIfValid());
+    }
     localStorage.setItem('onboardingCompletedPreviously', true);
 
     document.addEventListener('keydown', this.handleKeydown.bind(this));
     document.onkeydown = this.suppressBackspace.bind(this);
     document.onkeypress = this.suppressBackspace.bind(this);
+  }
+  addColorsInParams(palette) {
+    const formattedPalette = palette.split('-').filter((color) => isHex(color));
+
+    for (let i = 0; i < formattedPalette.length; i++) {
+      this.props.dispatch(addColor(`#${formattedPalette[i]}`));
+    }
   }
   suppressBackspace(e) {
     const event = e || window.event;
@@ -61,6 +75,7 @@ App.propTypes = {
   dispatch: PropTypes.func.isRequired,
   isFetching: PropTypes.bool.isRequired,
   onboarding: PropTypes.object.isRequired,
+  params: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => {

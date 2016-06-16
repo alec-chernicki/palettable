@@ -30,5 +30,5 @@ app.get('/api/change',
       );
 
 app.get('*', (req, res) => {
-  res.redirect('/');
+  res.sendFile(`${__dirname}/public/index.html`);
 });
