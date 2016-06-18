@@ -1,5 +1,6 @@
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const autoprefixer = require('autoprefixer');
+const webpack = require('webpack');
 
 module.exports = {
   entry: [
@@ -9,6 +10,7 @@ module.exports = {
     path: './public',
     filename: 'bundle.js',
   },
+  devtool: 'cheap-module-source-map',
   module: {
     loaders: [
       {
@@ -33,6 +35,14 @@ module.exports = {
   plugins: [
     new ExtractTextPlugin('style.css', {
       allChunks: true,
+    }),
+    new webpack.DefinePlugin({
+      'process.env': {
+        NODE_ENV: JSON.stringify('production'),
+      },
+    }),
+    new webpack.optimize.UglifyJsPlugin({
+      minimize: true
     }),
   ],
   postcss: () => [autoprefixer],
