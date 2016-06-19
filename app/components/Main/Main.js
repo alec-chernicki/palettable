@@ -2,9 +2,9 @@ import './Main.scss';
 
 import React, { PropTypes } from 'react';
 import Title from '../Title/Title';
-import Footer from '../Footer/Footer';
 import ColorList from '../ColorList/ColorList';
 import VisibleOnboarding from '../../containers/VisibleOnboarding';
+import FooterContainer from '../../containers/FooterContainer';
 
 const Main = ({ colors, isFetching, onboarding }) => {
   if (colors.length === 0) {
@@ -38,7 +38,7 @@ const Main = ({ colors, isFetching, onboarding }) => {
         <VisibleOnboarding />
         <div className="main-container">
           <ColorList colors={colors} isFetching={isFetching} />
-          <Footer />
+          <FooterContainer />
         </div>
       </div>
     </div>

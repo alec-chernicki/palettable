@@ -1,15 +1,13 @@
 import axios from 'axios';
-import { removeDuplicatesFrom } from '../utils/helpers';
+import { removeDuplicatesFrom, updateURLWith, isHex } from '../utils/helpers';
 // TODO: This is getting out of hand, implement redux-actions to handle some of this
 import {
-  CONTINUE_ONBOARDING, COMPLETE_ONBOARDING,
-  TOGGLE_COLOR_ANIMATION, DISLIKE_COLOR,
+  CONTINUE_ONBOARDING, COMPLETE_ONBOARDING, RESTART_ONBOARDING, DISLIKE_COLOR,
   CHANGE_COLOR_TEXT, EDIT_COLOR_TEXT, RESET_COLOR_NAME, TOGGLE_COLOR_PICKER,
   ADD_COLOR, REMOVE_COLOR, CHANGE_COLOR,
   REQUEST_PALETTE, RECEIVE_PALETTE, INVALIDATE_PALETTE, CLOSE_ALL_COLOR_PICKERS,
 
 } from './constants/ActionTypes';
-import { browserHistory } from 'react-router';
 
 export function continueOnboarding() {
   return {
@@ -58,6 +56,12 @@ export function toggleColorPicker(color) {
   };
 }
 
+export function restartOnboarding() {
+  return {
+    type: RESTART_ONBOARDING,
+  };
+}
+
 export function closeAllColorPickers() {
   return {
     type: CLOSE_ALL_COLOR_PICKERS,
@@ -84,13 +88,6 @@ export function editColorText(color, text) {
 export function resetColorName(color) {
   return {
     type: RESET_COLOR_NAME,
-    color,
-  };
-}
-
-export function toggleColorAnimation(color) {
-  return {
-    type: TOGGLE_COLOR_ANIMATION,
     color,
   };
 }
@@ -178,11 +175,6 @@ export function fetchColorFromPaletteIfNeeded() {
   };
 }
 
-function updateURLWith(colors) {
-  const formattedColors = colors.map(colorItem => colorItem.color.replace('#', '')).join('-');
-  browserHistory.push(`/${formattedColors}`);
-}
-
 export function addColorIfValid() {
   return (dispatch, getState) => {
     const { shownPalette: { colors }, onboarding } = getState();
@@ -200,6 +192,14 @@ export function addColorIfValid() {
       });
     }
     return false;
+  };
+}
+
+export function restartOnboardingAndUpdate() {
+  return (dispatch, getState) => {
+    dispatch(restartOnboarding());
+    const { shownPalette: { colors } } = getState();
+    updateURLWith(colors);
   };
 }
 
@@ -238,14 +238,24 @@ export function removeColorIfValid() {
   };
 }
 
-export function animateColorStatus(color) {
-  let animationTimeout;
-  clearTimeout(animationTimeout);
-  return dispatch => {
-    dispatch(toggleColorAnimation(color));
+export function loadPaletteFromURLIfValid(palette) {
+  return (dispatch) => {
+    const onboardingFinished = localStorage.getItem('onboardingCompletedPreviously');
 
-    animationTimeout = setTimeout(() => {
-      dispatch(toggleColorAnimation(color));
-    }, 1000);
+    if (palette) {
+      const formattedPalette = palette.split('-').filter((color) => isHex(color));
+
+      if (formattedPalette.length > 1) {
+        for (let i = 0; i < formattedPalette.length; i++) {
+          dispatch(addColor(`#${formattedPalette[i]}`));
+        }
+
+        return dispatch(completeOnboarding());
+      }
+    }
+    if (onboardingFinished) {
+      dispatch(completeOnboarding());
+    }
+    return dispatch(addColorIfValid());
   };
 }

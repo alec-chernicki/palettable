@@ -1,37 +1,22 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import Main from '../components/Main/Main';
-import { isHex } from '../../utils/helpers';
 import {
-  addColorIfValid, removeColorIfValid, changeColorIfValid, animateColorStatus, completeOnboarding,
-  addColor,
+  addColorIfValid, removeColorIfValid, changeColorIfValid, animateColorStatus, addColor,
+  loadPaletteFromURLIfValid,
 } from '../actions';
 
 class App extends Component {
   componentWillMount() {
-    if (localStorage.getItem('onboardingCompletedPreviously')) {
-      this.props.dispatch(completeOnboarding());
-    }
-  }
-  componentDidMount() {
-    const { palette } = this.props.params;
-    if (palette) {
-      this.addColorsInParams(palette);
-    } else {
-      this.props.dispatch(addColorIfValid());
-    }
+    const { dispatch, params: {palette} } = this.props;
+
+    dispatch(loadPaletteFromURLIfValid(palette));
+
     localStorage.setItem('onboardingCompletedPreviously', true);
 
     document.addEventListener('keydown', this.handleKeydown.bind(this));
     document.onkeydown = this.suppressBackspace.bind(this);
     document.onkeypress = this.suppressBackspace.bind(this);
-  }
-  addColorsInParams(palette) {
-    const formattedPalette = palette.split('-').filter((color) => isHex(color));
-
-    for (let i = 0; i < formattedPalette.length; i++) {
-      this.props.dispatch(addColor(`#${formattedPalette[i]}`));
-    }
   }
   suppressBackspace(e) {
     const event = e || window.event;
@@ -53,8 +38,6 @@ class App extends Component {
         dispatch(changeColorIfValid());
       } else if (e.which === 8) {
         dispatch(removeColorIfValid());
-      } else {
-        dispatch(animateColorStatus(colors[colors.length - 1]));
       }
     }
   }

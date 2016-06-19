@@ -27,6 +27,11 @@
   animation-delay: 625ms;
   animation-fill-mode: backwards;
   margin: 0;
+
+  .keyboard-button {
+    margin-left: 10px;
+    margin-right: 10px;
+  }
 }
 
 .step {

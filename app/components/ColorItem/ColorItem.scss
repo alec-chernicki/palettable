@@ -51,7 +51,7 @@
 }
 
 .instructions-container {
-  width: 45px;
+  // width: 46px;
   margin: 0;
   opacity: 0.8;
   position: absolute;
@@ -76,28 +76,46 @@
     left: 0;
   }
 
+  &.remove {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .color:nth-of-type(5) &.remove {
+    right: 0;
+    left: auto;
+    transform: none;
+  }
+
+  .color:nth-of-type(1) &.remove {
+    display: none;
+  }
+
+
   &.like {
     right: 0;
   }
 
   span {
     display: block;
-    margin: 5px auto 0;
-    float: left;
-    clear: both;
-
   }
 }
 
 .keyboard-button {
-  margin: 0 10px;
+  margin: 0 auto 7px;
   display: inline-block;
   padding: 0 15px;
   line-height: 40px;
   position: relative;
   border: solid 2px #FFF;
+  text-align: center;
   border-radius: 4px;
   transition: all 400ms cubic-bezier(.17,.89,.56,1.22);
+
+  .instructions-container & {
+    width: 46px;
+    padding: 0;
+  }
 }
 
 .keyboard-text {

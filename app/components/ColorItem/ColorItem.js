@@ -16,7 +16,7 @@ class ColorItem extends Component {
   }
   render() {
     const {
-      color, colorValue, onSubmit, onChange, onLike, onDislike, onCloseAllPickers,
+      color, colorValue, onSubmit, onChange, onLike, onRemove, onDislike, onCloseAllPickers,
     } = this.props;
     return (
       <li key={color.id} style={{ backgroundColor: color.color }} className="color">
@@ -57,6 +57,10 @@ class ColorItem extends Component {
             <div className="instructions-container dislike" onClick={onDislike}>
               <span className="keyboard-button">D</span>
               <span className="keyboard-text">Disike</span>
+            </div>
+            <div className="instructions-container remove" onClick={onRemove}>
+              <span className="keyboard-button">&#8592;</span>
+              <span className="keyboard-text">Remove</span>
             </div>
             <div className="instructions-container like" onClick={onLike}>
               <span className="keyboard-button">L</span>

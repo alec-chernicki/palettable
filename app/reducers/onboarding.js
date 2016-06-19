@@ -1,4 +1,6 @@
-import { CONTINUE_ONBOARDING, COMPLETE_ONBOARDING } from '../constants/ActionTypes';
+import {
+  CONTINUE_ONBOARDING, COMPLETE_ONBOARDING, RESTART_ONBOARDING,
+} from '../constants/ActionTypes';
 
 const initialState = {
   step: 0,
@@ -16,6 +18,12 @@ export function onboarding(state = initialState, action) {
       return {
         ...state,
         isCompleted: true,
+      };
+    case RESTART_ONBOARDING:
+      return {
+        ...state,
+        step: 1,
+        isCompleted: false,
       };
     default:
       return state;

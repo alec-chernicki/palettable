@@ -1,14 +1,16 @@
 footer {
   width: 100%;
   color: #444;
-  padding: 10px 25px;
+  align-items: center;
   position: relative;
   z-index: 100000000;
   background: #FFF;
+  display: flex;
+  padding: 0 25px;
+  height: 35px;
 }
 
 .footer-icon {
-  float: left;
   cursor: pointer;
   background-size: contain;
   background-repeat: no-repeat;
@@ -28,10 +30,11 @@ footer {
 }
 
 .footer-text {
-  float: right;
   margin: 0;
   font-weight: 400;
   font-size: 14px;
+  width: 100%;
+  text-align: right;
 
   .footer-name {
     font-weight: 600;
@@ -41,5 +44,19 @@ footer {
     &:hover {
       color: #000;
     }
+  }
+}
+
+.tutorial {
+  cursor: pointer;
+  color: #444;
+  font-weight: 700;
+  font-size: 14px;
+  text-align: center;
+  transition: all 0.25s ease-in-out;
+  user-select: none;
+
+  &:hover {
+    color: #000;
   }
 }

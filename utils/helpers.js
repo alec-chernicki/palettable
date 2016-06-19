@@ -1,3 +1,5 @@
+import { browserHistory } from 'react-router';
+
 // FIXME: This is duplicated logic
 function randomIndexOf(arr) {
   const randomIndex = Math.floor(Math.random() * arr.length);
@@ -17,4 +19,9 @@ export function isHex(color) {
   const colorText = /#/.test(color) ? color : `#${color}`;
 
   return regex.test(colorText);
+}
+
+export function updateURLWith(colors) {
+  const formattedColors = colors.map(colorItem => colorItem.color.replace('#', '')).join('-');
+  browserHistory.push(`/${formattedColors}`);
 }

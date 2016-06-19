@@ -3,7 +3,7 @@ import './Footer.scss';
 import React, { Component } from 'react';
 
 class Footer extends Component {
-  handleClick() {
+  handleTweet() {
     const text = 'Check out this great color palette I made with Palettable, made by @whynotdostuff.';
     const url = window.location.href;
     open(
@@ -12,11 +12,14 @@ class Footer extends Component {
       'height=400,width=550,resizable=1, toolbar=0,menubar=0,status=0, location=0'
     );
   }
+  handleRestartTutorial() {
+  }
   render() {
     return (
       <footer>
-        <a className="footer-icon twitter" onClick={this.handleClick} />
+        <a className="footer-icon twitter" onClick={this.handleTweet} />
         <a className="footer-icon github" href="https://github.com/alecortega/palettable" />
+        <a className="tutorial" onClick={this.props.onStartTutorial}>Tutorial</a>
         <p className="footer-text">
           Made By
           <a href="http://www.alecortega.com/" className="footer-name">

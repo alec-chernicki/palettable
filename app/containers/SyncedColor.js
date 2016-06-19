@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import {
   invalidatePalette, changeColorText, resetColorName, editColorText, toggleColorPicker,
-  addColorIfValid, changeColorIfValid, closeAllColorPickers,
+  addColorIfValid, changeColorIfValid, closeAllColorPickers, removeColorIfValid,
 } from '../actions';
 import { isHex } from '../../utils/helpers';
 import ColorItem from '../components/ColorItem/ColorItem';
@@ -37,6 +37,9 @@ const mapDispatchToProps = (dispatch) => ({
   },
   onDislike: () => {
     dispatch(changeColorIfValid());
+  },
+  onRemove() {
+    dispatch(removeColorIfValid());
   },
 });
 

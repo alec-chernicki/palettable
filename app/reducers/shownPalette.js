@@ -1,6 +1,6 @@
 import { colors } from './colors';
 import {
-  ADD_COLOR, CHANGE_COLOR, REMOVE_COLOR, DISLIKE_COLOR,
+  ADD_COLOR, CHANGE_COLOR, REMOVE_COLOR, DISLIKE_COLOR, RESTART_ONBOARDING,
   CHANGE_COLOR_TEXT, EDIT_COLOR_TEXT, RESET_COLOR_NAME,
   TOGGLE_COLOR_PICKER, TOGGLE_COLOR_ANIMATION, CLOSE_ALL_COLOR_PICKERS,
 } from '../constants/ActionTypes';
@@ -17,9 +17,9 @@ export function shownPalette(state = initialState, action) {
     case EDIT_COLOR_TEXT:
     case RESET_COLOR_NAME:
     case TOGGLE_COLOR_PICKER:
-    case TOGGLE_COLOR_ANIMATION:
     case CLOSE_ALL_COLOR_PICKERS:
     case CHANGE_COLOR:
+    case RESTART_ONBOARDING:
       return {
         ...state,
         colors: colors(state.colors, action),
