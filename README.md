@@ -11,11 +11,11 @@ Generate beautiful color palettes, even with no prior design knowledge.
 ### Client
 Tech Used: React, Redux, Webpack, Sass
 
-I tried to make the components are modular as possible so this will be a high level overview of how the data flows throughout the application. If you want to learn more I have several comments in the files containing the actions for Redux as well as several of the React components.
+I tried to make the components as modular as possible so this will be a high level overview of how the data flows throughout the application. If you want to learn more I have several comments in the files containing the actions for Redux as well as several of the React components.
 
 1. On initial load the client queries the `/random` endpoint on the server and receives a random set of 5 colors which is then caches and displays the first in the array.
 
-2. While the user goes through the tutorial, the keyboard events are conditionally blocked based on the current onboarding step using middleware from `redux-thunk`. Aka, they can't dislike a color when the tutorial is telling them to like a color.
+2. While the user goes through the tutorial, the keyboard events are conditionally blocked based on the current onboarding step using middleware from `redux-thunk`, i.e. they can't dislike a color when the tutorial is telling them to like a color.
 
 3. Once the tutorial is over, the actions `CHANGE_COLOR`, `ADD_COLOR`, and `REMOVE_COLOR` are dispatched based on the key that the user presses. The reducers handle these actions and update the state of `shownPalette` accordingly. 
 
@@ -25,7 +25,7 @@ I tried to make the components are modular as possible so this will be a high le
 
 #### Challenges and Improvements:
 
-- As long as a user likes the next color shown to them there's no reason to re-query the server to fetch a matching palette. Therefore a palette of 5 colors is always cached and all colors will be pulled from there when a `ADD_COLOR` action is dispatched. Whenever a user removes or dislikes a color the cached palette is invalidated and the server will be queried again. This conditional check for validity is again done using thunks.
+- As long as a user likes the next color shown to them there's no reason to re-query the server to fetch a matching palette. Therefore a palette of 5 colors is always cached and all colors will be pulled from there when a `ADD_COLOR` action is dispatched. Whenever a user removes or dislikes a color the cached palette is invalidated and the server will be queried again. This conditional check for validity is again done using `redux-thunk`.
 
 - Until the fetched palette has been re-validated all disliked colors are cached and sent back up to the server when it's queried. The server then filters it's response with those cached colors and returns a palette that's guaranteed not to have any colors that have been shown before.
 
