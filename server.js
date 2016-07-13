@@ -1,3 +1,4 @@
+'use stict';
 const express = require('express');
 const compress = require('compression');
 const axios = require('axios');
@@ -9,6 +10,8 @@ const app = express();
 
 // Initialize Middleware
 app.set('port', process.env.PORT || 3000);
+app.set('views', `${__dirname}/views`);
+app.set('view engine', 'jade');
 app.use(compress());
 app.use(express.static(`${__dirname}/public`));
 app.listen(app.get('port'));
@@ -16,11 +19,13 @@ app.listen(app.get('port'));
 // Controllers
 const randomController = require('./controllers/randomController');
 const changeController = require('./controllers/changeController');
+const imageController = require('./controllers/imageController');
+const homeController = require('./controllers/homeController');
 
 // Assign Routes and Controllers
-app.get('/', (req, res) => {
-  res.sendFile(`${__dirname}/public/index.html`);
-});
+app.get('/:palette', homeController.getHome);
+
+app.get('/api/image/:palette', imageController.drawMetaImage);
 
 app.get('/api/random', randomController.getRandom);
 app.get('/api/change',
@@ -29,6 +34,4 @@ app.get('/api/change',
         randomController.getRandom
       );
 
-app.get('*', (req, res) => {
-  res.sendFile(`${__dirname}/public/index.html`);
-});
+app.get('*', homeController.getHome);

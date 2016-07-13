@@ -1,4 +1,4 @@
-import { browserHistory } from 'react-router';
+const browserHistory = require('react-router').browserHistory;
 
 // FIXME: This is duplicated logic
 function randomIndexOf(arr) {
@@ -6,7 +6,7 @@ function randomIndexOf(arr) {
   return arr[randomIndex];
 }
 
-export function removeDuplicatesFrom(arrOne, arrTwo) {
+exports.removeDuplicatesFrom = (arrOne, arrTwo) => {
   const uniqueArr = arrTwo.filter(value =>
     arrOne.map(value => value.color).indexOf(value) === -1
   );
@@ -14,14 +14,14 @@ export function removeDuplicatesFrom(arrOne, arrTwo) {
   return randomIndexOf(uniqueArr);
 }
 
-export function isHex(color) {
+exports.isHex = (color) => {
   const regex = /^#?([a-fA-F0-9]{6}|[a-fA-F0-9]{3})$/;
   const colorText = /#/.test(color) ? color : `#${color}`;
 
   return regex.test(colorText);
 }
 
-export function updateURLWith(colors) {
+exports.updateURLWith = (colors) => {
   const formattedColors = colors.map(colorItem => colorItem.color.replace('#', '')).join('-');
   browserHistory.push(`/${formattedColors}`);
 }

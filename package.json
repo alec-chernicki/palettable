@@ -1,21 +1,24 @@
 {
   "name": "Palettable",
   "version": "1.0.0",
-  "description": "A search engine for user-generated color palettes.",
+  "description": "Generate color palettes using the knowledge of millions of designers.",
   "main": "server.js",
+  "author": "",
+  "repository": "git@github.com:alecortega/palettable.git",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"
   },
-  "author": "",
   "license": "ISC",
   "dependencies": {
     "axios": "^0.11.0",
     "babel-plugin-transform-object-rest-spread": "^6.6.5",
+    "canvas": "^1.4.0",
     "color": "^0.11.1",
     "color-namer": "^1.1.0",
     "compression": "^1.6.2",
     "express": "^4.13.4",
+    "jade": "^1.11.0",
     "lodash": "^4.12.0",
     "react": "^15.0.1",
     "react-addons-css-transition-group": "^15.0.2",
