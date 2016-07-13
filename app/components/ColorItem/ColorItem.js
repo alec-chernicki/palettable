@@ -56,7 +56,7 @@ class ColorItem extends Component {
           <div className="color-footer">
             <div className="instructions-container dislike" onClick={onDislike}>
               <span className="keyboard-button">D</span>
-              <span className="keyboard-text">Disike</span>
+              <span className="keyboard-text">Dislike</span>
             </div>
             <div className="instructions-container remove" onClick={onRemove}>
               <span className="keyboard-button">&#8592;</span>
