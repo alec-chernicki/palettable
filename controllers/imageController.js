@@ -22,7 +22,7 @@ exports.drawMetaImage = (req, res) => {
   res.setHeader('Expires', new Date(0));
   res.setHeader('Last-Modified', new Date(0));
 
-  const canvas = new Canvas(1200, 630);
+  const canvas = new Canvas(950, 500);
   const ctx = canvas.getContext('2d');
   const stream = canvas.createPNGStream();
 
@@ -34,17 +34,17 @@ exports.drawMetaImage = (req, res) => {
   });
 
   for (let i = 0; i < formattedPalette.length; i++) {
-    const currentXCoordinate = 1200 / (formattedPalette.length);
+    const currentXCoordinate = 950 / (formattedPalette.length);
     ctx.fillStyle = `#${formattedPalette[i]}`;
-    ctx.fillRect((i * currentXCoordinate), 0, currentXCoordinate, 630);
+    ctx.fillRect((i * currentXCoordinate), 0, currentXCoordinate, 500);
   }
 
   const luminosity = colorInterpreter(`#${formattedPalette[0]}`).luminosity();
   const titleColor = luminosity < 0.55 ? '#FFF' : '#444';
 
-  ctx.font = 'bold 28px Arial';
+  ctx.font = 'bold 22px Arial';
   ctx.fillStyle = titleColor;
-  ctx.fillText('PALETTABLE', 25, 50);
+  ctx.fillText('PALETTABLE', 24, 50);
 
   return 1;
 };
