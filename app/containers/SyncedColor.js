@@ -41,7 +41,7 @@ const mapDispatchToProps = (dispatch) => ({
   onDislike: () => {
     dispatch(changeColorIfValid());
   },
-  onRemove() {
+  onRemove: () => {
     dispatch(removeColorIfValid());
   },
 });

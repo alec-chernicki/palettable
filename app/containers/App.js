@@ -1,10 +1,9 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import Export from '../components/Export/Export';
 import Main from '../components/Main/Main';
 import {
-  addColorIfValid, removeColorIfValid, changeColorIfValid, animateColorStatus, addColor, goToPreviousColorIfValid,
-  loadPaletteFromURLIfValid,
+  addColorIfValid, removeColorIfValid, changeColorIfValid, animateColorStatus, addColor,
+  goToPreviousColorIfValid, loadPaletteFromURLIfValid,
 } from '../actions';
 
 class App extends Component {

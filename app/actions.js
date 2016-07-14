@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { removeDuplicatesFrom, updateURLWith, isHex } from '../utils/helpers';
+import { removeDuplicatesFrom, updateURLWith, isHex, downloadFile } from '../utils/helpers';
 // TODO: This is getting out of hand, implement redux-actions to handle some of this
 import {
   CONTINUE_ONBOARDING, COMPLETE_ONBOARDING, RESTART_ONBOARDING, DISLIKE_COLOR,
@@ -255,14 +255,16 @@ export function removeColorIfValid() {
 
 export function exportPaletteIfValid() {
   return (dispatch, getState) => {
-    const { shownPalette: { colors }, onboarding } = getState();
-    updateURLWith(colors);
-    if (colors.length > 1 && (onboarding.isCompleted || onboarding.step >= 3)) {
-      dispatch(invalidatePalette());
-      dispatch(removeColor(...colors.slice(-1)));
-      dispatch(continueOnboardingIfNeeded());
-      updateURLWith(getState().shownPalette.colors);
+    const { dislikedColors, colors } = getState().shownPalette;
+
+    var csvString = '"'+colors[0].color+'"';
+    for(var i = 1; i < colors.length; i++) {
+      csvString += ',' +'"'+colors[i].color+'"'
     }
+    
+    downloadFile('palette.csv','data:text/csv;charset=UTF-8,' + encodeURIComponent(csvString));
+
+    return false;
   };
 }
 
