@@ -5,7 +5,7 @@ import {
   CONTINUE_ONBOARDING, COMPLETE_ONBOARDING, RESTART_ONBOARDING, DISLIKE_COLOR,
   CHANGE_COLOR_TEXT, EDIT_COLOR_TEXT, RESET_COLOR_NAME, TOGGLE_COLOR_PICKER,
   ADD_COLOR, REMOVE_COLOR, CHANGE_COLOR,
-  REQUEST_PALETTE, RECEIVE_PALETTE, INVALIDATE_PALETTE, CLOSE_ALL_COLOR_PICKERS,
+  REQUEST_PALETTE, SET_PALETTE, INVALIDATE_PALETTE, CLOSE_ALL_COLOR_PICKERS,
 
 } from './constants/ActionTypes';
 
@@ -99,10 +99,10 @@ function requestPalette(currentColors) {
   };
 }
 
-function receivePalette(palette) {
+function setPalette(palette) {
   // FIXME: whats with this naming?
   return {
-    type: RECEIVE_PALETTE,
+    type: SET_PALETTE,
     colors: palette,
   };
 }
@@ -139,7 +139,7 @@ function fetchPalette(colors, dislikedColors) {
         },
       })
       .then(({ data }) => {
-        dispatch(receivePalette(data));
+        dispatch(setPalette(data));
       });
   };
 }
@@ -241,6 +241,19 @@ export function goToPreviousColorIfValid() {
 }
 
 export function removeColorIfValid() {
+  return (dispatch, getState) => {
+    const { shownPalette: { colors }, onboarding } = getState();
+    updateURLWith(colors);
+    if (colors.length > 1 && (onboarding.isCompleted || onboarding.step >= 3)) {
+      dispatch(invalidatePalette());
+      dispatch(removeColor(...colors.slice(-1)));
+      dispatch(continueOnboardingIfNeeded());
+      updateURLWith(getState().shownPalette.colors);
+    }
+  };
+}
+
+export function exportPaletteIfValid() {
   return (dispatch, getState) => {
     const { shownPalette: { colors }, onboarding } = getState();
     updateURLWith(colors);

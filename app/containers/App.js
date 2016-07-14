@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
+import Export from '../components/Export/Export';
 import Main from '../components/Main/Main';
 import {
   addColorIfValid, removeColorIfValid, changeColorIfValid, animateColorStatus, addColor, goToPreviousColorIfValid,
@@ -46,7 +47,7 @@ class App extends Component {
   render() {
     const { colors, isFetching, onboarding } = this.props;
     return (
-      <Main
+    <Main
         colors={colors}
         isFetching={isFetching}
         onboarding={onboarding}

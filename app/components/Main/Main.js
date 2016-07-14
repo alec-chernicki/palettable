@@ -2,6 +2,7 @@ import './Main.scss';
 
 import React, { PropTypes } from 'react';
 import Title from '../Title/Title';
+import Export from '../Export/Export';
 import ColorList from '../ColorList/ColorList';
 import VisibleOnboarding from '../../containers/VisibleOnboarding';
 import FooterContainer from '../../containers/FooterContainer';
@@ -35,6 +36,7 @@ const Main = ({ colors, isFetching, onboarding }) => {
           </a>
         </div>
         <Title colors={colors} />
+        <Export colors={colors} />
         <VisibleOnboarding />
         <div className="main-container">
           <ColorList colors={colors} isFetching={isFetching} />

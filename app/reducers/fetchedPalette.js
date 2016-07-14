@@ -1,5 +1,5 @@
 import {
-  REQUEST_PALETTE, RECEIVE_PALETTE, INVALIDATE_PALETTE,
+  REQUEST_PALETTE, SET_PALETTE, INVALIDATE_PALETTE,
 } from '../constants/ActionTypes';
 
 const initialState = {
@@ -16,7 +16,7 @@ export function fetchedPalette(state = initialState, action) {
         isFetching: true,
         didInvalidate: false,
       };
-    case RECEIVE_PALETTE:
+    case SET_PALETTE:
       return {
         ...state,
         isFetching: false,
