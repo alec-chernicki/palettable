@@ -11,6 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "axios": "^0.11.0",
+    "babel-plugin-transform-object-rest-spread": "^6.6.5",
     "color": "^0.11.1",
     "color-namer": "^1.1.0",
     "compression": "^1.6.2",
