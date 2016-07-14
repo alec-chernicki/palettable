@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import Main from '../components/Main/Main';
 import {
-  addColorIfValid, removeColorIfValid, changeColorIfValid, animateColorStatus, addColor,
+  addColorIfValid, removeColorIfValid, changeColorIfValid, animateColorStatus, addColor, goToPreviousColorIfValid,
   loadPaletteFromURLIfValid,
 } from '../actions';
 
@@ -38,6 +38,8 @@ class App extends Component {
         dispatch(changeColorIfValid());
       } else if (e.which === 8) {
         dispatch(removeColorIfValid());
+      } else if (e.which === 37) {
+        dispatch(goToPreviousColorIfValid());
       }
     }
   }
