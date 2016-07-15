@@ -5,7 +5,6 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import StepOne from './StepOne';
 import StepTwo from './StepTwo';
 import StepThree from './StepThree';
-import StepFour from './StepFour';
 import InterfaceTheme from '../InterfaceTheme/InterfaceTheme';
 
 const Onboarding = ({ color, isCompleted, step }) => (
@@ -22,7 +21,6 @@ const Onboarding = ({ color, isCompleted, step }) => (
           {step === 1 && <StepOne />}
           {step === 2 && <StepTwo />}
           {step === 3 && <StepThree />}
-          {step === 4 && <StepFour />}
         </ReactCSSTransitionGroup>
       </InterfaceTheme>}
   </div>

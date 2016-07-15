@@ -117,9 +117,9 @@ export function continueOnboardingIfNeeded() {
   return (dispatch, getState) => {
     const { onboarding: { step } } = getState();
     // FIXME: This checking logic is scattered around and gross
-    if (step < 4 && step >= 0) {
+    if (step < 3 && step >= 0) {
       dispatch(continueOnboarding());
-    } else if (step === 4) {
+    } else if (step === 3) {
       dispatch(completeOnboarding());
     }
   };
@@ -220,21 +220,6 @@ export function changeColorIfValid() {
       .then(() => {
         dispatch(continueOnboardingIfNeeded());
       });
-    }
-    return false;
-  };
-}
-
-export function goToPreviousColorIfValid() {
-  return (dispatch, getState) => {
-    const state = getState();
-
-    const { dislikedColors, colors } = state.shownPalette;
-
-    if (dislikedColors.length > 0) {
-          dispatch(changeColor(dislikedColors[dislikedColors.length - 1]));
-          dispatch(continueOnboardingIfNeeded());
-          updateURLWith(state.shownPalette.colors);
     }
     return false;
   };

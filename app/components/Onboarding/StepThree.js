@@ -1,17 +1,17 @@
 import React from 'react';
 
 const StepThree = () => (
-  <div className="step step-three">
-    <p className="helper-text">
-      We've got accidents covered! If you  dislike a
-      color by mistake you can always go back to it.
-    </p>
-    <p className="instructions">
-      Press
-      <span className="keyboard-button">&#8592;</span>
-      To Look at Previously Disliked Color
-    </p>
-  </div>
+    <div className="step step-three">
+        <p className="helper-text">
+            No more guessing random colors, all you need to
+            do is like or dislike what we find for you!
+        </p>
+        <p className="instructions">
+            Press
+            <span className="keyboard-button">BACKSPACE</span>
+            To Remove
+        </p>
+    </div>
 );
 
 export default StepThree;

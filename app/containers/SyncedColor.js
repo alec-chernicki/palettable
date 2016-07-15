@@ -41,9 +41,6 @@ const mapDispatchToProps = (dispatch) => ({
   onDislike: () => {
     dispatch(changeColorIfValid());
   },
-  onRemove: () => {
-    dispatch(removeColorIfValid());
-  },
 });
 
 const SyncedColor = connect(
