@@ -25,3 +25,12 @@ exports.updateURLWith = (colors) => {
   const formattedColors = colors.map(colorItem => colorItem.color.replace('#', '')).join('-');
   browserHistory.push(`/${formattedColors}`);
 }
+
+export function downloadFile(fileName, urlData){
+  var aLink = document.createElement('a');
+  var evt = document.createEvent("HTMLEvents");
+  evt.initEvent("click");
+  aLink.download = fileName;
+  aLink.href = urlData ;
+  aLink.dispatchEvent(evt);
+}

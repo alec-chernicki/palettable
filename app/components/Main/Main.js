@@ -5,11 +5,12 @@ import Title from '../Title/Title';
 import ColorList from '../ColorList/ColorList';
 import VisibleOnboarding from '../../containers/VisibleOnboarding';
 import FooterContainer from '../../containers/FooterContainer';
+import ExportContainer from '../../containers/ExportContainer';
 
 const Main = ({ colors, isFetching, onboarding }) => {
   if (colors.length === 0) {
     return (
-      <div className="loading-cotainer">
+      <div className="loading-container">
         <h1 className="loading">Loading</h1>
       </div>
     );
@@ -35,6 +36,7 @@ const Main = ({ colors, isFetching, onboarding }) => {
           </a>
         </div>
         <Title colors={colors} />
+        <ExportContainer colors={colors} />
         <VisibleOnboarding />
         <div className="main-container">
           <ColorList colors={colors} isFetching={isFetching} />

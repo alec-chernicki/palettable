@@ -1,11 +1,11 @@
 import axios from 'axios';
-import { removeDuplicatesFrom, updateURLWith, isHex } from '../utils/helpers';
+import { removeDuplicatesFrom, updateURLWith, isHex, downloadFile } from '../utils/helpers';
 // TODO: This is getting out of hand, implement redux-actions to handle some of this
 import {
   CONTINUE_ONBOARDING, COMPLETE_ONBOARDING, RESTART_ONBOARDING, DISLIKE_COLOR,
   CHANGE_COLOR_TEXT, EDIT_COLOR_TEXT, RESET_COLOR_NAME, TOGGLE_COLOR_PICKER,
   ADD_COLOR, REMOVE_COLOR, CHANGE_COLOR,
-  REQUEST_PALETTE, RECEIVE_PALETTE, INVALIDATE_PALETTE, CLOSE_ALL_COLOR_PICKERS,
+  REQUEST_PALETTE, SET_PALETTE, INVALIDATE_PALETTE, CLOSE_ALL_COLOR_PICKERS,
 
 } from './constants/ActionTypes';
 
@@ -99,10 +99,10 @@ function requestPalette(currentColors) {
   };
 }
 
-function receivePalette(palette) {
+function setPalette(palette) {
   // FIXME: whats with this naming?
   return {
-    type: RECEIVE_PALETTE,
+    type: SET_PALETTE,
     colors: palette,
   };
 }
@@ -139,7 +139,7 @@ function fetchPalette(colors, dislikedColors) {
         },
       })
       .then(({ data }) => {
-        dispatch(receivePalette(data));
+        dispatch(setPalette(data));
       });
   };
 }
@@ -235,6 +235,21 @@ export function removeColorIfValid() {
       dispatch(continueOnboardingIfNeeded());
       updateURLWith(getState().shownPalette.colors);
     }
+  };
+}
+
+export function exportPaletteIfValid() {
+  return (dispatch, getState) => {
+    const { dislikedColors, colors } = getState().shownPalette;
+
+    var csvString = '"'+colors[0].color+'"';
+    for(var i = 1; i < colors.length; i++) {
+      csvString += ',' +'"'+colors[i].color+'"'
+    }
+    
+    downloadFile('palette.csv','data:text/csv;charset=UTF-8,' + encodeURIComponent(csvString));
+
+    return false;
   };
 }
 

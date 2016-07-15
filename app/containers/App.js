@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Main from '../components/Main/Main';
 import {
   addColorIfValid, removeColorIfValid, changeColorIfValid, animateColorStatus, addColor,
-  loadPaletteFromURLIfValid,
+  goToPreviousColorIfValid, loadPaletteFromURLIfValid,
 } from '../actions';
 
 class App extends Component {
@@ -38,13 +38,15 @@ class App extends Component {
         dispatch(changeColorIfValid());
       } else if (e.which === 8) {
         dispatch(removeColorIfValid());
+      } else if (e.which === 37) {
+        dispatch(goToPreviousColorIfValid());
       }
     }
   }
   render() {
     const { colors, isFetching, onboarding } = this.props;
     return (
-      <Main
+    <Main
         colors={colors}
         isFetching={isFetching}
         onboarding={onboarding}
