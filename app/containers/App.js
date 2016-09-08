@@ -41,15 +41,52 @@ class App extends Component {
       }
     }
   }
-  render() {
-    const { colors, isFetching, onboarding } = this.props;
+  renderErrorIfValid() {
     return (
-      <Main
-        colors={colors}
-        isFetching={isFetching}
-        onboarding={onboarding}
-      />
-    );
+      <div className="fullscreen-notice">
+        <div className="fullscreen-notice-inner">
+          <h1>
+            PALETTABLE
+          </h1>
+          <p>
+            This application depends on the API from
+            <a
+              href="http://www.colourlovers.com/"
+              target="_blank"
+            >
+              &nbsp;colourlovers.com
+            </a>
+            .&nbsp;Unforutunately their API is down for maintenance and Palettable will be down as well
+            until they are back up again. I know, I'm pretty sad about it too, but we'll hopefully be
+            back soon. For more status updates:
+          </p>
+          <a
+            className="twitter-follow-button"
+            href="https://twitter.com/whynotdostuff"
+          >
+            Follow @whynotdostuff
+          </a>
+        </div>
+      </div>
+    )
+  }
+  render() {
+    const { colors, isFetching, fetchFailed, onboarding } = this.props;
+
+    if (!fetchFailed) {
+      return (
+        <Main
+          colors={colors}
+          isFetching={isFetching}
+          onboarding={onboarding}
+        />
+      );
+    }
+    else {
+      return (
+        this.renderErrorIfValid()
+      )
+    }
   }
 }
 
@@ -63,9 +100,11 @@ App.propTypes = {
 
 const mapStateToProps = (state) => {
   const { onboarding, shownPalette, fetchedPalette } = state;
+  console.log(fetchedPalette);
   return {
     colors: shownPalette.colors,
     onboarding,
+    fetchFailed: fetchedPalette.fetchFailed,
     isFetching: fetchedPalette.isFetching,
   };
 };

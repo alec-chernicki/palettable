@@ -22,6 +22,9 @@ exports.isHex = (color) => {
 }
 
 exports.updateURLWith = (colors) => {
+  if (!colors[0]) {
+    return
+  }
   const formattedColors = colors.map(colorItem => colorItem.color.replace('#', '')).join('-');
   browserHistory.push(`/${formattedColors}`);
 }

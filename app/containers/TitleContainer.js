@@ -10,7 +10,7 @@ const mapStateToProps = (state) => ({
   colorString: flattenedColors(state.shownPalette.colors),
 });
 
-const TitleContainer = connect(
+const t = connect(
   mapStateToProps
 )(Title);
 

@@ -5,8 +5,8 @@ import {
   CONTINUE_ONBOARDING, COMPLETE_ONBOARDING, RESTART_ONBOARDING, DISLIKE_COLOR,
   CHANGE_COLOR_TEXT, EDIT_COLOR_TEXT, RESET_COLOR_NAME, TOGGLE_COLOR_PICKER,
   ADD_COLOR, REMOVE_COLOR, CHANGE_COLOR,
-  REQUEST_PALETTE, RECEIVE_PALETTE, INVALIDATE_PALETTE, CLOSE_ALL_COLOR_PICKERS,
-
+  REQUEST_PALETTE, RECEIVE_PALETTE, RECEIVE_PALETTE_FAILED,
+  INVALIDATE_PALETTE, CLOSE_ALL_COLOR_PICKERS,
 } from './constants/ActionTypes';
 
 export function continueOnboarding() {
@@ -107,6 +107,12 @@ function receivePalette(palette) {
   };
 }
 
+function receivePaletteFailed() {
+  return {
+    type: RECEIVE_PALETTE_FAILED,
+  };
+}
+
 export function invalidatePalette() {
   return {
     type: INVALIDATE_PALETTE,
@@ -140,6 +146,9 @@ function fetchPalette(colors, dislikedColors) {
       })
       .then(({ data }) => {
         dispatch(receivePalette(data));
+      })
+      .catch(() => {
+        dispatch(receivePaletteFailed())
       });
   };
 }
