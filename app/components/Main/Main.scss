@@ -61,6 +61,10 @@ li {
   display: none;
 }
 
+.fullscreen-notice {
+  display: flex;
+}
+
 .mobile-notice,
 .fullscreen-notice {
   position: fixed;
@@ -68,7 +72,6 @@ li {
   left: 0;
   height: 100vh;
   width: 100vw;
-  display: flex;
   justify-content: center;
   align-items: center;
   z-index: 100000000;
@@ -108,6 +111,10 @@ li {
 
 .fullscreen-notice-inner {
   max-width: 600px;
+
+  .twitter-follow-button {
+
+  }
 }
 
 .is-mobile {

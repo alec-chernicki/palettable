@@ -72,7 +72,7 @@ class App extends Component {
   }
   render() {
     const { colors, isFetching, fetchFailed, onboarding } = this.props;
-
+  
     if (!fetchFailed) {
       return (
         <Main
@@ -100,7 +100,7 @@ App.propTypes = {
 
 const mapStateToProps = (state) => {
   const { onboarding, shownPalette, fetchedPalette } = state;
-  console.log(fetchedPalette);
+
   return {
     colors: shownPalette.colors,
     onboarding,
