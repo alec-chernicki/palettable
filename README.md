@@ -1,6 +1,6 @@
 # <img src='http://i.imgur.com/580vPI2.png' height='50'></a>
 
-Generate beautiful color palettes, even with no prior design knowledge.
+Create color palettes using the knowledge of millions of designers.
 
 **Full Website: http://palettable.io**
 
