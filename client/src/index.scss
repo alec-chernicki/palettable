@@ -1,0 +1,57 @@
+:global(.m-x-auto) {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@for $i from 0 through 35 {
+  $value-interval: 4;
+  $value: $i * $value-interval + px;
+
+  :global(.m-top-#{$i}) {
+    margin-top: $value;
+  }
+  :global(.m-right-#{$i}) {
+    margin-right: $value;
+  }
+  :global(.m-bottom-#{$i}) {
+    margin-bottom: $value;
+  }
+  :global(.m-left-#{$i}) {
+    margin-left: $value;
+  }
+  :global(.m-x-#{$i}) {
+    margin-right: $value;
+    margin-left: $value;
+  }
+  :global(.m-y-#{$i}) {
+    margin-top: $value;
+    margin-bottom: $value;
+  }
+  :global(.m-all-#{$i}) {
+    margin: $value;
+  }
+
+  :global(.p-top-#{$i}) {
+    padding-top: $value;
+  }
+  :global(.p-right-#{$i}) {
+    padding-right: $value;
+  }
+  :global(.p-bottom-#{$i}) {
+    padding-bottom: $value;
+  }
+  :global(.p-left-#{$i}) {
+    padding-left: $value;
+  }
+  :global(.p-x-#{$i}) {
+    padding-right: $value;
+    padding-left: $value;
+  }
+  :global(.p-y-#{$i}) {
+    padding-top: $value;
+    padding-bottom: $value;
+  }
+  :global(.p-all-#{$i}) {
+    padding: $value;
+  }
+}

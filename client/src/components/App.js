@@ -1,6 +1,8 @@
 // @flow
 import React from 'react';
-import url from './utilities/url';
+import styles from './App.scss';
+import url from '../utilities/url';
+import ExportButton from './Export/ExportButton';
 
 type Props = {
   colors: [Object],
@@ -51,8 +53,15 @@ class App extends React.Component<Props> {
     const { children } = this.props;
 
     return (
-      <div styleName="app">
-        <NavigationBar />
+      <div className={styles.app}>
+        <div className={styles.navigationBar}>
+          <a href="/">
+            <h1>PALETTABLE</h1>
+          </a>
+          <div>
+            <ExportButton />
+          </div>
+        </div>
         {children}
       </div>
     );
