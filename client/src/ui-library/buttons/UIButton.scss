@@ -1,0 +1,23 @@
+%button {
+  border-radius: 3px;
+  padding: 14px 20px;
+  cursor: pointer;
+  display: inline-block;
+  text-align: center;
+  width: 100%;
+}
+
+.primary {
+  @extend %button;
+  background-color: #63a3d0;
+}
+
+.positive {
+  @extend %button;
+  background-color: #77a88d;
+}
+
+.negative {
+  @extend %button;
+  background-color: #ff6670;
+}

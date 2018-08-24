@@ -1,44 +1,59 @@
 // @flow
 import React from 'react';
-import url from '../../utils/url';
+import url from './utilities/url';
 
 type Props = {
   colors: [Object],
 };
 
+const L_KEYCODE = 76;
+const D_KEYCODE = 68;
+
 class App extends React.Component<Props> {
-  componentDidMount() {
-    const { requestRandomPalette, hydrateFromUrl } = this.props;
+  componentWillMount() {
     const paletteFromUrl = url.parseColors();
 
     if (paletteFromUrl.length) {
-      return hydrateFromUrl(paletteFromUrl);
+      // hydrate local state from query param
     }
 
-    requestRandomPalette();
+    // request random palette
   }
 
-  suppressBackspace = e => {
-    const event = e || window.event;
-    const target = event.target || event.srcElement;
+  componentDidMount() {
+    document.addEventListener('keydown', this.handleKeydown);
+  }
 
-    if (event.keyCode === 8 && !/input|textarea/i.test(target.nodeName)) {
-      return false;
+  componentWillUnmount() {
+    document.removeEventListener('keydown', this.handleKeydown);
+  }
+
+  getIsEventFromInput(event: KeyboardEvent) {
+    const tag: string = event.target.tagName.toLowerCase();
+
+    return tag === 'input';
+  }
+
+  handleKeydown = (event: KeyboardEvent) => {
+    const keycode: number = event.which;
+    const isEventFromInput = this.getIsEventFromInput(event);
+
+    if (!isEventFromInput) {
+      if (keycode === L_KEYCODE) {
+        // add to palette
+      } else if (keycode === D_KEYCODE) {
+        // change last color in palette
+      }
     }
-    return true;
   };
 
   render() {
-    const { colors, isFetching } = this.props;
+    const { children } = this.props;
 
     return (
-      <div>
-        <Title colors={colors} />
-        <VisibleOnboarding />
-        <div className="main-container">
-          <ColorList colors={colors} isFetching={isFetching} />
-          <FooterContainer />
-        </div>
+      <div styleName="app">
+        <NavigationBar />
+        {children}
       </div>
     );
   }
