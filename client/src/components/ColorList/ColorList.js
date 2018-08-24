@@ -1,13 +1,9 @@
 // @flow
 import styles from './ColorList.css';
-import CSSModules from 'react-css-modules';
 import React from 'react';
-import { connect } from 'react-redux';
 import { MoonLoader } from 'halogen';
-import likedColorsSelector from '../../redux/selectors/likedColorsSelector';
 import ColorItem from '../../components/ColorItem/ColorItem';
 import getInterfaceAttributes from '../../utils/getInterfaceAttributes';
-import hasFetchFailedSelector from '../../redux/selectors/hasFetchFailedSelector';
 import UIButton from '../../UILibrary/button/UIButton';
 import CSSTransition from 'react-transition-group/CSSTransition';
 import TransitionGroup from 'react-transition-group/TransitionGroup';
@@ -70,6 +66,7 @@ class ColorList extends React.Component<Props> {
       </TransitionGroup>
     );
   }
+
   renderLoader() {
     const interfaceAttributes = getInterfaceAttributes('#222');
     return (
@@ -80,6 +77,7 @@ class ColorList extends React.Component<Props> {
       </div>
     );
   }
+
   render() {
     const { likedColors, hasFetchFailed } = this.props;
     if (hasFetchFailed) {
@@ -91,10 +89,5 @@ class ColorList extends React.Component<Props> {
     return this.renderList();
   }
 }
-const mapStateToProps = state => {
-  return {
-    likedColors: likedColorsSelector(state),
-    hasFetchFailed: hasFetchFailedSelector(state),
-  };
-};
-export default connect(mapStateToProps)(CSSModules(ColorList, styles));
+
+export default ColorList;

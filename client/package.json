@@ -7,6 +7,7 @@
     "classnames": "^2.2.6",
     "dotenv": "4.0.0",
     "dotenv-expand": "4.2.0",
+    "downloadjs": "^1.4.7",
     "fs-extra": "3.0.1",
     "graphql": "^0.13.2",
     "jest": "20.0.4",

@@ -3,6 +3,7 @@ import React from 'react';
 import styles from './App.scss';
 import url from '../utilities/url';
 import ExportButton from './Export/ExportButton';
+import ColorList from './ColorList/ColorList';
 
 type Props = {
   colors: [Object],
@@ -62,7 +63,7 @@ class App extends React.Component<Props> {
             <ExportButton />
           </div>
         </div>
-        {children}
+        <ColorList />
       </div>
     );
   }
