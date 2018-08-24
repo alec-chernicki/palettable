@@ -1,7 +1,7 @@
-const axios = require("axios");
+const axios = require('axios');
 
 const fetchRandomPalette = () =>
-  axios.get("/random").then(response => {
+  axios.get('/random').then(response => {
     const colors = response.data[0].colors;
 
     // Continue calling API until palette that's 5 colors long (which is most of
@@ -15,5 +15,5 @@ const fetchRandomPalette = () =>
 exports.getRandom = (req, res, next) => {
   fetchRandomPalette()
     .then(colors => res.json(colors))
-    .catch(() => next(new Error("Error fetching random palette")));
+    .catch(() => next(new Error('Error fetching random palette')));
 };
