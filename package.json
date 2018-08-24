@@ -1,9 +1,12 @@
 {
-  "name": "Palettable",
+  "name": "palettable",
   "version": "1.0.0",
   "description": "Generate color palettes using the knowledge of millions of designers.",
   "author": "Alec Ortega",
   "repository": "git@github.com:alecortega/palettable.git",
+  "engines": {
+    "node": "8.6.0"
+  },
   "scripts": {
     "precommit": "pretty-quick --staged",
     "deploy-client": "git subtree push --prefix=client heroku-client master",
