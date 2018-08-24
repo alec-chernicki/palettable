@@ -1,9 +1,9 @@
-const axios = require("axios");
-const _ = require("lodash");
-const colornamer = require("color-namer");
+const axios = require('axios');
+const _ = require('lodash');
+const colornamer = require('color-namer');
 
 function getPalettes(params) {
-  return axios.get("/", { params }).then(request => request.data);
+  return axios.get('/', { params }).then(request => request.data);
 }
 
 function getNewColorsFromData(palettes, dislikedColors, currentColors) {
@@ -41,7 +41,7 @@ exports.hasExactMatch = (req, res, next) => {
 
       return res.json(newColors);
     })
-    .catch(() => next(new Error("Error fetching exact match")));
+    .catch(() => next(new Error('Error fetching exact match')));
 };
 
 exports.hasClosestHexMatch = (req, res, next) => {
@@ -64,5 +64,5 @@ exports.hasClosestHexMatch = (req, res, next) => {
 
       return res.json(newColors);
     })
-    .catch(() => next(new Error("Error fetching closest hex match")));
+    .catch(() => next(new Error('Error fetching closest hex match')));
 };
