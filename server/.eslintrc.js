@@ -3,14 +3,12 @@ module.exports = {
     es6: true,
     node: true
   },
-  extends: "eslint:recommended",
+  extends: ["prettier"],
   parserOptions: {
     ecmaVersion: 2016
   },
+  plugins: ["prettier"],
   rules: {
-    indent: ["error", 4],
-    "linebreak-style": ["error", "unix"],
-    quotes: ["error", "single"],
-    semi: ["error", "always"]
+    "prettier/prettier": "error"
   }
 };

@@ -7,8 +7,11 @@ Create color palettes using the knowledge of millions of designers.
 ![alt tag](http://i.imgur.com/U1ImIj1.png)
 
 ## How It's Made
+
 ---
+
 ### Client
+
 Tech Used: React, Redux, Webpack, Sass
 
 I tried to make the components as modular as possible so this will be a high level overview of how the data flows throughout the application. If you want to learn more I have several comments in the files containing the actions for Redux as well as several of the React components.
@@ -17,7 +20,7 @@ I tried to make the components as modular as possible so this will be a high lev
 
 2. While the user goes through the tutorial, the keyboard events are conditionally blocked based on the current onboarding step using middleware from `redux-thunk`, i.e. they can't dislike a color when the tutorial is telling them to like a color.
 
-3. Once the tutorial is over, the actions `CHANGE_COLOR`, `ADD_COLOR`, and `REMOVE_COLOR` are dispatched based on the key that the user presses. The reducers handle these actions and update the state of `shownPalette` accordingly. 
+3. Once the tutorial is over, the actions `CHANGE_COLOR`, `ADD_COLOR`, and `REMOVE_COLOR` are dispatched based on the key that the user presses. The reducers handle these actions and update the state of `shownPalette` accordingly.
 
 4. Since the actions are asynchronous, the actions `REQUEST_PALETTE` and `RECEIVED_PALLETE` are dispatched when server is called. The request action blocks all key events and kicks off the searching animation. When received, key events are re-enabled and searching disappears.
 
@@ -30,10 +33,12 @@ I tried to make the components as modular as possible so this will be a high lev
 - Until the fetched palette has been re-validated all disliked colors are cached and sent back up to the server when it's queried. The server then filters it's response with those cached colors and returns a palette that's guaranteed not to have any colors that have been shown before.
 
 #### Redux State Tree:
+
 ![alt tag](http://i.imgur.com/60dsrvo.png)
 ![alt tag](http://gifyu.com/images/palettable.gif)
 
 ### Server
+
 Tech Used: Express
 
 1. Initial call to server is at the `/api/random` endpoint where it will fetch a new random palette from Colourlovers
@@ -42,6 +47,6 @@ Tech Used: Express
 
 #### Challenges and Improvements:
 
-- On initial load the server queries Colourlovers' random palette API endpoint and serves that as the initial palette. On all subsequent calls, the server queries the API end point to find palette that contains the second to last color since that one is the one still liked by the user. In the application I give the user to choose *any* color, not just the ones contained in the data from the API. This becomes a problem since if I called the API with a color it doesn't have it will just return no data. To mitigate this and still give the user as much freedom as possible I've employed a bit of witchcraft. If no match is found I take the HEX code and convert it into a string that describes the code, so if a user customizes a color item to a hex code of `#77834B` and no results are found, the server re-queries the API with a search term of ``"moss green"`` instead. This allows us to give the user more accurate match results while still giving them full freedom to customize any color. If no results are found with the search term, it will default back to a random palette.
+- On initial load the server queries Colourlovers' random palette API endpoint and serves that as the initial palette. On all subsequent calls, the server queries the API end point to find palette that contains the second to last color since that one is the one still liked by the user. In the application I give the user to choose _any_ color, not just the ones contained in the data from the API. This becomes a problem since if I called the API with a color it doesn't have it will just return no data. To mitigate this and still give the user as much freedom as possible I've employed a bit of witchcraft. If no match is found I take the HEX code and convert it into a string that describes the code, so if a user customizes a color item to a hex code of `#77834B` and no results are found, the server re-queries the API with a search term of `"moss green"` instead. This allows us to give the user more accurate match results while still giving them full freedom to customize any color. If no results are found with the search term, it will default back to a random palette.
 
 - All of this is done through Express middleware, where if no results are found the middleware will just call `next()`.

@@ -1,52 +1,106 @@
-"use strict";
-
+// @flow
+const path = require("path");
 const Canvas = require("canvas");
-const helpers = require("../utils/helpers");
-const colorInterpreter = require("color");
+const isHex = require("../utilities/isHex");
+const Color = require("color");
+const fs = require("fs");
 
-exports.drawMetaImage = (req, res) => {
-  const palette = req.params.palette;
-  if (!palette || palette.indexOf("-") === -1) {
+function getFontFile(name) {
+  return path.resolve(__dirname, "../assets/", name);
+}
+
+Canvas.registerFont(getFontFile("Asap-Bold.ttf"), {
+  family: "Asap",
+  weight: "bold"
+});
+
+exports.drawImage = (req, res) => {
+  const palette = req.params.palette.replace(".png", "");
+
+  if (!palette === -1) {
     res.status(404);
     return res.end("Error");
   }
 
-  const formattedPalette = palette
-    .split("-")
-    .filter(color => helpers.isHex(color));
-  if (formattedPalette.length <= 1) {
+  const formattedPalette = palette.split("-").filter(color => isHex(color));
+
+  if (formattedPalette.length === 0) {
     res.status(404);
     return res.end("Error");
   }
 
-  res.setHeader("Content-Type", "image/png");
-  res.setHeader("Cache-Control", "public, max-age=31536000");
   res.setHeader("Expires", new Date(0));
   res.setHeader("Last-Modified", new Date(0));
+  res.setHeader("Content-disposition", `attachment; filename=${palette}.png`);
+  res.setHeader("Content-Type", "image/png");
 
-  const canvas = new Canvas(950, 500);
+  const DPI_FACTOR = 2;
+
+  const CANVAS_WIDTH = 900 * DPI_FACTOR;
+  const CANVAS_HEIGHT = 550 * DPI_FACTOR;
+
+  const IMAGE_WIDTH = 900;
+  const IMAGE_HEIGHT = 550;
+  const IMAGE_BAR_HEIGHT = IMAGE_HEIGHT / 10;
+
+  const FONT_HEIGHT = 22;
+
+  const canvas = Canvas.createCanvas(CANVAS_WIDTH, CANVAS_HEIGHT);
+
   const ctx = canvas.getContext("2d");
-  const stream = canvas.createPNGStream();
+  ctx.scale(DPI_FACTOR, DPI_FACTOR);
+  ctx.font = `bold ${FONT_HEIGHT}px Asap`;
 
-  stream.on("data", chunk => {
-    res.write(chunk);
-  });
-  stream.on("end", () => {
-    res.end();
-  });
+  canvas.createPNGStream().pipe(res);
 
+  const _getInterfaceColor = hexCode => {
+    const colorObject = Color(hexCode);
+    const black = Color("#333");
+    const white = Color("#FFF");
+
+    const interfaceColor = colorObject.dark()
+      ? colorObject.mix(white)
+      : colorObject.mix(black);
+
+    return interfaceColor.hex();
+  };
+
+  // Iterates over each color and draws a vertical rectangle
   for (let i = 0; i < formattedPalette.length; i++) {
-    const currentXCoordinate = 950 / formattedPalette.length;
-    ctx.fillStyle = `#${formattedPalette[i]}`;
-    ctx.fillRect(i * currentXCoordinate, 0, currentXCoordinate, 500);
+    const colorWidth = IMAGE_WIDTH / formattedPalette.length;
+    const hexCode = `#${formattedPalette[i]}`;
+
+    // Draws color item
+    ctx.fillStyle = hexCode;
+    ctx.fillRect(i * colorWidth, 0, colorWidth, IMAGE_HEIGHT);
+
+    // Draws hex code
+    ctx.textAlign = "center";
+    ctx.fillStyle = _getInterfaceColor(hexCode);
+    ctx.fillText(hexCode, i * colorWidth + colorWidth / 2, IMAGE_HEIGHT - 35);
   }
 
-  const luminosity = colorInterpreter(`#${formattedPalette[0]}`).luminosity();
-  const titleColor = luminosity < 0.55 ? "#FFF" : "#444";
+  // Draws top white bar
+  ctx.fillStyle = "#FFF";
+  ctx.fillRect(0, 0, IMAGE_WIDTH, IMAGE_BAR_HEIGHT);
 
-  ctx.font = "bold 22px Arial";
-  ctx.fillStyle = titleColor;
-  ctx.fillText("PALETTABLE", 24, 50);
+  // Draws title
+  ctx.textAlign = "left";
+  ctx.fillStyle = "#333";
+  ctx.fillText(
+    "PALETTABLE",
+    IMAGE_WIDTH / 50,
+    IMAGE_BAR_HEIGHT / 2 + FONT_HEIGHT / 2 - 3
+  );
+
+  ctx.textAlign = "end";
+  ctx.font = `bold ${FONT_HEIGHT / 1.75}px Asap`;
+  ctx.fillStyle = "#999";
+  ctx.fillText(
+    `palettable.io/${palette}`,
+    IMAGE_WIDTH - IMAGE_WIDTH / 50,
+    IMAGE_BAR_HEIGHT / 2 + FONT_HEIGHT / 2 - 7
+  );
 
   return 1;
 };
