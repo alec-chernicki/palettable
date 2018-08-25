@@ -2,9 +2,9 @@
 import styles from './ColorItem.scss';
 import React from 'react';
 import ColorName from '../color/ColorName';
-// import ColorItemFooter from './ColorItemFooter';
+import ColorItemFooter from '../color/ColorItemFooter';
 import ColorPickerTool from '../color/ColorPickerTool';
-// import RemoveTool from './Tools/RemoveTool';
+import RemoveColorTool from '../color/tools/RemoveColorTool';
 import CSSTransition from 'react-transition-group/CSSTransition';
 import TransitionGroup from 'react-transition-group/TransitionGroup';
 import type { ColorType } from '../../constants/FlowTypes';
@@ -49,7 +49,7 @@ class ColorItem extends React.PureComponent<Props> {
           <ColorName color={color} />
           <div className={styles.toolIcons}>
             <ColorPickerTool color={color} />
-            {/* <RemoveTool color={color} /> */}
+            <RemoveColorTool color={color} />
           </div>
         </div>
       </CSSTransition>
@@ -76,11 +76,7 @@ class ColorItem extends React.PureComponent<Props> {
     return (
       <li style={style} className={styles.colorItem}>
         <TransitionGroup>{this.renderTools()}</TransitionGroup>
-        {/* <ColorItemFooter
-          isLastItem={isLastItem}
-          active={isLastItem}
-          color={color}
-        /> */}
+        <ColorItemFooter color={color} />
       </li>
     );
   }

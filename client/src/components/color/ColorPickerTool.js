@@ -25,6 +25,7 @@ class ColorPickerTool extends React.PureComponent<Props> {
   };
 
   handleBlur = () => {
+    console.log('blur');
     this.setState({ isActive: false });
   };
 
@@ -35,18 +36,18 @@ class ColorPickerTool extends React.PureComponent<Props> {
   };
 
   handleClick = e => {
-    this.setState({ isActive: true });
+    const { isActive } = this.state;
+    this.setState({ isActive: !isActive });
   };
 
   renderColorPicker() {
     const {
       color: { hexCode },
-      onBlur,
     } = this.props;
 
     return (
       <ColorPicker
-        onBlur={onBlur}
+        onBlur={this.handleBlur}
         onChange={this.handleChange}
         color={hexCode}
       />

@@ -4,6 +4,7 @@ import styles from './App.scss';
 import url from '../utilities/url';
 import ExportButton from './Export/ExportButton';
 import ColorList from './ColorList/ColorList';
+import UIFlex from '../ui-library/layout/UIFlex';
 
 type Props = {
   colors: [Object],
@@ -51,18 +52,22 @@ class App extends React.Component<Props> {
   };
 
   render() {
-    const { children } = this.props;
-
     return (
       <div className={styles.app}>
-        <div className={styles.navigationBar}>
-          <a href="/">
-            <h1>PALETTABLE</h1>
-          </a>
+        <UIFlex justify="space-between" className={styles.navigationBar}>
+          <UIFlex align="center">
+            <a href="/">
+              <h1>PALETTABLE</h1>
+            </a>
+            <p className="m-left-5 m-y-0" style={{ color: '#a6b4bd' }}>
+              Generate beautiful color palettes using the knowledge of millions
+              of designers.
+            </p>
+          </UIFlex>
           <div>
             <ExportButton />
           </div>
-        </div>
+        </UIFlex>
         <ColorList />
       </div>
     );
