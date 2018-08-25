@@ -2,7 +2,7 @@
 import React from 'react';
 import { partial } from 'lodash';
 import type { ColorType } from '../../../constants/FlowTypes';
-import UIButton from '../../../UILibrary/button/UIButton';
+import UIButton from '../../../ui-library/buttons/UIButton';
 import exportOptionsKeys from '../exportOptionsKeys';
 
 type Props = {

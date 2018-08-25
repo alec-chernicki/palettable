@@ -1,0 +1,66 @@
+.picker {
+  width: 230px;
+  padding: 10px 10px 0;
+  background: #fff;
+  left: 50%;
+  margin-left: -115px;
+  margin-right: auto;
+  border-radius: 4px;
+  position: relative;
+  z-index: 1100;
+  box-shadow: rgba(0, 0, 0, 0.05) 0 0 0 1px;
+}
+
+.saturation {
+  border-radius: 3px;
+  cursor: pointer;
+  overflow: hidden;
+  padding-bottom: 60%;
+  position: relative;
+  width: 100%;
+}
+
+.saturationMain {
+  border-radius: 3px;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.15),
+    inset 0 0 4px rgba(0, 0, 0, 0.25);
+}
+
+.controls {
+  display: flex;
+}
+
+.cover {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 35px;
+  z-index: 900;
+  left: 0;
+}
+
+.cover.onboarding {
+  z-index: 1100;
+  cursor: auto;
+}
+
+.sliders {
+  padding: 10px 0;
+  flex: 1;
+}
+
+.hue {
+  position: relative;
+  height: 15px;
+  border-radius: 3px;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.hue * {
+  height: 95% !important;
+}
+
+.hue > div {
+  height: 100% !important;
+}

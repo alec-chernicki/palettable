@@ -2,7 +2,7 @@
 import { partial } from 'lodash';
 import React from 'react';
 import ExportModal from './ExportModal';
-import UIButton from '../../UILibrary/button/UIButton';
+import UIButton from '../../ui-library/buttons/UIButton';
 
 type Props = {};
 

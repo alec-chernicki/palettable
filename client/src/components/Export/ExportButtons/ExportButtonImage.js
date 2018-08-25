@@ -1,9 +1,9 @@
 // @flow
 import React from 'react';
-import UISelectableButton from '../../../ui-library/button/UISelectableButton';
-import FaImage from 'react-icons/lib/fa/image';
+import UISelectableButton from '../../../ui-library/buttons/UISelectableButton';
+import { FaImage } from 'react-icons/fa';
 import type { ColorType } from '../../../constants/FlowTypes';
-import url from '../../../utils/url';
+import url from '../../../utilities/url';
 import download from 'downloadjs';
 import exportOptionsKeys from '../exportOptionsKeys';
 

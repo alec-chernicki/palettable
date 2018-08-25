@@ -1,14 +1,14 @@
 module.exports = {
   env: {
     es6: true,
-    node: true
+    node: true,
   },
-  extends: ["prettier"],
+  extends: ['prettier'],
   parserOptions: {
-    ecmaVersion: 2016
+    ecmaVersion: 2017,
   },
-  plugins: ["prettier"],
+  plugins: ['prettier'],
   rules: {
-    "prettier/prettier": "error"
-  }
+    'prettier/prettier': 'error',
+  },
 };

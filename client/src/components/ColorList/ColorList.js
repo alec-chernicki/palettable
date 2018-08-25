@@ -1,17 +1,30 @@
 // @flow
-import styles from './ColorList.css';
+import styles from './ColorList.scss';
 import React from 'react';
-import { MoonLoader } from 'halogen';
+import Loader from 'react-loader-spinner';
 import ColorItem from '../../components/ColorItem/ColorItem';
-import getInterfaceAttributes from '../../utils/getInterfaceAttributes';
-import UIButton from '../../UILibrary/button/UIButton';
+import getInterfaceAttributes from '../../utilities/getInterfaceAttributes';
+import UIButton from '../../ui-library/buttons/UIButton';
 import CSSTransition from 'react-transition-group/CSSTransition';
 import TransitionGroup from 'react-transition-group/TransitionGroup';
+import gql from 'graphql-tag';
+import { Query } from 'react-apollo';
+
+const QUERY = gql`
+  {
+    palette {
+      colors {
+        id
+        hexCode
+      }
+    }
+  }
+`;
 
 type Props = {
   +likedColors: Array<Object>,
   +requestPalette: () => mixed,
-  +styles: Object,
+
   +hasFetchFailed: boolean,
 };
 
@@ -22,7 +35,7 @@ class ColorList extends React.Component<Props> {
 
   renderError() {
     return (
-      <div styleName="loader-container">
+      <div className={styles.loaderContainer}>
         <div>
           <h1>Well, this is embarassing.</h1>
           <p>Unfortunately we weren't able to get suggested palettes.</p>
@@ -36,57 +49,71 @@ class ColorList extends React.Component<Props> {
 
   renderColors() {
     const { likedColors } = this.props;
+
     return likedColors.map((color, index) => {
       const isLastItem = likedColors.length - 1 === index;
       return (
         <CSSTransition
           key={color.id}
-          className={styles['flex-item-wrapper']}
+          className={styles.flexItemWrapper}
           timeout={400}
           classNames={{
-            enter: styles['flex-enter'],
-            enterActive: styles['flex-enter-active'],
-            exit: styles['flex-exit'],
-            exitActive: styles['flex-exit-active'],
+            enter: styles.flexEnter,
+            enterActive: styles.flexEnterActive,
+            exit: styles.flexExit,
+            exitActive: styles.flexExitActive,
           }}
         >
-          <div>
-            <ColorItem color={color} isLastItem={isLastItem} />
-          </div>
+          <div>{/* <ColorItem color={color} isLastItem={isLastItem} /> */}</div>
         </CSSTransition>
       );
     });
   }
 
-  renderList() {
-    const { styles } = this.props;
-    return (
-      <TransitionGroup className={styles['color-list']}>
-        {this.renderColors()}
-      </TransitionGroup>
-    );
-  }
-
   renderLoader() {
     const interfaceAttributes = getInterfaceAttributes('#222');
     return (
-      <div styleName="loader-container">
-        <div styleName="loader" key="loader">
-          <MoonLoader color={interfaceAttributes.color} />
+      <div className={styles.loaderContainer}>
+        <div className={styles.loader}>
+          <Loader type="line-scale" color={interfaceAttributes.color} />
         </div>
       </div>
     );
   }
 
   render() {
-    const { likedColors, hasFetchFailed } = this.props;
-    if (hasFetchFailed) {
-      return this.renderError();
-    }
-    if (!likedColors.length) {
-      return this.renderLoader();
-    }
-    return this.renderList();
+    return (
+      <Query query={QUERY}>
+        {({ loading, error, data }) => {
+          if (loading) return this.renderLoader();
+          if (error) return this.renderError();
+
+          return (
+            <TransitionGroup className={styles.loaderContainer}>
+              {data.palette.colors.map((color, index) => {
+                const isLastItem = data.palette.colors.length - 1 === index;
+
+                return (
+                  <CSSTransition
+                    key={color.id}
+                    className={styles.flexItemWrapper}
+                    timeout={400}
+                    classNames={{
+                      enter: styles.flexEnter,
+                      enterActive: styles.flexEnterActive,
+                      exit: styles.flexExit,
+                      exitActive: styles.flexExitActive,
+                    }}
+                  >
+                    <ColorItem color={color} isLastItem={isLastItem} />
+                  </CSSTransition>
+                );
+              })}
+            </TransitionGroup>
+          );
+        }}
+      </Query>
+    );
   }
 }
 

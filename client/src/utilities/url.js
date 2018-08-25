@@ -1,6 +1,6 @@
 // @flow
 import paletteAdapter from '../adapters/paletteAdapter';
-import isHex from '../utils/isHex';
+import isHex from '../utilities/isHex';
 import Color from 'color';
 import type { ColorType } from '../constants/FlowTypes';
 

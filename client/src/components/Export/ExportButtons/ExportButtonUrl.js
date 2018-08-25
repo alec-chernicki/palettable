@@ -1,8 +1,8 @@
 // @flow
 import React from 'react';
-import { partial } from 'lodash';
-import UISelectableButton from '../../../UILibrary/button/UISelectableButton';
-import FaChain from 'react-icons/lib/fa/chain';
+import { partial } from 'underscore';
+import UISelectableButton from '../../../ui-library/buttons/UISelectableButton';
+import { FaLink } from 'react-icons/fa';
 import exportOptionsKeys from '../exportOptionsKeys';
 
 type Props = {
@@ -12,8 +12,8 @@ type Props = {
 const ExportButtonUrl = ({ onClick }: Props) => {
   return (
     <UISelectableButton
-      icon={FaChain}
-      onClick={partial(this.handleClick, exportOptionsKeys.URL)}
+      icon={FaLink}
+      onClick={partial(onClick, exportOptionsKeys.URL)}
     >
       URL
     </UISelectableButton>

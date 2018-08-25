@@ -1,4 +1,3 @@
-// @flow
 const path = require('path');
 const Canvas = require('canvas');
 const isHex = require('../utilities/isHex');
@@ -14,7 +13,8 @@ Canvas.registerFont(getFontFile('Asap-Bold.ttf'), {
   weight: 'bold',
 });
 
-exports.drawImage = (req, res) => {
+module.exports = (req, res) => {
+  const paletteFromParams = req.params.palette;
   const palette = req.params.palette.replace('.png', '');
 
   if (!palette === -1) {

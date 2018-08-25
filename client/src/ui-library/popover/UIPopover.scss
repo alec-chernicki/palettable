@@ -1,0 +1,92 @@
+.popperArrow {
+  width: 0;
+  height: 0;
+  border-style: solid;
+  position: absolute;
+  margin: 13px;
+}
+
+[data-placement^='top'] {
+  margin-bottom: 25px;
+}
+
+[data-placement^='top'] .popperArrow {
+  border-width: 13px 13px 0 13px;
+  border-color: #fff transparent transparent transparent;
+  bottom: -13px;
+  left: calc(50% - 26px);
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+[data-placement^='bottom'] {
+  margin-top: 25px;
+}
+
+[data-placement^='bottom'] .popperArrow {
+  border-width: 0 13px 13px 13px;
+  border-color: transparent transparent #fff transparent;
+  top: -13px;
+  left: calc(50% - 26px);
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+[data-placement^='right'] {
+  margin-left: 25px;
+}
+
+[data-placement^='right'] .popperArrow {
+  border-width: 13px 13px 13px 0;
+  border-color: transparent #fff transparent transparent;
+  left: -13px;
+  top: calc(50% - 26px);
+  margin-left: 0;
+  margin-right: 0;
+}
+
+[data-placement^='left'] {
+  margin-right: 25px;
+}
+
+[data-placement^='left'] .popper-arrow {
+  border-width: 13px 0 13px 13px;
+  border-color: transparent transparent transparent #fff;
+  right: -13px;
+  top: calc(50% - 26px);
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.popover {
+  position: relative;
+}
+
+.popperAnimationWrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
+.popoverEnter {
+  opacity: 0.001;
+  transform: scale(0.7);
+}
+
+.popoverEnterActive {
+  opacity: 1;
+  transform: scale(1);
+  transition: all 200ms ease;
+}
+
+.popoverExit {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.popoverExitActive {
+  opacity: 0.001;
+  transform: scale(0.7);
+  transition: all 200ms ease;
+}

@@ -1,0 +1,15 @@
+.colorName {
+  background: transparent;
+  border: none;
+  outline: none;
+  font-family: 'ASAP';
+  text-align: center;
+  font-size: 30px;
+  font-weight: 600;
+  letter-spacing: 0.025em;
+  width: 100%;
+  z-index: 100;
+  position: relative;
+  margin-bottom: 20px;
+  transition: color 125ms ease-in-out;
+}

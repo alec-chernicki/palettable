@@ -1,0 +1,64 @@
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.loaderContainer {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation-delay: 125ms;
+  animation: fade-in 125 ease-out;
+}
+
+.colorItem {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  position: relative;
+  width: 100%;
+  flex: 1;
+  height: 100%;
+  z-index: 100;
+  overflow: hidden;
+  transition: background-color 150ms ease-out;
+}
+
+.tool-icons {
+  position: relative;
+  z-index: 1000;
+}
+
+@media only screen and (max-width: 768px) {
+  .tool-icons {
+    display: none;
+  }
+}
+
+.fadeEnter {
+  opacity: 0.01;
+}
+
+.fadeEnterActive {
+  opacity: 1;
+  transition: opacity 200ms ease-out 200ms;
+}
+
+.fadeExit {
+  opacity: 1;
+  overflow: hidden;
+}
+
+.fadeExitActive {
+  opacity: 0.01;
+  transition: opacity 200ms ease-out;
+}

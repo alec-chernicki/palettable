@@ -2,10 +2,10 @@
 import React from 'react';
 import { partial } from 'lodash';
 import type { ColorType } from '../../../constants/FlowTypes';
-import UIButton from '../../../UILibrary/button/UIButton';
+import UIButton from '../../../ui-library/buttons/UIButton';
 import exportOptionsKeys from '../exportOptionsKeys';
-import UITextInput from '../../../UILibrary/input/UITextCopyInput';
-import url from '../../../utils/url';
+import UITextInput from '../../../ui-library/input/UITextCopyInput';
+import url from '../../../utilities/url';
 import { baseUrl } from '../../../constants/links';
 
 type Props = {
