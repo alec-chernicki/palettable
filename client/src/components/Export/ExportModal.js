@@ -80,12 +80,13 @@ class ExportModal extends React.Component<Props, State> {
     return (
       <Modal
         isOpen={true}
-        className={styles.exportModalBackdrop}
+        closeTimeoutMS={200}
+        className={styles.exportModalContainer}
         overlayClassName={styles.exportModalOverlay}
       >
         <div className={styles.exportModal}>
           <div className={styles.exportModalHeader}>
-            <h2 className="m-y-0 p-right-5">
+            <h2 className={styles.exportModalTitle}>
               How would you like to export your palette?
             </h2>
             <a className={styles.closeButton} onClick={onClose}>

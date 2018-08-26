@@ -77,7 +77,7 @@ class ColorList extends React.Component<Props> {
         {({ loading, error, data }) => {
           if (loading) return this.renderLoader();
           if (error) return this.renderError();
-
+          debugger;
           if (data.likedColors.length === 0) {
             return null;
           }

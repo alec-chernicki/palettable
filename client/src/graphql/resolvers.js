@@ -4,7 +4,12 @@ import { pluck } from 'underscore';
 
 export const defaults = {
   dislikedColors: [],
-  likedColors: url.parseColors() || [],
+  likedColors: [],
+};
+
+const _setPaletteUrl = likedColors => {
+  const newUrl = url.stringifyColors(likedColors);
+  window.history.replaceState({}, '', newUrl);
 };
 
 export const resolvers = {
@@ -47,6 +52,7 @@ export const resolvers = {
         data: { likedColors: likedColorsWithChangedColor },
       });
 
+      _setPaletteUrl(likedColorsWithChangedColor);
       return likedColorsWithChangedColor;
     },
     dislikeColor: (_, variables, { cache }) => {
@@ -101,6 +107,7 @@ export const resolvers = {
         data: newData,
       });
 
+      _setPaletteUrl(likedColorsWithChangedColor);
       return likedColorsWithChangedColor;
     },
 
@@ -111,7 +118,10 @@ export const resolvers = {
         cache.writeQuery({
           query: gql`
             query {
-              likedColors
+              likedColors {
+                id
+                hexCode
+              }
             }
           `,
           data: { likedColors: colorsFromUrl },
@@ -124,7 +134,10 @@ export const resolvers = {
         query: gql`
           query {
             palette {
-              colors
+              colors {
+                id
+                hexCode
+              }
             }
           }
         `,
@@ -134,12 +147,16 @@ export const resolvers = {
       cache.writeQuery({
         query: gql`
           query {
-            likedColors
+            likedColors {
+              id
+              hexCode
+            }
           }
         `,
         data: { likedColors: [firstColorFromFetchedPalette] },
       });
 
+      _setPaletteUrl([firstColorFromFetchedPalette]);
       return [firstColorFromFetchedPalette];
     },
 
@@ -150,10 +167,12 @@ export const resolvers = {
             palette {
               colors {
                 id
+                hexCode
               }
             }
             likedColors {
               id
+              hexCode
             }
             dislikedColors {
               id
@@ -161,6 +180,10 @@ export const resolvers = {
           }
         `,
       });
+
+      if (likedColors.length === 5) {
+        return likedColors;
+      }
 
       const newColorToShow = palette.colors.filter(color => {
         return (
@@ -182,6 +205,8 @@ export const resolvers = {
         `,
         data: newData,
       });
+
+      _setPaletteUrl([...likedColors, newColorToShow]);
       return newColorToShow;
     },
 
@@ -191,6 +216,7 @@ export const resolvers = {
           query {
             likedColors {
               id
+              hexCode
             }
           }
         `,
@@ -211,6 +237,7 @@ export const resolvers = {
         data: { likedColors: colorswWithoutDislikedColor },
       });
 
+      _setPaletteUrl(colorswWithoutDislikedColor);
       return colorswWithoutDislikedColor;
     },
   },
