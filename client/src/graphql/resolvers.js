@@ -9,7 +9,7 @@ export const defaults = {
 
 const _setPaletteUrl = likedColors => {
   const newUrl = url.stringifyColors(likedColors);
-  window.history.replaceState({}, '', newUrl);
+  window.history.replaceState({}, 'palettable', newUrl);
 };
 
 export const resolvers = {
