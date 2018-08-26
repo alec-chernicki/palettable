@@ -40,7 +40,6 @@ class ExportButtonImage extends React.Component<Props> {
       <Query query={QUERY}>
         {({ loading, error, data }) => {
           const { colors } = data.palette;
-          debugger;
           const stringifiedColors = url.stringifyColors(colors);
 
           return (

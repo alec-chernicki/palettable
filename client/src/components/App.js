@@ -5,10 +5,18 @@ import url from '../utilities/url';
 import ExportButton from './Export/ExportButton';
 import ColorList from './ColorList/ColorList';
 import UIFlex from '../ui-library/layout/UIFlex';
+import gql from 'graphql-tag';
+import { Mutation } from 'react-apollo';
 
 type Props = {
   colors: [Object],
 };
+
+const MUTATION = gql`
+  mutation HydateInitialLikedColors {
+    hydrateInitialLikedColors @client
+  }
+`;
 
 const L_KEYCODE = 76;
 const D_KEYCODE = 68;
@@ -86,7 +94,11 @@ class App extends React.Component<Props> {
             <ExportButton />
           </UIFlex>
         </UIFlex>
-        <ColorList />
+        <Mutation mutation={MUTATION}>
+          {(hydrateInitialLikedColors, { data }) => {
+            return <ColorList onLoad={hydrateInitialLikedColors} />;
+          }}
+        </Mutation>
       </div>
     );
   }

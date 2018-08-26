@@ -7,7 +7,8 @@ export default `
   type Mutation {
     dislikeColor(id: ID!): Color
     likeColor(id: ID!): Color
-    removeColor(id: ID!): Color]
+    removeColor(id: ID!): Color
+    hydrateInitialLikedColors: [Colors]
   }
 
   type Query {

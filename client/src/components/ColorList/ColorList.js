@@ -18,19 +18,32 @@ const QUERY = gql`
         hexCode
       }
     }
+    likedColors @client {
+      id
+      hexCode
+    }
   }
 `;
 
 type Props = {
   +likedColors: Array<Object>,
   +requestPalette: () => mixed,
-
   +hasFetchFailed: boolean,
 };
 
 class ColorList extends React.Component<Props> {
   static defaultProps = {
-    likedColors: [],
+    onLoad: () => {},
+  };
+
+  handleOnComplete = data => {
+    const { onLoad } = this.props;
+
+    if (data.likedColors.length !== 0) {
+      return;
+    }
+
+    onLoad();
   };
 
   renderError() {
@@ -47,29 +60,6 @@ class ColorList extends React.Component<Props> {
     );
   }
 
-  renderColors() {
-    const { likedColors } = this.props;
-
-    return likedColors.map((color, index) => {
-      const isLastItem = likedColors.length - 1 === index;
-      return (
-        <CSSTransition
-          key={color.id}
-          className={styles.flexItemWrapper}
-          timeout={400}
-          classNames={{
-            enter: styles.flexEnter,
-            enterActive: styles.flexEnterActive,
-            exit: styles.flexExit,
-            exitActive: styles.flexExitActive,
-          }}
-        >
-          <div>{/* <ColorItem color={color} isLastItem={isLastItem} /> */}</div>
-        </CSSTransition>
-      );
-    });
-  }
-
   renderLoader() {
     const interfaceAttributes = getInterfaceAttributes('#222');
     return (
@@ -83,16 +73,14 @@ class ColorList extends React.Component<Props> {
 
   render() {
     return (
-      <Query query={QUERY}>
+      <Query query={QUERY} onCompleted={this.handleOnComplete}>
         {({ loading, error, data }) => {
           if (loading) return this.renderLoader();
           if (error) return this.renderError();
-
+          debugger;
           return (
             <TransitionGroup className={styles.loaderContainer}>
-              {data.palette.colors.map((color, index) => {
-                const isLastItem = data.palette.colors.length - 1 === index;
-
+              {data.likedColors.map((color, index) => {
                 return (
                   <CSSTransition
                     key={color.id}
@@ -105,7 +93,7 @@ class ColorList extends React.Component<Props> {
                       exitActive: styles.flexExitActive,
                     }}
                   >
-                    <ColorItem color={color} isLastItem={isLastItem} />
+                    <ColorItem color={color} />
                   </CSSTransition>
                 );
               })}

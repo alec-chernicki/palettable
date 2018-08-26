@@ -1,4 +1,5 @@
 // @flow
+import { partial } from 'underscore';
 import styles from './ColorItemFooter.scss';
 import type { ColorType } from '../../constants/FlowTypes';
 import React from 'react';
@@ -6,14 +7,20 @@ import classNames from 'classnames';
 import UIButton from '../../ui-library/buttons/UIButton';
 import ExportButton from '../Export/ExportButton';
 import gql from 'graphql-tag';
-import { Query } from 'react-apollo';
+import { Query, Mutation } from 'react-apollo';
 
 const QUERY = gql`
   {
-    palette {
-      colors {
-        id
-      }
+    likedColors @client {
+      id
+    }
+  }
+`;
+
+const LIKE_COLOR_MUTATION = gql`
+  mutation LikeColor($id: ID!) {
+    likeColor(id: $id) @client {
+      id
     }
   }
 `;
@@ -32,16 +39,6 @@ class ColorItemFooter extends React.Component<Props> {
 
   renderExportButton() {
     return <ExportButton />;
-  }
-
-  renderLikeButton() {
-    const { onLike } = this.props;
-
-    return (
-      <UIButton use="positive" onClick={onLike}>
-        Like
-      </UIButton>
-    );
   }
 
   renderDislikeButton() {
@@ -64,9 +61,11 @@ class ColorItemFooter extends React.Component<Props> {
     return (
       <Query query={QUERY}>
         {({ loading, error, data }) => {
-          const { colors } = data.palette;
-          const isLastColor = colors[colors.length - 1].id === color.id;
-          const isAtMaximum = colors.length === 5;
+          const { likedColors } = data;
+          const isLastColor =
+            !!likedColors.length &&
+            likedColors[likedColors.length - 1].id === color.id;
+          const isAtMaximum = likedColors.length === 5;
           const className = classNames(styles.colorFooter, {
             [styles.active]: isLastColor,
             [styles.inactive]: !isLastColor,
@@ -79,9 +78,24 @@ class ColorItemFooter extends React.Component<Props> {
               )}
               <div className={styles.buttons}>
                 {this.renderDislikeButton()}
-                {isAtMaximum
-                  ? this.renderExportButton()
-                  : this.renderLikeButton()}
+                {isAtMaximum ? (
+                  this.renderExportButton()
+                ) : (
+                  <Mutation mutation={LIKE_COLOR_MUTATION}>
+                    {(likeColor, { data }) => {
+                      return (
+                        <UIButton
+                          use="positive"
+                          onClick={partial(likeColor, {
+                            variables: { id: color.id },
+                          })}
+                        >
+                          Like
+                        </UIButton>
+                      );
+                    }}
+                  </Mutation>
+                )}
               </div>
             </div>
           );

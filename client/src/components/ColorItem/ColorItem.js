@@ -67,8 +67,7 @@ class ColorItem extends React.PureComponent<Props> {
   }
 
   render() {
-    const { color, isLastItem } = this.props;
-
+    const { color } = this.props;
     const style = {
       backgroundColor: color.hexCode,
     };
