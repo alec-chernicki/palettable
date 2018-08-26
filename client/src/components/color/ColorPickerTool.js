@@ -1,9 +1,20 @@
 // @flow
 import React from 'react';
+import { partial } from 'underscore';
 import ColorPicker from './ColorPicker';
 import UISliderIcon from '../../ui-library/icons/UISliderIcon';
 import UIPopover from '../../ui-library/popover/UIPopover';
 import type { ColorType } from '../../../constants/FlowTypes';
+import gql from 'graphql-tag';
+import { Mutation } from 'react-apollo';
+
+const CHANGE_COLOR_MUTATION = gql`
+  mutation ChangeColor($id: ID!, $hexCode: String!) {
+    changeColor(id: $id, hexCode: $hexCode) @client {
+      id
+    }
+  }
+`;
 
 type Props = {
   color: ColorType,
@@ -25,14 +36,7 @@ class ColorPickerTool extends React.PureComponent<Props> {
   };
 
   handleBlur = () => {
-    console.log('blur');
     this.setState({ isActive: false });
-  };
-
-  handleChange = colorData => {
-    const { onChange } = this.props;
-
-    onChange(colorData.hex.toUpperCase());
   };
 
   handleClick = e => {
@@ -40,17 +44,32 @@ class ColorPickerTool extends React.PureComponent<Props> {
     this.setState({ isActive: !isActive });
   };
 
+  handleChange = (changeColor, { hex }) => {
+    const { color } = this.props;
+
+    changeColor({
+      variables: {
+        id: color.id,
+        hexCode: hex.toUpperCase(),
+      },
+    });
+  };
+
   renderColorPicker() {
-    const {
-      color: { hexCode },
-    } = this.props;
+    const { color } = this.props;
 
     return (
-      <ColorPicker
-        onBlur={this.handleBlur}
-        onChange={this.handleChange}
-        color={hexCode}
-      />
+      <Mutation mutation={CHANGE_COLOR_MUTATION}>
+        {(changeColor, { data }) => {
+          return (
+            <ColorPicker
+              onBlur={this.handleBlur}
+              onChange={partial(this.handleChange, changeColor)}
+              color={color.hexCode}
+            />
+          );
+        }}
+      </Mutation>
     );
   }
 
