@@ -25,6 +25,14 @@ const LIKE_COLOR_MUTATION = gql`
   }
 `;
 
+const DISLIKE_COLOR_MUTATION = gql`
+  mutation DislikeColor($id: ID!) {
+    dislikeColor(id: $id) @client {
+      id
+    }
+  }
+`;
+
 type Props = {
   +onLike: () => {},
   +onDislike: () => {},
@@ -42,16 +50,24 @@ class ColorItemFooter extends React.Component<Props> {
   }
 
   renderDislikeButton() {
-    const { onDislike } = this.props;
+    const { color } = this.props;
 
     return (
-      <UIButton
-        use="negative"
-        className={styles.buttonDislike}
-        onClick={onDislike}
-      >
-        Dislike
-      </UIButton>
+      <Mutation mutation={DISLIKE_COLOR_MUTATION}>
+        {(dislikeColor, { data }) => {
+          return (
+            <UIButton
+              use="negative"
+              className={styles.buttonDislike}
+              onClick={partial(dislikeColor, {
+                variables: { id: color.id },
+              })}
+            >
+              Dislike
+            </UIButton>
+          );
+        }}
+      </Mutation>
     );
   }
 

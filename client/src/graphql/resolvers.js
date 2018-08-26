@@ -9,27 +9,61 @@ export const defaults = {
 
 export const resolvers = {
   Mutation: {
-    // dislikeColor: (_, variables, { cache }) => {
-    //   const query = gql`
-    //     query {
-    //       palette {
-    //         colors
-    //       }
-    //       likedColors
-    //       dislikedColors
-    //     }
-    //   `;
-    //   const cachedData = cache.readQuery({ query });
-    //   const newData = {
-    //     palette: cachedData.palette,
-    //     likedColors: cachedData.likedColors,
-    //     dislikedColors: [...cachedData.dislikedColors, variables.color],
-    //   };
+    dislikeColor: (_, variables, { cache }) => {
+      debugger;
+      const { palette, likedColors, dislikedColors } = cache.readQuery({
+        query: gql`
+          query {
+            palette {
+              colors {
+                id
+                hexCode
+              }
+            }
+            likedColors {
+              id
+              hexCode
+            }
+            dislikedColors
+          }
+        `,
+      });
+      const dislikedColor = likedColors.filter(color => {
+        return color.id === variables.id;
+      })[0];
+      const newColorToShow = palette.colors.filter(color => {
+        return (
+          pluck(dislikedColors, 'id').indexOf(color.id) === -1 &&
+          pluck(likedColors, 'id').indexOf(color.id) === -1
+        );
+      })[0];
+      const likedColorsWithChangedColor = likedColors.map(color => {
+        if (color.id === variables.id) {
+          return newColorToShow;
+        }
 
-    //   cache.writeQuery({ query, newData });
+        return color;
+      });
+      const newData = {
+        likedColors: likedColorsWithChangedColor,
+        dislikedColors: [...dislikedColors, dislikedColor],
+      };
 
-    //   return variables.color;
-    // },
+      cache.writeQuery({
+        query: gql`
+          query {
+            likedColors {
+              id
+              hexCode
+            }
+            dislikedColors
+          }
+        `,
+        data: newData,
+      });
+
+      return likedColorsWithChangedColor;
+    },
 
     hydrateInitialLikedColors: (_, variables, { cache }) => {
       const colorsFromUrl = url.parseColors();
@@ -112,20 +146,33 @@ export const resolvers = {
       return newColorToShow;
     },
 
-    //   removeColor: (_, variables, { cache }) => {
-    //     const query = gql`
-    //       query {
-    //         likedColors
-    //       }
-    //     `;
-    //     const cachedData = cache.readQuery({ query });
-    //     const newData = cachedData.likedColors.filter(likedColor => {
-    //       return likedColor.id !== variables.color.id;
-    //     });
+    removeColor: (_, variables, { cache }) => {
+      const cachedData = cache.readQuery({
+        query: gql`
+          query {
+            likedColors {
+              id
+            }
+          }
+        `,
+      });
+      const colorswWithoutDislikedColor = cachedData.likedColors.filter(
+        likedColor => {
+          return likedColor.id !== variables.color.id;
+        }
+      );
+      cache.writeQuery({
+        query: gql`
+          query {
+            likedColors {
+              id
+            }
+          }
+        `,
+        data: { likedColors: colorswWithoutDislikedColor },
+      });
 
-    //     cache.writeQuery({ query, data: newData });
-
-    //     return variables.color;
-    //   },
+      return colorswWithoutDislikedColor;
+    },
   },
 };
