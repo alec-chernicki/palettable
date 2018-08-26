@@ -9,17 +9,16 @@ import download from 'downloadjs';
 import exportOptionsKeys from '../exportOptionsKeys';
 import gql from 'graphql-tag';
 import { Query } from 'react-apollo';
+import getServerUrl from '../../../utilities/getServerUrl';
 
 const QUERY = gql`
   {
-    palette {
-      colors {
-        hexCode
-      }
+    likedColors {
+      hexCode
     }
   }
 `;
-const IMAGE_ENDPOINT = 'http://localhost:4000/api/image';
+const IMAGE_ENDPOINT = `${getServerUrl()}/api/image`;
 
 type Props = {
   +likedColors: ColorType[],
@@ -27,9 +26,9 @@ type Props = {
 };
 
 class ExportButtonImage extends React.Component<Props> {
-  handleClick = (colors, e) => {
+  handleClick = (likedColors, e) => {
     const { onClick } = this.props;
-    const stringifiedColors = url.stringifyColors(colors);
+    const stringifiedColors = url.stringifyColors(likedColors);
 
     download(`${IMAGE_ENDPOINT}/${stringifiedColors}.png`);
     onClick(exportOptionsKeys.IMAGE);
@@ -39,14 +38,10 @@ class ExportButtonImage extends React.Component<Props> {
     return (
       <Query query={QUERY}>
         {({ loading, error, data }) => {
-          const { colors } = data.palette;
-          const stringifiedColors = url.stringifyColors(colors);
-
           return (
             <UISelectableButton
               icon={FaImage}
-              href={`${IMAGE_ENDPOINT}/${stringifiedColors}`}
-              onClick={partial(this.handleClick, colors)}
+              onClick={partial(this.handleClick, data.likedColors)}
             >
               PNG
             </UISelectableButton>

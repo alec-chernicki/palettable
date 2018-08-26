@@ -33,6 +33,7 @@ module.exports = (req, res) => {
   res.setHeader('Last-Modified', new Date(0));
   res.setHeader('Content-disposition', `attachment; filename=${palette}.png`);
   res.setHeader('Content-Type', 'image/png');
+  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
 
   const DPI_FACTOR = 2;
 

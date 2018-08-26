@@ -7,11 +7,9 @@ import ApolloClient from 'apollo-boost';
 import { ApolloProvider } from 'react-apollo';
 import { defaults, resolvers } from './graphql/resolvers';
 import typeDefs from './graphql/typeDefs';
+import getServerUrl from './utilities/getServerUrl';
 
-const PROD_ENDPOINT = 'https://wwww.api.palettable.io/graphql';
-const LOCAL_ENDPOINT = 'http://localhost:4000/graphql';
-const isLocal = window.location.href.indexOf('localhost') !== -1;
-const GRAPHQL_ENDPOINT = isLocal ? LOCAL_ENDPOINT : PROD_ENDPOINT;
+const GRAPHQL_ENDPOINT = `${getServerUrl()}/graphql`;
 
 const client = new ApolloClient({
   uri: GRAPHQL_ENDPOINT,
