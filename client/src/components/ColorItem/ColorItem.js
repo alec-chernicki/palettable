@@ -73,10 +73,12 @@ class ColorItem extends React.PureComponent<Props> {
     };
 
     return (
-      <li style={style} className={styles.colorItem}>
-        <TransitionGroup>{this.renderTools()}</TransitionGroup>
-        <ColorItemFooter color={color} />
-      </li>
+      <div className={styles.colorItem}>
+        <div style={style} className={styles.colorItemBackground}>
+          <TransitionGroup>{this.renderTools()}</TransitionGroup>
+          <ColorItemFooter color={color} />
+        </div>
+      </div>
     );
   }
 }

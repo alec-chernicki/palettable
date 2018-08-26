@@ -21,15 +21,20 @@
 }
 
 .colorItem {
-  align-items: center;
-  display: flex;
-  justify-content: center;
   position: relative;
   width: 100%;
   flex: 1;
   height: 100%;
   z-index: 100;
   overflow: hidden;
+}
+
+.colorItemBackground {
+  height: 100%;
+  width: 100%;
+  align-items: center;
+  display: flex;
+  justify-content: center;
   transition: background-color 150ms ease-out;
 }
 

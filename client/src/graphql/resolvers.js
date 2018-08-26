@@ -1,5 +1,6 @@
 import gql from 'graphql-tag';
 import url from '../utilities/url';
+import { pluck } from 'underscore';
 
 export const defaults = {
   dislikedColors: [],
@@ -56,53 +57,59 @@ export const resolvers = {
         `,
       });
 
+      const firstColorFromFetchedPalette = cachedData.palette.colors[0];
       cache.writeQuery({
         query: gql`
           query {
             likedColors
           }
         `,
-        data: { likedColors: [cachedData.palette.colors[0]] },
+        data: { likedColors: [firstColorFromFetchedPalette] },
       });
 
-      return [cachedData.palette.colors[0]];
+      return [firstColorFromFetchedPalette];
     },
 
     likeColor: (_, variables, { cache }) => {
-      const readQuery = gql`
-        query {
-          palette {
-            colors {
+      const { palette, likedColors, dislikedColors } = cache.readQuery({
+        query: gql`
+          query {
+            palette {
+              colors {
+                id
+              }
+            }
+            likedColors {
               id
-              hexCode
+            }
+            dislikedColors {
+              id
             }
           }
-          likedColors {
-            id
-            hexCode
-          }
-        }
-      `;
-
-      const writeQuery = gql`
-        query {
-          likedColors {
-            id
-            hexCode
-          }
-        }
-      `;
-
-      const cachedData = cache.readQuery({ query: readQuery });
-      const likedColor = cachedData.palette.colors.filter(likedColor => {
-        return likedColor.id === variables.id;
+        `,
       });
+
+      const newColorToShow = palette.colors.filter(color => {
+        return (
+          pluck(dislikedColors, 'id').indexOf(color.id) === -1 &&
+          pluck(likedColors, 'id').indexOf(color.id) === -1
+        );
+      })[0];
       const newData = {
-        likedColors: likedColor,
+        likedColors: [...likedColors, newColorToShow],
       };
 
-      cache.writeQuery({ query: writeQuery, data: newData });
-      return likedColor;
+      cache.writeQuery({
+        query: gql`
+          query {
+            likedColors {
+              id
+            }
+          }
+        `,
+        data: newData,
+      });
+      return newColorToShow;
     },
 
     //   removeColor: (_, variables, { cache }) => {
