@@ -6,13 +6,35 @@ import ExportButton from './Export/ExportButton';
 import ColorList from './ColorList/ColorList';
 import UIFlex from '../ui-library/layout/UIFlex';
 import gql from 'graphql-tag';
-import { Mutation } from 'react-apollo';
+import { graphql, compose } from 'react-apollo';
 
 type Props = {
   colors: [Object],
 };
 
-const MUTATION = gql`
+const LIKED_COLORS_QUERY = gql`
+  query {
+    likedColors {
+      id
+    }
+  }
+`;
+
+const LIKE_COLOR_MUTATION = gql`
+  mutation LikeColor($id: ID!) {
+    likeColor(id: $id) @client {
+      id
+    }
+  }
+`;
+const DISLIKE_COLOR_MUTATION = gql`
+  mutation DislikeColor($id: ID!) {
+    dislikeColor(id: $id) @client {
+      id
+    }
+  }
+`;
+const HYDRATE_INITIAL_LIKED_COLORS_MUTATION = gql`
   mutation HydateInitialLikedColors {
     hydrateInitialLikedColors @client
   }
@@ -22,16 +44,6 @@ const L_KEYCODE = 76;
 const D_KEYCODE = 68;
 
 class App extends React.Component<Props> {
-  componentWillMount() {
-    const paletteFromUrl = url.parseColors();
-
-    if (paletteFromUrl.length) {
-      // hydrate local state from query param
-    }
-
-    // request random palette
-  }
-
   componentDidMount() {
     document.addEventListener('keydown', this.handleKeydown);
   }
@@ -47,14 +59,16 @@ class App extends React.Component<Props> {
   }
 
   handleKeydown = (event: KeyboardEvent) => {
+    const { likeColor, dislikeColor, data } = this.props;
     const keycode: number = event.which;
     const isEventFromInput = this.getIsEventFromInput(event);
+    const lastColorInList = data.likedColors[data.likedColors.length - 1];
 
     if (!isEventFromInput) {
       if (keycode === L_KEYCODE) {
-        // add to palette
+        likeColor({ variables: { id: lastColorInList.id } });
       } else if (keycode === D_KEYCODE) {
-        // change last color in palette
+        dislikeColor({ variables: { id: lastColorInList.id } });
       }
     }
   };
@@ -76,6 +90,7 @@ class App extends React.Component<Props> {
   }
 
   render() {
+    const { hydrateInitialLikedColors } = this.props;
     return (
       <div className={styles.app}>
         <UIFlex justify="space-between" className={styles.navigationBar}>
@@ -94,14 +109,17 @@ class App extends React.Component<Props> {
             <ExportButton />
           </UIFlex>
         </UIFlex>
-        <Mutation mutation={MUTATION}>
-          {(hydrateInitialLikedColors, { data }) => {
-            return <ColorList onLoad={hydrateInitialLikedColors} />;
-          }}
-        </Mutation>
+        <ColorList onLoad={hydrateInitialLikedColors} />
       </div>
     );
   }
 }
 
-export default App;
+export default compose(
+  graphql(LIKED_COLORS_QUERY, { name: 'data' }),
+  graphql(HYDRATE_INITIAL_LIKED_COLORS_MUTATION, {
+    name: 'hydrateInitialLikedColors',
+  }),
+  graphql(LIKE_COLOR_MUTATION, { name: 'likeColor' }),
+  graphql(DISLIKE_COLOR_MUTATION, { name: 'dislikeColor' })
+)(App);
