@@ -87,7 +87,7 @@ class ColorList extends React.Component<Props> {
               {data.likedColors.map((color, index) => {
                 return (
                   <CSSTransition
-                    key={color.id}
+                    key={index}
                     className={styles.flexItemWrapper}
                     timeout={400}
                     classNames={{

@@ -9,8 +9,47 @@ export const defaults = {
 
 export const resolvers = {
   Mutation: {
+    changeColor: (_, variables, { cache }) => {
+      const cachedData = cache.readQuery({
+        query: gql`
+          query {
+            likedColors {
+              id
+              hexCode
+            }
+          }
+        `,
+      });
+      const likedColorsWithChangedColor = cachedData.likedColors.map(
+        likedColor => {
+          if (likedColor.id === variables.id) {
+            const newLikedColor = {
+              ...likedColor,
+              hexCode: variables.hexCode,
+            };
+
+            return newLikedColor;
+          }
+
+          return likedColor;
+        }
+      );
+
+      cache.writeQuery({
+        query: gql`
+          query {
+            likedColors {
+              id
+              hexCode
+            }
+          }
+        `,
+        data: { likedColors: likedColorsWithChangedColor },
+      });
+
+      return likedColorsWithChangedColor;
+    },
     dislikeColor: (_, variables, { cache }) => {
-      debugger;
       const { palette, likedColors, dislikedColors } = cache.readQuery({
         query: gql`
           query {
@@ -158,7 +197,7 @@ export const resolvers = {
       });
       const colorswWithoutDislikedColor = cachedData.likedColors.filter(
         likedColor => {
-          return likedColor.id !== variables.color.id;
+          return likedColor.id !== variables.id;
         }
       );
       cache.writeQuery({

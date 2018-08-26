@@ -1,10 +1,21 @@
 // @flow
 import styles from './ColorName.scss';
 import React from 'react';
+import { partial } from 'underscore';
 import getInterfaceAttributes from '../../utilities/getInterfaceAttributes';
 import isHex from '../../utilities/isHex';
 import Color from 'color';
 import type { ColorType } from '../../constants/FlowTypes';
+import gql from 'graphql-tag';
+import { Mutation } from 'react-apollo';
+
+const CHANGE_COLOR_MUTATION = gql`
+  mutation ChangeColor($id: ID!, $hexCode: String!) {
+    changeColor(id: $id, hexCode: $hexCode) @client {
+      id
+    }
+  }
+`;
 
 type Props = {
   color: ColorType,
@@ -46,30 +57,29 @@ class ColorName extends React.Component<Props, State> {
     this.setState({ isEditing: true });
   };
 
-  handleChange = e => {
+  handleChange = (changeColor, e) => {
+    const { color } = this.props;
     const { value }: { value: string } = e.target;
     const formattedValue = _formatToHashedString(value);
 
     this.setState({ shownHexCode: value });
 
     if (isHex(formattedValue)) {
-      this.props.onBlur(formattedValue);
+      changeColor({ variables: { id: color.id, hexCode: formattedValue } });
     }
   };
 
-  handleBlur = e => {
-    const {
-      color: { hexCode },
-    } = this.props;
+  handleBlur = (changeColor, e) => {
+    const { color } = this.props;
     const { value }: { value: string } = e.target;
     const formattedValue = _formatToHashedString(value);
 
     if (!isHex(formattedValue)) {
-      return this.setState({ shownHexCode: hexCode });
+      return this.setState({ shownHexCode: color.hexCode });
     }
 
     this.setState({ shownHexCode: Color(formattedValue).hex() });
-    this.props.onBlur(formattedValue);
+    changeColor({ variables: { id: color.id, hexCode: formattedValue } });
   };
 
   render() {
@@ -84,15 +94,21 @@ class ColorName extends React.Component<Props, State> {
     };
 
     return (
-      <input
-        type="text"
-        className={styles.colorName}
-        value={shownHexCode}
-        style={style}
-        onFocus={this.handleFocus}
-        onChange={this.handleChange}
-        onBlur={this.handleBlur}
-      />
+      <Mutation mutation={CHANGE_COLOR_MUTATION}>
+        {(changeColor, { data }) => {
+          return (
+            <input
+              type="text"
+              className={styles.colorName}
+              value={shownHexCode}
+              style={style}
+              onFocus={this.handleFocus}
+              onChange={partial(this.handleChange, changeColor)}
+              onBlur={partial(this.handleBlur, changeColor)}
+            />
+          );
+        }}
+      </Mutation>
     );
   }
 }
