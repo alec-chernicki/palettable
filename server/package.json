@@ -1,0 +1,29 @@
+{
+  "name": "palettable-server",
+  "version": "1.0.0",
+  "description": "The back-end for Palettable.io",
+  "engines": {
+    "node": "8.11.4"
+  },
+  "main": "server.js",
+  "scripts": {
+    "precommit": "pretty-quick --staged",
+    "test": "test",
+    "start": "nodemon server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.16.2",
+    "body-parser": "^1.17.2",
+    "canvas": "next",
+    "color": "^2.0.0",
+    "color-namer": "^1.3.0",
+    "eslint": "^5.4.0",
+    "eslint-plugin-node": "^7.0.1",
+    "express": "^4.15.3",
+    "lodash": "^4.17.4",
+    "nodemon": "^1.11.0",
+    "underscore": "^1.9.1"
+  }
+}
