@@ -1,0 +1,89 @@
+.exportModalContent {
+  padding: 40px;
+}
+
+.exportButtons {
+  display: flex;
+  justify-content: space-between;
+  max-width: 350px;
+  margin: 0 auto;
+}
+
+.exportModal {
+  position: relative;
+  background-color: #fff;
+  color: #333;
+  border-radius: 4px;
+}
+
+.exportModalTitle {
+  margin: 0;
+  padding-right: 25px;
+  font-size: 22px;
+  color: #fff;
+}
+
+.exportModalHeader {
+  padding: 25px;
+  display: flex;
+  background-color: #619fcc;
+
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+}
+
+.closeButton {
+  color: #fff;
+  cursor: pointer;
+}
+
+.exportModalContainer {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.exportModalOverlay {
+  background-color: rgba(51, 51, 51, 0.85);
+  z-index: 100000;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+:global .ReactModal__Overlay {
+  transition: opacity 100ms ease-out;
+  opacity: 0;
+  background-color: rgba(48, 69, 86, 0.925) !important;
+  z-index: 1000000;
+}
+
+:global .ReactModalPortal .ReactModal__Overlay--after-open {
+  opacity: 1;
+}
+
+:global .ReactModalPortal .ReactModal__Overlay--before-close {
+  opacity: 0;
+}
+
+:global .ReactModalPortal .ReactModal__Content {
+  outline: none;
+  transition: transform 100ms ease-out;
+  transform: scale(0.9);
+}
+
+:global .ReactModalPortal .ReactModal__Content--after-open {
+  transform: scale(1);
+}
+
+:global .ReactModalPortal .ReactModal__Content--before-close {
+  transform: scale(0.925);
+}

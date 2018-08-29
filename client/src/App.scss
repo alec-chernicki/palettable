@@ -1,0 +1,52 @@
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  color: #fff;
+  height: 100%;
+  font-family: "Asap";
+  -webkit-font-smoothing: antialiased;
+  font-weight: 700;
+  overflow: hidden;
+  background-color: #304556;
+}
+
+h1 {
+  margin: 0;
+}
+
+span,
+p {
+  -webkit-font-smoothing: antialiased;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+}
+
+a,
+a:visited,
+a:active {
+  color: #fff;
+  text-decoration: none;
+}
+
+li {
+  list-style: none;
+}
+
+p {
+  display: block;
+  margin-bottom: 25px;
+}
+
+.app {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}

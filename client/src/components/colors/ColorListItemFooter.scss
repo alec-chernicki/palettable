@@ -1,0 +1,56 @@
+@keyframes slide-in {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+.colorFooter {
+  position: absolute;
+  bottom: 0;
+  left: auto;
+  z-index: 100000;
+  background-color: #fff;
+  padding: 20px 30px;
+  width: 100%;
+  max-width: 50vw;
+  right: auto;
+  filter: drop-shadow(0 -1px 0 rgba(0, 0, 0, 0.05));
+}
+
+@media only screen and (max-width: 768px) {
+  .colorFooter {
+    max-width: 100%;
+  }
+}
+
+.buttons {
+  display: flex;
+}
+
+.buttons > * {
+  flex: 1 1 50%;
+}
+
+.buttonDislike {
+  margin-right: 20px;
+}
+
+.active {
+  animation: slide-in 500ms cubic-bezier(0.215, 0.61, 0.355, 1);
+  animation-delay: 350ms;
+  animation-fill-mode: backwards;
+}
+
+.inactive {
+  transform: translateY(100%);
+}
+
+.message {
+  color: #222;
+  text-align: center;
+  padding: 10px 20px;
+  margin: 0 0 10px 0;
+}

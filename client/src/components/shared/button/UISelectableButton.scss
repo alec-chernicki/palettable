@@ -1,0 +1,28 @@
+.selectableButton {
+  padding: 35px 55px;
+  background-color: #fff;
+  border-radius: 2px;
+  color: #222;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  border-radius: 4px;
+  cursor: pointer;
+  border: solid 2px #d3d3d3;
+}
+
+.selectableButton:hover {
+  transition: border-color 100ms ease-in-out;
+  border-color: #619fcc;
+  box-shadow: 0 0 4px #619fcc;
+}
+
+.image {
+  width: 100%;
+  max-width: 60px;
+  margin-bottom: 25px;
+}
+
+.icon {
+  margin: 0 auto 18px;
+}

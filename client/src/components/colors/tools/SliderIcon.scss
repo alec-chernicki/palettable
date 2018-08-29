@@ -1,0 +1,76 @@
+.sliderIcon {
+  cursor: pointer;
+  margin: 25px auto;
+  position: relative;
+  transition: opacity 0.25s ease-in-out;
+  width: 40px;
+  z-index: 1000;
+}
+
+.item {
+  margin: 9px 0;
+  position: relative;
+}
+
+.dark {
+  .itemLine,
+  .itemCircle {
+    background-color: #333;
+  }
+}
+
+.light {
+  .itemLine,
+  .itemCircle {
+    background-color: #fff;
+  }
+}
+
+.itemLine {
+  border-radius: 2px;
+  height: 3px;
+  width: 100%;
+}
+
+.itemCircle {
+  border-radius: 50%;
+  bottom: 0;
+  height: 7px;
+  margin: auto;
+  position: absolute;
+  position: absolute;
+  top: 0;
+  transition: transform 0.25s ease-in-out;
+  width: 7px;
+}
+
+.item:nth-child(1) .itemCircle {
+  right: 5px;
+}
+
+.item:nth-child(2) .itemCircle {
+  left: 5px;
+}
+
+.item:nth-child(3) .itemCircle {
+  left: 50%;
+  margin-left: -4px;
+}
+
+.inactive {
+  opacity: 0.35;
+}
+
+.active {
+  opacity: 1;
+
+  .item:nth-child(1) .itemCircle {
+    transform: translateX(-23px);
+  }
+  .item:nth-child(2) .itemCircle {
+    transform: translateX(23px);
+  }
+  .item:nth-child(3) .itemCircle {
+    transform: translateX(-5px);
+  }
+}

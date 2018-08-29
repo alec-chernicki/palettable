@@ -1,0 +1,60 @@
+.navigationBar {
+  background-color: #fff;
+  padding: 15px 30px;
+  display: flex;
+  justify-content: space-between;
+  flex-shrink: 0;
+  align-items: center;
+  position: relative;
+  z-index: 10000;
+  box-shadow: rgba(0, 0, 0, 0.05) 0 1px;
+
+  h1 {
+    color: #304556;
+    font-size: 24px;
+    line-height: 35px;
+  }
+
+  p {
+    color: #a6b4bd;
+    font-size: 16px;
+    margin: 0;
+    margin-left: 20px;
+  }
+}
+
+.exportOptions {
+  display: flex;
+  align-items: center;
+}
+
+.navigationText {
+  display: flex;
+  align-items: center;
+}
+
+.divider {
+  height: 25px;
+  border-right: solid 1px #a6b4bd;
+  margin: 0 25px;
+}
+
+.helpers {
+  display: flex;
+  margin-left: 10px;
+
+  p {
+    margin-right: 10px;
+  }
+}
+
+.key {
+  height: 30px;
+  width: 30px;
+  text-align: center;
+  line-height: 27px;
+  border: solid 1px #a6b4bd;
+  border-radius: 3px;
+  display: inline-block;
+  margin-right: 6px;
+}

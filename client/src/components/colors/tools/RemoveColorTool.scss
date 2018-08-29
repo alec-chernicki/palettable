@@ -1,0 +1,24 @@
+.removeColorTool {
+  margin: 0 auto;
+  width: 40px;
+  display: block !important;
+}
+
+.removeColorToolIcon {
+  margin: 0 auto;
+  height: 40px;
+  display: block;
+  cursor: pointer;
+
+  path {
+    transition: fill 150ms ease-in-out;
+  }
+}
+
+.light:hover path {
+  fill: #fff !important;
+}
+
+.dark:hover path {
+  fill: #333 !important;
+}

@@ -1,0 +1,20 @@
+.button {
+  border-radius: 3px;
+  padding: 14px 20px;
+  cursor: pointer;
+  display: inline-block;
+  text-align: center;
+  width: 100%;
+}
+
+.primary {
+  background-color: #619fcc;
+}
+
+.positive {
+  background-color: #77a88d;
+}
+
+.negative {
+  background-color: #ff6670;
+}
