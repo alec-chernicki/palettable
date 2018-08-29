@@ -32,7 +32,9 @@ While the current implementation still does use Redux to store client-side state
 
 When a user likes or dislikes a color the action is sent through the redux-observable middleware and the current cache is checked. If there are still suggested colors cached that the user has not disliked or liked then the color is either changed or a new one is added. Otherwise, all disliked and liked colors are sent to the `/api/palette` endpoint and a new palette is fetched. Once the cache is updated with new colors the color is either changed or a new one is added.
 
-### Redux State Tree:
+### Redux state tree in action:
+
+![Imgur](https://preview.ibb.co/iGSLnp/palettable_graphql.gif)
 
 ## Server
 
