@@ -46,7 +46,8 @@ Node is a pretty lightweight server choice and can be spun up fairly easily. We 
 
 ### Data Flow:
 
-![alt tag](http://i65.tinypic.com/qx02nt.png)
+![](https://user-images.githubusercontent.com/6596787/44816092-3d3f8680-abaf-11e8-9245-82c049864ebc.png)
+
 
 Palettable gives the user the ability to create a palette with _any_ color, but our suggestions are powered by the ColourLovers API so there isn't a human-generated palette for every hex code imaginable. To get around this we search the API using several different methods.
 
