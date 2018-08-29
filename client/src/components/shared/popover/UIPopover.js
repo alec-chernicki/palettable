@@ -1,6 +1,5 @@
 // @flow
 import styles from './UIPopover.scss';
-import CSSModules from 'react-css-modules';
 import * as React from 'react';
 import { Manager, Target, Popper, Arrow } from 'react-popper';
 import CSSTransition from 'react-transition-group/CSSTransition';
@@ -10,7 +9,6 @@ type Props = {
   +placement: 'top' | 'bottom' | 'left' | 'right',
   +children: React.Node,
   +content: React.Node,
-  +styles: Object,
 };
 
 class UIPopover extends React.Component<Props> {
@@ -20,7 +18,7 @@ class UIPopover extends React.Component<Props> {
   };
 
   renderContent() {
-    const { placement, content, isOpen, styles } = this.props;
+    const { placement, content, isOpen } = this.props;
 
     return (
       <CSSTransition
@@ -57,4 +55,4 @@ class UIPopover extends React.Component<Props> {
   }
 }
 
-export default CSSModules(UIPopover, styles);
+export default UIPopover;

@@ -1,5 +1,4 @@
 // @flow
-import PropTypes from 'prop-types';
 import * as React from 'react';
 import { connect } from 'react-redux';
 import styles from './NavigationBar.scss';
@@ -66,10 +65,6 @@ class NavigationBar extends React.Component<Props> {
     );
   }
 }
-
-NavigationBar.propTypes = {
-  likedColors: PropTypes.array.isRequired,
-};
 
 const mapStateToProps = state => {
   return {

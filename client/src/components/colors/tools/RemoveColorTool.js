@@ -1,6 +1,5 @@
 // @flow
 import styles from './RemoveColorTool.scss';
-import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import { removeLikedColor } from '../../../redux/actions/likedColors';
@@ -12,6 +11,8 @@ import { Tooltip } from 'react-tippy';
 type Props = {
   accentHexCode: string,
   isDark: boolean,
+  color: Object,
+  isOnlyItem: boolean,
 };
 
 const RemoveColorTool = ({
@@ -53,11 +54,6 @@ const RemoveColorTool = ({
       </svg>
     </Tooltip>
   );
-};
-
-RemoveColorTool.propTypes = {
-  color: PropTypes.object.isRequired,
-  isOnlyItem: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = state => {
