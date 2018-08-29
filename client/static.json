@@ -2,7 +2,7 @@
   "root": "build/",
   "proxies": {
     "/api/": {
-      "origin": "https://${APP_NAME}.herokuapp.com/api"
+      "origin": "https://${APP_NAME}.herokuapp.com/api/"
     }
   }
 }
