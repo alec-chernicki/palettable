@@ -6,6 +6,8 @@ Create color palettes using the knowledge of millions of designers.
 
 ![alt tag](http://i63.tinypic.com/16iikx4.png)
 
+Palettable is split up into two separate deployables, a web client and a beckend server.
+
 ## Client
 
 ### Tech Used: React, Redux, Redux-Observable, Sass
