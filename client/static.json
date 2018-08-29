@@ -1,5 +1,7 @@
 {
   "root": "build/",
+  "/**": "index.html",
+  "https_only": true,
   "proxies": {
     "/api/": {
       "origin": "https://palettable-server.herokuapp.com/api/"
