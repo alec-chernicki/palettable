@@ -1,11 +1,11 @@
 // @flow
-import React from "react";
-import UISelectableButton from "../../shared/button/UISelectableButton";
-import FaChain from "react-icons/lib/fa/chain";
-import exportOptionsKeys from "../exportOptionsKeys";
+import React from 'react';
+import UISelectableButton from '../../shared/button/UISelectableButton';
+import FaChain from 'react-icons/lib/fa/chain';
+import exportOptionsKeys from '../exportOptionsKeys';
 
 type Props = {
-  +onClick: (key: string) => {}
+  +onClick: (key: string) => {},
 };
 
 class ExportButtonUrl extends React.Component<Props> {

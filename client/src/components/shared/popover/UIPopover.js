@@ -1,22 +1,22 @@
 // @flow
-import styles from "./UIPopover.scss";
-import CSSModules from "react-css-modules";
-import * as React from "react";
-import { Manager, Target, Popper, Arrow } from "react-popper";
-import CSSTransition from "react-transition-group/CSSTransition";
+import styles from './UIPopover.scss';
+import CSSModules from 'react-css-modules';
+import * as React from 'react';
+import { Manager, Target, Popper, Arrow } from 'react-popper';
+import CSSTransition from 'react-transition-group/CSSTransition';
 
 type Props = {
   +isOpen: boolean,
-  +placement: "top" | "bottom" | "left" | "right",
+  +placement: 'top' | 'bottom' | 'left' | 'right',
   +children: React.Node,
   +content: React.Node,
-  +styles: Object
+  +styles: Object,
 };
 
 class UIPopover extends React.Component<Props> {
   static defaultProps = {
     isOpen: false,
-    placement: "top"
+    placement: 'top',
   };
 
   renderContent() {
@@ -32,7 +32,7 @@ class UIPopover extends React.Component<Props> {
           enter: styles.popoverEnter,
           enterActive: styles.popoverEnterActive,
           exit: styles.popoverExit,
-          exitActive: styles.popoverExitActive
+          exitActive: styles.popoverExitActive,
         }}
       >
         <div className={styles.popperAnimationWrapper}>

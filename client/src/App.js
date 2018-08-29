@@ -1,23 +1,23 @@
 // @flow
-import styles from "./App.scss";
-import * as React from "react";
-import NavigationBar from "./components/navigation/NavigationBar";
-import { connect } from "react-redux";
-import { dislikeColor } from "./redux/actions/dislikedColors";
-import { likeColor } from "./redux/actions/likedColors";
-import ColorList from "./components/colors/ColorList";
-import { requestPalette } from "./redux/actions/suggestedColors";
-import { addLikedColors } from "./redux/actions/likedColors";
-import lastColorInPaletteSelector from "./redux/selectors/lastColorInPaletteSelector";
-import url from "./utils/url";
-import type { ColorType } from "./constants/FlowTypes";
+import styles from './App.scss';
+import * as React from 'react';
+import NavigationBar from './components/navigation/NavigationBar';
+import { connect } from 'react-redux';
+import { dislikeColor } from './redux/actions/dislikedColors';
+import { likeColor } from './redux/actions/likedColors';
+import ColorList from './components/colors/ColorList';
+import { requestPalette } from './redux/actions/suggestedColors';
+import { addLikedColors } from './redux/actions/likedColors';
+import lastColorInPaletteSelector from './redux/selectors/lastColorInPaletteSelector';
+import url from './utils/url';
+import type { ColorType } from './constants/FlowTypes';
 
 type Props = {
   hydrateFromUrl: (ColorType[]) => void,
   requestRandomPalette: () => mixed,
   onLike: (lastColorInPalette: Object) => mixed,
   onDislike: (lastColorInPalette: Object) => mixed,
-  lastColorInPalette: Object
+  lastColorInPalette: Object,
 };
 
 const L_KEYCODE = 76;
@@ -36,17 +36,17 @@ class App extends React.Component<Props> {
   }
 
   componentWillMount() {
-    document.addEventListener("keydown", this.handleKeydown);
+    document.addEventListener('keydown', this.handleKeydown);
   }
 
   componentWillUnmount() {
-    document.removeEventListener("keydown", this.handleKeydown);
+    document.removeEventListener('keydown', this.handleKeydown);
   }
 
   getIsEventFromInput(event: KeyboardEvent) {
     const tag: string = event.target.tagName.toLowerCase();
 
-    return tag === "input";
+    return tag === 'input';
   }
 
   handleKeydown = (event: KeyboardEvent) => {
@@ -76,7 +76,7 @@ class App extends React.Component<Props> {
 
 const mapStateToProps = state => {
   return {
-    lastColorInPalette: lastColorInPaletteSelector(state)
+    lastColorInPalette: lastColorInPaletteSelector(state),
   };
 };
 
@@ -85,7 +85,7 @@ const mapDispatchToProps = dispatch => {
     onLike: color => dispatch(likeColor(color)),
     onDislike: color => dispatch(dislikeColor(color)),
     requestRandomPalette: () => dispatch(requestPalette()),
-    hydrateFromUrl: colors => dispatch(addLikedColors(colors))
+    hydrateFromUrl: colors => dispatch(addLikedColors(colors)),
   };
 };
 

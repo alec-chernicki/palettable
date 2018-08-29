@@ -1,5 +1,5 @@
 // @flow
-import type { ReduxStore } from "../../constants/FlowTypes";
+import type { ReduxStore } from '../../constants/FlowTypes';
 
 const dislikedColorsSelector = (state: ReduxStore) => {
   return state.dislikedColors;

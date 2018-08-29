@@ -1,17 +1,17 @@
 // @flow
-import styles from "./ColorPicker.scss";
-import React, { Component } from "react";
-import { CustomPicker } from "react-color";
-import { Hue, Saturation } from "react-color/lib/components/common";
+import styles from './ColorPicker.scss';
+import React, { Component } from 'react';
+import { CustomPicker } from 'react-color';
+import { Hue, Saturation } from 'react-color/lib/components/common';
 
 type Props = {
   +onBlur: () => mixed,
-  +onChange: (colorData: mixed) => mixed
+  +onChange: (colorData: mixed) => mixed,
 };
 
 class ColorPicker extends Component<Props> {
   componentDidMount() {
-    window.addEventListener("mousedown", this.props.onBlur);
+    window.addEventListener('mousedown', this.props.onBlur);
   }
 
   handleClick = e => {

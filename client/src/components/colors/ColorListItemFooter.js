@@ -1,14 +1,14 @@
 // @flow
-import styles from "./ColorListItemFooter.scss";
-import type { ColorType } from "../../constants/FlowTypes";
-import React from "react";
-import classNames from "classnames";
-import UIButton from "../shared/button/UIButton";
-import { connect } from "react-redux";
-import { dislikeColor } from "../../redux/actions/dislikedColors";
-import { likeColor } from "../../redux/actions/likedColors";
-import likedColorsSelector from "../../redux/selectors/likedColorsSelector";
-import ExportButton from "../export/ExportButton";
+import styles from './ColorListItemFooter.scss';
+import type { ColorType } from '../../constants/FlowTypes';
+import React from 'react';
+import classNames from 'classnames';
+import UIButton from '../shared/button/UIButton';
+import { connect } from 'react-redux';
+import { dislikeColor } from '../../redux/actions/dislikedColors';
+import { likeColor } from '../../redux/actions/likedColors';
+import likedColorsSelector from '../../redux/selectors/likedColorsSelector';
+import ExportButton from '../export/ExportButton';
 
 type Props = {
   +isAtMaximum: boolean,
@@ -17,13 +17,13 @@ type Props = {
   +color: ColorType,
   +isLastItem: boolean,
   +isAtMaximum: boolean,
-  +active: boolean
+  +active: boolean,
 };
 
 class ColorListItemFooter extends React.Component<Props> {
   static defaultProps = {
     isLastItem: false,
-    isAtMaximum: false
+    isAtMaximum: false,
   };
 
   renderLikeButton() {
@@ -54,7 +54,7 @@ class ColorListItemFooter extends React.Component<Props> {
     const { active, isAtMaximum } = this.props;
     const classNameProp = classNames(styles.colorFooter, {
       [styles.active]: active,
-      [styles.inactive]: !active
+      [styles.inactive]: !active,
     });
 
     return (
@@ -70,13 +70,13 @@ class ColorListItemFooter extends React.Component<Props> {
 }
 
 const mapStateToProps = state => ({
-  isAtMaximum: likedColorsSelector(state).length >= 5
+  isAtMaximum: likedColorsSelector(state).length >= 5,
 });
 
 const mapDispatchToProps = (dispatch, { color }) => {
   return {
     onLike: () => dispatch(likeColor(color)),
-    onDislike: () => dispatch(dislikeColor(color))
+    onDislike: () => dispatch(dislikeColor(color)),
   };
 };
 

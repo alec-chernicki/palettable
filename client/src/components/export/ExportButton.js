@@ -1,13 +1,13 @@
 // @flow
-import { partial } from "lodash";
-import React from "react";
-import ExportModal from "./ExportModal";
-import UIButton from "../shared/button/UIButton";
+import { partial } from 'lodash';
+import React from 'react';
+import ExportModal from './ExportModal';
+import UIButton from '../shared/button/UIButton';
 
 type Props = {};
 
 type State = {
-  isExportModalOpen: boolean
+  isExportModalOpen: boolean,
 };
 
 class ExportButton extends React.Component<Props, State> {
@@ -15,7 +15,7 @@ class ExportButton extends React.Component<Props, State> {
     super(props);
 
     this.state = {
-      isExportModalOpen: false
+      isExportModalOpen: false,
     };
   }
 

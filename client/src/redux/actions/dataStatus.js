@@ -2,22 +2,22 @@
 import {
   IS_FETCHING_SET,
   IS_STALE_SET,
-  HAS_FETCH_FAILED_SET
-} from "./ActionTypes";
+  HAS_FETCH_FAILED_SET,
+} from './ActionTypes';
 
 type SetIsFetchingAction = {
   type: typeof IS_FETCHING_SET,
-  payload: boolean
+  payload: boolean,
 };
 
 type SetIsStaleAction = {
   type: typeof IS_STALE_SET,
-  payload: boolean
+  payload: boolean,
 };
 
 type SetHasFetchFailedAction = {
   type: typeof HAS_FETCH_FAILED_SET,
-  payload: boolean
+  payload: boolean,
 };
 
 export type DataStatusActions =

@@ -6,11 +6,11 @@
   margin: 13px;
 }
 
-.popper[data-placement^="top"] {
+.popper[data-placement^='top'] {
   margin-bottom: 25px;
 }
 
-.popper[data-placement^="top"] .popperArrow {
+.popper[data-placement^='top'] .popperArrow {
   border-width: 13px 13px 0 13px;
   border-color: #fff transparent transparent transparent;
   bottom: -13px;
@@ -19,11 +19,11 @@
   margin-bottom: 0;
 }
 
-.popper[data-placement^="bottom"] {
+.popper[data-placement^='bottom'] {
   margin-top: 25px;
 }
 
-.popper[data-placement^="bottom"] .popperArrow {
+.popper[data-placement^='bottom'] .popperArrow {
   border-width: 0 13px 13px 13px;
   border-color: transparent transparent #fff transparent;
   top: -13px;
@@ -32,11 +32,11 @@
   margin-bottom: 0;
 }
 
-.popper[data-placement^="right"] {
+.popper[data-placement^='right'] {
   margin-left: 25px;
 }
 
-.popper[data-placement^="right"] .popperArrow {
+.popper[data-placement^='right'] .popperArrow {
   border-width: 13px 13px 13px 0;
   border-color: transparent #fff transparent transparent;
   left: -13px;
@@ -45,11 +45,11 @@
   margin-right: 0;
 }
 
-.popper[data-placement^="left"] {
+.popper[data-placement^='left'] {
   margin-right: 25px;
 }
 
-.popper[data-placement^="left"] .popperArrow {
+.popper[data-placement^='left'] .popperArrow {
   border-width: 13px 0 13px 13px;
   border-color: transparent transparent transparent #fff;
   right: -13px;

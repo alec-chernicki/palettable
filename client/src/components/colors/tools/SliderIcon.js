@@ -1,16 +1,16 @@
 // @flow
-import React from "react";
-import styles from "./SliderIcon.scss";
-import classNames from "classnames";
-import Color from "color";
+import React from 'react';
+import styles from './SliderIcon.scss';
+import classNames from 'classnames';
+import Color from 'color';
 
 type Props = {
   onClick: () => mixed,
-  hexCode: string
+  hexCode: string,
 };
 
 type State = {
-  active: boolean
+  active: boolean,
 };
 
 class SliderIcon extends React.Component<Props, State> {
@@ -18,7 +18,7 @@ class SliderIcon extends React.Component<Props, State> {
     super(props);
 
     this.state = {
-      active: false
+      active: false,
     };
   }
 
@@ -35,7 +35,7 @@ class SliderIcon extends React.Component<Props, State> {
     const { active } = this.state;
     const classNameProp = classNames(styles.sliderIcon, {
       [styles.active]: active,
-      [styles.inactive]: !active
+      [styles.inactive]: !active,
     });
     const isDark = Color(hexCode).dark();
     const colorClassName = isDark ? styles.light : styles.dark;

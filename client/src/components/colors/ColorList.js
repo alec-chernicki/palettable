@@ -1,24 +1,24 @@
 // @flow
-import styles from "./ColorList.scss";
-import React from "react";
-import { connect } from "react-redux";
-import { MoonLoader } from "halogen";
-import likedColorsSelector from "../../redux/selectors/likedColorsSelector";
-import ColorListItem from "../colors/ColorListItem";
-import hasFetchFailedSelector from "../../redux/selectors/hasFetchFailedSelector";
-import UIButton from "../shared/button/UIButton";
-import CSSTransition from "react-transition-group/CSSTransition";
-import TransitionGroup from "react-transition-group/TransitionGroup";
+import styles from './ColorList.scss';
+import React from 'react';
+import { connect } from 'react-redux';
+import { MoonLoader } from 'halogen';
+import likedColorsSelector from '../../redux/selectors/likedColorsSelector';
+import ColorListItem from '../colors/ColorListItem';
+import hasFetchFailedSelector from '../../redux/selectors/hasFetchFailedSelector';
+import UIButton from '../shared/button/UIButton';
+import CSSTransition from 'react-transition-group/CSSTransition';
+import TransitionGroup from 'react-transition-group/TransitionGroup';
 
 type Props = {
   +likedColors: Array<Object>,
   +requestPalette: () => mixed,
-  +hasFetchFailed: boolean
+  +hasFetchFailed: boolean,
 };
 
 class ColorList extends React.PureComponent<Props> {
   static defaultProps = {
-    likedColors: []
+    likedColors: [],
   };
 
   renderColors() {
@@ -36,7 +36,7 @@ class ColorList extends React.PureComponent<Props> {
             enter: styles.flexEnter,
             enterActive: styles.flexEnterActive,
             exit: styles.flexExit,
-            exitActive: styles.flexExitActive
+            exitActive: styles.flexExitActive,
           }}
         >
           <div>
@@ -85,7 +85,7 @@ class ColorList extends React.PureComponent<Props> {
 const mapStateToProps = state => {
   return {
     likedColors: likedColorsSelector(state),
-    hasFetchFailed: hasFetchFailedSelector(state)
+    hasFetchFailed: hasFetchFailedSelector(state),
   };
 };
 

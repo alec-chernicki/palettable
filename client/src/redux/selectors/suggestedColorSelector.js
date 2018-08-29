@@ -1,9 +1,9 @@
 // @flow
-import { createSelector } from "reselect";
-import dislikedColorsSelector from "../selectors/dislikedColorsSelector";
-import likedColorsSelector from "../selectors/likedColorsSelector";
-import type { ColorType } from "../../constants/FlowTypes";
-import type { ReduxStore } from "../../constants/FlowTypes";
+import { createSelector } from 'reselect';
+import dislikedColorsSelector from '../selectors/dislikedColorsSelector';
+import likedColorsSelector from '../selectors/likedColorsSelector';
+import type { ColorType } from '../../constants/FlowTypes';
+import type { ReduxStore } from '../../constants/FlowTypes';
 
 const suggestedColorsSelector = (state: ReduxStore) => state.suggestedColors;
 

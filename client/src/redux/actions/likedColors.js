@@ -1,5 +1,5 @@
 // @flow
-import type { ColorType } from "../../constants/FlowTypes";
+import type { ColorType } from '../../constants/FlowTypes';
 import {
   COLOR_LIKED,
   COLOR_CHANGED,
@@ -7,27 +7,27 @@ import {
   LIKED_COLOR_ADDED,
   LIKED_COLORS_ADDED,
   LIKED_COLOR_REMOVED,
-  LIKED_COLOR_CHANGED
-} from "./ActionTypes";
+  LIKED_COLOR_CHANGED,
+} from './ActionTypes';
 
 type AddLikedColorAction = {
   type: typeof LIKED_COLOR_ADDED,
-  payload: ColorType
+  payload: ColorType,
 };
 
 type AddLikedColorsAction = {
   type: typeof LIKED_COLORS_ADDED,
-  payload: ColorType[]
+  payload: ColorType[],
 };
 
 type RemoveLikedColorAction = {
   type: typeof LIKED_COLOR_REMOVED,
-  payload: ColorType
+  payload: ColorType,
 };
 
 type ChangeLikedColorAction = {
   type: typeof LIKED_COLOR_CHANGED,
-  payload: { color: ColorType, newHexCode: string }
+  payload: { color: ColorType, newHexCode: string },
 };
 
 export type LikedColorsActions =
@@ -50,10 +50,10 @@ export const removeLikedColor = (color: ColorType): RemoveLikedColorAction => {
 
 export const changeLikedColor = ({
   color,
-  newHexCode
+  newHexCode,
 }: {
   color: ColorType,
-  newHexCode: string
+  newHexCode: string,
 }): ChangeLikedColorAction => {
   return { type: LIKED_COLOR_CHANGED, payload: { color, newHexCode } };
 };

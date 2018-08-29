@@ -1,19 +1,19 @@
 // @flow
-import React from "react";
-import UISelectableButton from "../../shared/button/UISelectableButton";
-import FaImage from "react-icons/lib/fa/image";
-import { connect } from "react-redux";
-import likedColorsSelector from "../../../redux/selectors/likedColorsSelector";
-import type { ColorType } from "../../../constants/FlowTypes";
-import url from "../../../utils/url";
-import download from "downloadjs";
-import exportOptionsKeys from "../exportOptionsKeys";
+import React from 'react';
+import UISelectableButton from '../../shared/button/UISelectableButton';
+import FaImage from 'react-icons/lib/fa/image';
+import { connect } from 'react-redux';
+import likedColorsSelector from '../../../redux/selectors/likedColorsSelector';
+import type { ColorType } from '../../../constants/FlowTypes';
+import url from '../../../utils/url';
+import download from 'downloadjs';
+import exportOptionsKeys from '../exportOptionsKeys';
 
-const IMAGE_ENDPOINT = "/api/image";
+const IMAGE_ENDPOINT = '/api/image';
 
 type Props = {
   +likedColors: ColorType[],
-  +onClick: (key: string) => {}
+  +onClick: (key: string) => {},
 };
 
 class ExportButtonPng extends React.Component<Props> {
@@ -44,7 +44,7 @@ class ExportButtonPng extends React.Component<Props> {
 
 const mapStateToProps = state => {
   return {
-    likedColors: likedColorsSelector(state)
+    likedColors: likedColorsSelector(state),
   };
 };
 

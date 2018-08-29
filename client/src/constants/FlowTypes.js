@@ -1,7 +1,7 @@
 // @flow
 export type ColorType = {
   +id: string,
-  +hexCode: string
+  +hexCode: string,
 };
 
 export type ReduxStore = {|
@@ -11,6 +11,6 @@ export type ReduxStore = {|
   +dataStatus: {
     +isFetching: boolean,
     +isStale: boolean,
-    +hasFetchFailed: boolean
-  }
+    +hasFetchFailed: boolean,
+  },
 |};

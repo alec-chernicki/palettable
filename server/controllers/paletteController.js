@@ -1,9 +1,9 @@
-const axios = require("axios");
-const _ = require("underscore");
-const colornamer = require("color-namer");
+const axios = require('axios');
+const _ = require('underscore');
+const colornamer = require('color-namer');
 
-axios.defaults.baseURL = "http://www.colourlovers.com/api/palettes";
-axios.defaults.params = { format: "json" };
+axios.defaults.baseURL = 'http://www.colourlovers.com/api/palettes';
+axios.defaults.params = { format: 'json' };
 
 const _formatColors = colors => {
   return colors.map(color => `#${color}`);
@@ -50,7 +50,7 @@ module.exports.fetchPaletteWithHexCode = async (req, res, next) => {
   const searchColor = likedColors[likedColors.length - 2];
 
   try {
-    const newColors = await axios.get("/", { hex: searchColor });
+    const newColors = await axios.get('/', { hex: searchColor });
 
     if (!newColors.length) {
       return next();
@@ -59,7 +59,7 @@ module.exports.fetchPaletteWithHexCode = async (req, res, next) => {
     const palette = generatePalette({
       newColors,
       dislikedColors,
-      likedColors
+      likedColors,
     });
 
     if (palette.length !== 5) return next();
@@ -67,7 +67,7 @@ module.exports.fetchPaletteWithHexCode = async (req, res, next) => {
     return res.json(palette);
   } catch (error) {
     res.status(500);
-    res.send("Error fetching exact match");
+    res.send('Error fetching exact match');
   }
 };
 
@@ -79,12 +79,12 @@ module.exports.fetchPaletteWithSearchWord = async (req, res, next) => {
   // Transforms HEX code into a search term then queries the API with term
   const searchTerm = colornamer(searchColor).html[0].hex;
   try {
-    const newColors = await axios.get("/", { hex: searchTerm });
+    const newColors = await axios.get('/', { hex: searchTerm });
 
     const palette = generatePalette({
       newColors,
       dislikedColors,
-      likedColors
+      likedColors,
     });
 
     if (palette.length < 5) return next();
@@ -92,7 +92,7 @@ module.exports.fetchPaletteWithSearchWord = async (req, res, next) => {
     return res.json(palette);
   } catch (error) {
     res.status(500);
-    res.send("Error fetching closest hex match");
+    res.send('Error fetching closest hex match');
   }
 };
 
@@ -105,7 +105,7 @@ module.exports.fetchRandomPalette = async (req, res, next) => {
 
   try {
     const recursiveFetch = async () => {
-      const response = await axios.get("/random");
+      const response = await axios.get('/random');
       const palette = response.data[0].colors;
 
       if (palette.length === 5) return palette;
@@ -121,6 +121,6 @@ module.exports.fetchRandomPalette = async (req, res, next) => {
     res.json(_formatColors(palette));
   } catch (error) {
     res.status(500);
-    res.send("Error fetching random palette");
+    res.send('Error fetching random palette');
   }
 };

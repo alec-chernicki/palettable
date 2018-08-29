@@ -1,28 +1,28 @@
 // @flow
-import styles from "./HexCodeInput.scss";
-import React from "react";
-import { connect } from "react-redux";
-import { changeLikedColor } from "../../../redux/actions/likedColors";
-import isHex from "../../../utils/isHex";
-import Color from "color";
-import classNames from "classnames";
-import type { ColorType } from "../../../constants/FlowTypes";
-import connectInterfaceColorScheme from "../../decorators/connectInterfaceColorScheme";
+import styles from './HexCodeInput.scss';
+import React from 'react';
+import { connect } from 'react-redux';
+import { changeLikedColor } from '../../../redux/actions/likedColors';
+import isHex from '../../../utils/isHex';
+import Color from 'color';
+import classNames from 'classnames';
+import type { ColorType } from '../../../constants/FlowTypes';
+import connectInterfaceColorScheme from '../../decorators/connectInterfaceColorScheme';
 
 type Props = {
   color: ColorType,
   onBlur: (hexCode: string) => mixed,
   accentHexCode: string,
-  isDark: boolean
+  isDark: boolean,
 };
 
 type State = {
   isEditing: boolean,
-  shownHexCode: string
+  shownHexCode: string,
 };
 
 const _formatToHashedString = (hexCode: string): string => {
-  if (hexCode[0] !== "#") {
+  if (hexCode[0] !== '#') {
     return `#${hexCode}`;
   }
 
@@ -35,7 +35,7 @@ class HexCodeInput extends React.Component<Props, State> {
 
     this.state = {
       isEditing: false,
-      shownHexCode: props.color.hexCode
+      shownHexCode: props.color.hexCode,
     };
   }
 
@@ -64,7 +64,7 @@ class HexCodeInput extends React.Component<Props, State> {
 
   handleBlur = e => {
     const {
-      color: { hexCode }
+      color: { hexCode },
     } = this.props;
     const { value }: { value: string } = e.target;
     const formattedValue = _formatToHashedString(value);
@@ -81,13 +81,13 @@ class HexCodeInput extends React.Component<Props, State> {
     const { shownHexCode } = this.state;
     const {
       color: { hexCode },
-      accentHexCode
+      accentHexCode,
     } = this.props;
     const isDark = Color(hexCode).dark();
     const colorClassName = isDark ? styles.light : styles.dark;
 
     const style = {
-      color: accentHexCode
+      color: accentHexCode,
     };
 
     return (
@@ -110,10 +110,10 @@ const mapDispatchToProps = (dispatch, { color }: Props) => {
       dispatch(
         changeLikedColor({
           color,
-          newHexCode: newHexCode
+          newHexCode: newHexCode,
         })
       );
-    }
+    },
   };
 };
 

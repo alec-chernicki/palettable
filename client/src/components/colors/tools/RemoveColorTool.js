@@ -1,24 +1,24 @@
 // @flow
-import styles from "./RemoveColorTool.scss";
-import PropTypes from "prop-types";
-import React from "react";
-import { connect } from "react-redux";
-import { removeLikedColor } from "../../../redux/actions/likedColors";
-import connectInterfaceColorScheme from "../../decorators/connectInterfaceColorScheme";
-import Color from "color";
-import classNames from "classnames";
-import { Tooltip } from "react-tippy";
+import styles from './RemoveColorTool.scss';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { connect } from 'react-redux';
+import { removeLikedColor } from '../../../redux/actions/likedColors';
+import connectInterfaceColorScheme from '../../decorators/connectInterfaceColorScheme';
+import Color from 'color';
+import classNames from 'classnames';
+import { Tooltip } from 'react-tippy';
 
 type Props = {
   accentHexCode: string,
-  isDark: boolean
+  isDark: boolean,
 };
 
 const RemoveColorTool = ({
   onClick,
   color,
   isOnlyItem,
-  accentHexCode
+  accentHexCode,
 }: Props) => {
   const isDark = Color(color.hexCode).dark();
   const colorClassName = isDark ? styles.light : styles.dark;
@@ -36,7 +36,7 @@ const RemoveColorTool = ({
       animation="shift"
       arrow={true}
       distance={20}
-      theme={isDark ? "light" : "dark"}
+      theme={isDark ? 'light' : 'dark'}
     >
       <svg
         className={classNames(styles.removeColorToolIcon, colorClassName)}
@@ -57,18 +57,18 @@ const RemoveColorTool = ({
 
 RemoveColorTool.propTypes = {
   color: PropTypes.object.isRequired,
-  isOnlyItem: PropTypes.bool.isRequired
+  isOnlyItem: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = state => {
   return {
-    isOnlyItem: state.likedColors.length === 1
+    isOnlyItem: state.likedColors.length === 1,
   };
 };
 
 const mapDispatchToProps = (dispatch, { color }) => {
   return {
-    onClick: () => dispatch(removeLikedColor(color))
+    onClick: () => dispatch(removeLikedColor(color)),
   };
 };
 

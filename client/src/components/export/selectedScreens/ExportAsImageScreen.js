@@ -1,12 +1,12 @@
 // @flow
-import React from "react";
-import type { ColorType } from "../../../constants/FlowTypes";
-import UIButton from "../../shared/button/UIButton";
-import exportOptionsKeys from "../exportOptionsKeys";
+import React from 'react';
+import type { ColorType } from '../../../constants/FlowTypes';
+import UIButton from '../../shared/button/UIButton';
+import exportOptionsKeys from '../exportOptionsKeys';
 
 type Props = {
   +onSelectExportType: (key: string) => {},
-  +likedColors: ColorType[]
+  +likedColors: ColorType[],
 };
 
 class ExportContentImage extends React.Component<Props> {
@@ -18,7 +18,7 @@ class ExportContentImage extends React.Component<Props> {
 
   render() {
     const buttonStyle = {
-      maxWidth: "200px"
+      maxWidth: '200px',
     };
 
     return (

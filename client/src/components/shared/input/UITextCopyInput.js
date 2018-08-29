@@ -1,16 +1,16 @@
 // @flow
-import React from "react";
-import styles from "./UITextCopyInput.scss";
-import { CopyToClipboard } from "react-copy-to-clipboard";
+import React from 'react';
+import styles from './UITextCopyInput.scss';
+import { CopyToClipboard } from 'react-copy-to-clipboard';
 
 type Props = {
   +value: mixed,
-  +onChange: () => {}
+  +onChange: () => {},
 };
 
 class UITextCopyInput extends React.Component<Props> {
   static defaultProps = {
-    onChange: () => {}
+    onChange: () => {},
   };
 
   render() {

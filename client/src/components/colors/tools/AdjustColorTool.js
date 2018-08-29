@@ -1,26 +1,26 @@
 // @flow
-import React from "react";
-import { Tooltip } from "react-tippy";
-import { connect } from "react-redux";
-import ColorPicker from "./ColorPicker";
-import SliderIcon from "./SliderIcon";
-import { changeLikedColor } from "../../../redux/actions/likedColors";
-import UIPopover from "../../shared/popover/UIPopover";
-import type { ColorType } from "../../../constants/FlowTypes";
-import Color from "color";
+import React from 'react';
+import { Tooltip } from 'react-tippy';
+import { connect } from 'react-redux';
+import ColorPicker from './ColorPicker';
+import SliderIcon from './SliderIcon';
+import { changeLikedColor } from '../../../redux/actions/likedColors';
+import UIPopover from '../../shared/popover/UIPopover';
+import type { ColorType } from '../../../constants/FlowTypes';
+import Color from 'color';
 
 type Props = {
   color: ColorType,
-  onChange: (hexCode: string) => {}
+  onChange: (hexCode: string) => {},
 };
 
 type State = {
-  isActive: boolean
+  isActive: boolean,
 };
 
 class AdjustColorTool extends React.Component<Props, State> {
   state = {
-    isActive: false
+    isActive: false,
   };
 
   handleChange = colorData => {
@@ -40,7 +40,7 @@ class AdjustColorTool extends React.Component<Props, State> {
 
   renderColorPicker() {
     const {
-      color: { hexCode }
+      color: { hexCode },
     } = this.props;
 
     return (
@@ -70,7 +70,7 @@ class AdjustColorTool extends React.Component<Props, State> {
           animation="shift"
           arrow={true}
           distance={-5}
-          theme={isDark ? "light" : "dark"}
+          theme={isDark ? 'light' : 'dark'}
         >
           <SliderIcon
             hexCode={color.hexCode}
@@ -86,7 +86,7 @@ class AdjustColorTool extends React.Component<Props, State> {
 const mapDispatchToProps = (dispatch, { color }) => {
   return {
     onChange: hexCode =>
-      dispatch(changeLikedColor({ color, newHexCode: hexCode }))
+      dispatch(changeLikedColor({ color, newHexCode: hexCode })),
   };
 };
 

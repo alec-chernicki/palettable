@@ -1,7 +1,7 @@
 // @flow
-import type { DislikedColorActions } from "../actions/dislikedColors";
-import type { ColorType } from "../../constants/FlowTypes";
-import { COLOR_DISLIKED, DISLIKED_COLOR_ADDED } from "../actions/ActionTypes";
+import type { DislikedColorActions } from '../actions/dislikedColors';
+import type { ColorType } from '../../constants/FlowTypes';
+import { COLOR_DISLIKED, DISLIKED_COLOR_ADDED } from '../actions/ActionTypes';
 
 type State = ColorType[];
 

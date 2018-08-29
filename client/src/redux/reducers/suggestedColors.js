@@ -1,7 +1,7 @@
 // @flow
-import type { SuggestedColorActions } from "../actions/suggestedColors";
-import type { ColorType } from "../../constants/FlowTypes";
-import { PALETTE_RECEIVED, PALETTE_REQUESTED } from "../actions/ActionTypes";
+import type { SuggestedColorActions } from '../actions/suggestedColors';
+import type { ColorType } from '../../constants/FlowTypes';
+import { PALETTE_RECEIVED, PALETTE_REQUESTED } from '../actions/ActionTypes';
 
 type State = ColorType[];
 

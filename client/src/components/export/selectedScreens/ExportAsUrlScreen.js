@@ -1,15 +1,15 @@
 // @flow
-import React from "react";
-import type { ColorType } from "../../../constants/FlowTypes";
-import UIButton from "../../shared/button/UIButton";
-import exportOptionsKeys from "../exportOptionsKeys";
-import UITextCopyInput from "../../shared/input/UITextCopyInput";
-import url from "../../../utils/url";
-import { baseUrl } from "../../../constants/links";
+import React from 'react';
+import type { ColorType } from '../../../constants/FlowTypes';
+import UIButton from '../../shared/button/UIButton';
+import exportOptionsKeys from '../exportOptionsKeys';
+import UITextCopyInput from '../../shared/input/UITextCopyInput';
+import url from '../../../utils/url';
+import { baseUrl } from '../../../constants/links';
 
 type Props = {
   +onSelectExportType: (key: string) => {},
-  +likedColors: ColorType[]
+  +likedColors: ColorType[],
 };
 
 class ExportContentUrl extends React.Component<Props> {
@@ -24,7 +24,7 @@ class ExportContentUrl extends React.Component<Props> {
     const stringifiedColors = url.stringifyColors(likedColors);
     const linkableUrl = baseUrl(stringifiedColors);
     const buttonStyle = {
-      maxWidth: "200px"
+      maxWidth: '200px',
     };
 
     return (

@@ -1,7 +1,7 @@
 // @flow
-import * as React from "react";
-import classNames from "classnames";
-import styles from "./UISelectableButton.scss";
+import * as React from 'react';
+import classNames from 'classnames';
+import styles from './UISelectableButton.scss';
 
 type Props = {
   +icon: string,
@@ -9,7 +9,7 @@ type Props = {
   +onClick: () => mixed,
   +className: string,
   +href: string,
-  +type: string
+  +type: string,
 };
 
 class UISelectableButton extends React.Component<Props> {

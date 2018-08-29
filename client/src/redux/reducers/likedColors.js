@@ -1,13 +1,13 @@
 // @flow
-import shortId from "shortid";
-import type { LikedColorsActions } from "../actions/likedColors";
-import type { ColorType } from "../../constants/FlowTypes";
+import shortId from 'shortid';
+import type { LikedColorsActions } from '../actions/likedColors';
+import type { ColorType } from '../../constants/FlowTypes';
 import {
   LIKED_COLOR_ADDED,
   LIKED_COLORS_ADDED,
   LIKED_COLOR_REMOVED,
-  LIKED_COLOR_CHANGED
-} from "../actions/ActionTypes";
+  LIKED_COLOR_CHANGED,
+} from '../actions/ActionTypes';
 
 type State = ColorType[];
 
@@ -21,7 +21,7 @@ export default function reducer(
     case LIKED_COLOR_ADDED:
       const newLikedColor: ColorType = {
         ...action.payload,
-        id: shortId.generate()
+        id: shortId.generate(),
       };
 
       return [...state, newLikedColor];
@@ -30,7 +30,7 @@ export default function reducer(
       const colorsWithIds: ColorType[] = action.payload.map(color => {
         return {
           ...color,
-          id: shortId.generate()
+          id: shortId.generate(),
         };
       });
 
@@ -46,7 +46,7 @@ export default function reducer(
 
         return {
           ...likedColor,
-          hexCode: newHexCode
+          hexCode: newHexCode,
         };
       });
 

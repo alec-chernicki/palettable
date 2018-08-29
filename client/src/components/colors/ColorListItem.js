@@ -1,31 +1,28 @@
 // @flow
-import styles from "./ColorListItem.scss";
-import React from "react";
-import HexCodeInput from "./tools/HexCodeInput";
-import ColorListItemFooter from "./ColorListItemFooter";
-import AdjustColorTool from "./tools/AdjustColorTool";
-import RemoveColorTool from "./tools/RemoveColorTool";
-import { MoonLoader } from "halogen";
-import { connect } from "react-redux";
-import CSSTransition from "react-transition-group/CSSTransition";
-import TransitionGroup from "react-transition-group/TransitionGroup";
-import type { ReduxStore, ColorType } from "../../constants/FlowTypes";
-import connectInterfaceColorScheme from "../decorators/connectInterfaceColorScheme";
+import styles from './ColorListItem.scss';
+import React from 'react';
+import HexCodeInput from './tools/HexCodeInput';
+import ColorListItemFooter from './ColorListItemFooter';
+import AdjustColorTool from './tools/AdjustColorTool';
+import RemoveColorTool from './tools/RemoveColorTool';
+import { MoonLoader } from 'halogen';
+import { connect } from 'react-redux';
+import CSSTransition from 'react-transition-group/CSSTransition';
+import TransitionGroup from 'react-transition-group/TransitionGroup';
+import type { ReduxStore, ColorType } from '../../constants/FlowTypes';
+import connectInterfaceColorScheme from '../decorators/connectInterfaceColorScheme';
 
 type Props = {
   color: ColorType,
   isFetching: boolean,
   isLastItem: boolean,
   accentHexCode: string,
-  isDark: boolean
+  isDark: boolean,
 };
 
 class ColorListItem extends React.Component<Props> {
   renderLoader() {
-    const {
-      color: { hexCode },
-      accentHexCode
-    } = this.props;
+    const { accentHexCode } = this.props;
 
     return (
       <CSSTransition
@@ -35,7 +32,7 @@ class ColorListItem extends React.Component<Props> {
           enter: styles.fadeEnter,
           enterActive: styles.fadeEnterActive,
           exit: styles.fadeExit,
-          exitActive: styles.fadeExitActive
+          exitActive: styles.fadeExitActive,
         }}
       >
         <div className={styles.loaderContainer}>
@@ -54,7 +51,7 @@ class ColorListItem extends React.Component<Props> {
           enter: styles.fadeEnter,
           enterActive: styles.fadeEnterActive,
           exit: styles.fadeExit,
-          exitActive: styles.fadeExitActive
+          exitActive: styles.fadeExitActive,
         }}
       >
         <div>
@@ -80,7 +77,7 @@ class ColorListItem extends React.Component<Props> {
   render() {
     const { color, isLastItem } = this.props;
     const style = {
-      backgroundColor: color.hexCode
+      backgroundColor: color.hexCode,
     };
 
     return (
@@ -100,7 +97,7 @@ class ColorListItem extends React.Component<Props> {
 
 const mapStateToProps = (state: ReduxStore) => {
   return {
-    isFetching: state.dataStatus.isFetching
+    isFetching: state.dataStatus.isFetching,
   };
 };
 

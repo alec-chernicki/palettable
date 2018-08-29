@@ -1,15 +1,15 @@
 // @flow
-import type { ColorType } from "../../constants/FlowTypes";
-import { PALETTE_RECEIVED, PALETTE_REQUESTED } from "./ActionTypes";
+import type { ColorType } from '../../constants/FlowTypes';
+import { PALETTE_RECEIVED, PALETTE_REQUESTED } from './ActionTypes';
 
 type ReceivePaletteAction = {
   type: typeof PALETTE_RECEIVED,
-  payload: ColorType[]
+  payload: ColorType[],
 };
 
 type RequestPaletteAction = {
   type: typeof PALETTE_REQUESTED,
-  payload: null
+  payload: null,
 };
 
 export type SuggestedColorActions = ReceivePaletteAction | RequestPaletteAction;

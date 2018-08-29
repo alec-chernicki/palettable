@@ -1,24 +1,24 @@
 // @flow
-import PropTypes from "prop-types";
-import * as React from "react";
-import { connect } from "react-redux";
-import styles from "./NavigationBar.scss";
-import likedColorsSelector from "../../redux/selectors/likedColorsSelector";
-import ExportButton from "../export/ExportButton";
+import PropTypes from 'prop-types';
+import * as React from 'react';
+import { connect } from 'react-redux';
+import styles from './NavigationBar.scss';
+import likedColorsSelector from '../../redux/selectors/likedColorsSelector';
+import ExportButton from '../export/ExportButton';
 
 type Props = {
-  likedColors: Array<Object>
+  likedColors: Array<Object>,
 };
 
 class NavigationBar extends React.Component<Props> {
   handleClickTweet = () => {
     const text =
-      "Check out this great color palette I made with Palettable, made by @whynotdostuff.";
+      'Check out this great color palette I made with Palettable, made by @whynotdostuff.';
     const url = window.location.href;
     window.open(
       `http://twitter.com/intent/tweet?text=${text}&url=${url}`,
-      "thsare",
-      "height=400,width=550,resizable=1, toolbar=0,menubar=0,status=0, location=0"
+      'thsare',
+      'height=400,width=550,resizable=1, toolbar=0,menubar=0,status=0, location=0'
     );
   };
 
@@ -47,7 +47,7 @@ class NavigationBar extends React.Component<Props> {
         <div className={styles.exportOptions}>
           <a onClick={this.handleClickTweet}>
             <svg
-              style={{ cursor: "pointer" }}
+              style={{ cursor: 'pointer' }}
               fill="#619fcc"
               preserveAspectRatio="xMidYMid meet"
               height="20"
@@ -68,12 +68,12 @@ class NavigationBar extends React.Component<Props> {
 }
 
 NavigationBar.propTypes = {
-  likedColors: PropTypes.array.isRequired
+  likedColors: PropTypes.array.isRequired,
 };
 
 const mapStateToProps = state => {
   return {
-    likedColors: likedColorsSelector(state)
+    likedColors: likedColorsSelector(state),
   };
 };
 

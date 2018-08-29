@@ -1,22 +1,22 @@
 // @flow
-import "rxjs/add/operator/filter";
-import "rxjs/add/operator/do";
-import "rxjs/add/operator/ignoreElements";
-import "rxjs/add/observable/empty";
-import { Observable } from "rxjs/Observable";
+import 'rxjs/add/operator/filter';
+import 'rxjs/add/operator/do';
+import 'rxjs/add/operator/ignoreElements';
+import 'rxjs/add/observable/empty';
+import { Observable } from 'rxjs/Observable';
 import {
   LIKED_COLOR_CHANGED,
   LIKED_COLOR_ADDED,
-  LIKED_COLOR_REMOVED
-} from "../actions/ActionTypes";
-import url from "../../utils/url";
-import likedColorsSelector from "../selectors/likedColorsSelector";
-import { baseUrl } from "../../constants/links";
+  LIKED_COLOR_REMOVED,
+} from '../actions/ActionTypes';
+import url from '../../utils/url';
+import likedColorsSelector from '../selectors/likedColorsSelector';
+import { baseUrl } from '../../constants/links';
 
 const updatableActions = [
   LIKED_COLOR_CHANGED,
   LIKED_COLOR_ADDED,
-  LIKED_COLOR_REMOVED
+  LIKED_COLOR_REMOVED,
 ];
 
 const setPaletteUrl = (action$: Object, store: Object) => {
@@ -27,7 +27,7 @@ const setPaletteUrl = (action$: Object, store: Object) => {
 
       window.history.replaceState(
         {},
-        "Palettable",
+        'Palettable',
         baseUrl(url.stringifyColors(newPalette))
       );
 

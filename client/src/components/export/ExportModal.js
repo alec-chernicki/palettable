@@ -1,23 +1,23 @@
 // @flow
-import styles from "./ExportModal.scss";
-import Modal from "react-modal";
-import React from "react";
-import type { ColorType, ReduxStore } from "../../constants/FlowTypes";
-import likedColorsSelector from "../../redux/selectors/likedColorsSelector";
-import { connect } from "react-redux";
-import exportOptionsConfig from "./exportOptionsConfig";
-import exportOptionsKeys from "./exportOptionsKeys";
-import Icon from "react-icons-kit";
-import { closeRound } from "react-icons-kit/ionicons/closeRound";
+import styles from './ExportModal.scss';
+import Modal from 'react-modal';
+import React from 'react';
+import type { ColorType, ReduxStore } from '../../constants/FlowTypes';
+import likedColorsSelector from '../../redux/selectors/likedColorsSelector';
+import { connect } from 'react-redux';
+import exportOptionsConfig from './exportOptionsConfig';
+import exportOptionsKeys from './exportOptionsKeys';
+import Icon from 'react-icons-kit';
+import { closeRound } from 'react-icons-kit/ionicons/closeRound';
 
 type Props = {
   +likedColors: ColorType[],
   +isOpen: boolean,
-  +onClose: () => {}
+  +onClose: () => {},
 };
 
 type State = {
-  selectedExportOption: string
+  selectedExportOption: string,
 };
 
 class ExportModal extends React.Component<Props, State> {
@@ -25,7 +25,7 @@ class ExportModal extends React.Component<Props, State> {
     super(props);
 
     this.state = {
-      selectedExportOption: exportOptionsKeys.UNSELECTED
+      selectedExportOption: exportOptionsKeys.UNSELECTED,
     };
   }
 
@@ -99,7 +99,7 @@ class ExportModal extends React.Component<Props, State> {
 
 const mapStateToProps = (state: ReduxStore) => {
   return {
-    likedColors: likedColorsSelector(state)
+    likedColors: likedColorsSelector(state),
   };
 };
 
