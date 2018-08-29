@@ -2,7 +2,7 @@
 
 Create color palettes using the knowledge of millions of designers.
 
-**Full Website: http://palettable.io**
+**Full Website: https://palettable.io**
 
 ![alt tag](http://i63.tinypic.com/16iikx4.png)
 
