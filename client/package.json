@@ -1,6 +1,7 @@
 {
   "name": "palettable-client",
-  "version": "0.1.0",
+  "author": "Alec Ortega",
+  "version": "1.0.0",
   "private": true,
   "proxy": "http://localhost:3001/",
   "dependencies": {

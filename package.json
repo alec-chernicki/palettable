@@ -5,7 +5,7 @@
   "author": "Alec Ortega",
   "repository": "git@github.com:alecortega/palettable.git",
   "scripts": {
-    "deploy-client": "git subtree push --prefix=client heroku-test master",
+    "deploy-client": "git subtree push --prefix=client heroku-client master",
     "deploy-server": "git subtree push --prefix=server heroku-server master",
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "concurrently \"npm run server\" \"npm run client\"",
