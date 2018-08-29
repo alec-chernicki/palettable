@@ -34,7 +34,7 @@ When a user likes or dislikes a color the action is sent through the redux-obser
 
 ### Redux state tree in action:
 
-![Imgur](https://preview.ibb.co/iGSLnp/palettable_graphql.gif)
+![](https://user-images.githubusercontent.com/6596787/44816030-11bc9c00-abaf-11e8-99a7-c0f5d2bede61.gif)
 
 ## Server
 
