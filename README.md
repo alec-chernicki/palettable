@@ -6,6 +6,8 @@ Create color palettes using the knowledge of millions of designers.
 
 ![alt tag](http://i63.tinypic.com/16iikx4.png)
 
+Palettable is split up into two separate deployables, a web client and a beckend server.
+
 ## Client
 
 ### Tech Used: React, Redux, Redux-Observable, Sass
@@ -34,9 +36,7 @@ When a user likes or dislikes a color the action is sent through the redux-obser
 
 ### Redux state tree in action:
 
-![Imgur](https://media.giphy.com/media/t7t1lp6Sjwyn9BPgpM/giphy.gif)
-
-## Directory structure:
+![](https://user-images.githubusercontent.com/6596787/44816030-11bc9c00-abaf-11e8-99a7-c0f5d2bede61.gif)
 
 ## Server
 
@@ -48,7 +48,7 @@ Node is a pretty lightweight server choice and can be spun up fairly easily. We 
 
 ### Data Flow:
 
-![alt tag](http://i65.tinypic.com/qx02nt.png)
+![](https://user-images.githubusercontent.com/6596787/44816092-3d3f8680-abaf-11e8-9245-82c049864ebc.png)
 
 Palettable gives the user the ability to create a palette with _any_ color, but our suggestions are powered by the ColourLovers API so there isn't a human-generated palette for every hex code imaginable. To get around this we search the API using several different methods.
 
