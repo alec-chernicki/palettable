@@ -1,6 +1,8 @@
 {
   "root": "build/",
-  "/**": "index.html",
+  "routes": {
+    "/**": "index.html"
+  },
   "https_only": true,
   "proxies": {
     "/api/": {
