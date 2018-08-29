@@ -50,3 +50,13 @@ p {
   display: flex;
   flex-direction: column;
 }
+
+.footer {
+  display: none;
+}
+
+@media only screen and (max-width: 768px) {
+  .footer {
+    display: block;
+  }
+}

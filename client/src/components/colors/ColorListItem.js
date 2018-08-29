@@ -84,11 +84,9 @@ class ColorListItem extends React.Component<Props> {
       <div className={styles.colorListItem}>
         <div style={style} className={styles.colorListItemBackground}>
           <TransitionGroup>{this.renderContent()}</TransitionGroup>
-          <ColorListItemFooter
-            isLastItem={isLastItem}
-            active={isLastItem}
-            color={color}
-          />
+          <div className={styles.footer}>
+            <ColorListItemFooter active={isLastItem} color={color} />
+          </div>
         </div>
       </div>
     );

@@ -29,12 +29,6 @@
   animation-fill-mode: backwards;
 }
 
-@media only screen and (max-width: 768px) {
-  .colorList {
-    flex-direction: column;
-  }
-}
-
 .flexItemWrapper {
   flex: 1;
 }
@@ -55,4 +49,10 @@
 .flexExitActive {
   flex: 0.00001 !important;
   transition: flex 400ms ease-out;
+}
+
+@media only screen and (max-width: 768px) {
+  .colorList {
+    flex-direction: column;
+  }
 }

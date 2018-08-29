@@ -15,14 +15,13 @@ type Props = {
   +onLike: () => {},
   +onDislike: () => {},
   +color: ColorType,
-  +isLastItem: boolean,
   +isAtMaximum: boolean,
   +active: boolean,
 };
 
 class ColorListItemFooter extends React.Component<Props> {
   static defaultProps = {
-    isLastItem: false,
+    active: false,
     isAtMaximum: false,
   };
 

@@ -50,9 +50,20 @@
 }
 
 @media only screen and (max-width: 768px) {
-  .toolIcons {
+  .toolIcons,
+  .footer {
     display: none;
   }
+}
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  left: auto;
+  z-index: 100000;
+  width: 100%;
+  max-width: 50vw;
+  right: auto;
 }
 
 .fadeEnter {
