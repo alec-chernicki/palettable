@@ -58,3 +58,10 @@
   display: inline-block;
   margin-right: 6px;
 }
+
+@media only screen and (max-width: 768px) {
+  .navigationBar p,
+  .helpers {
+    display: none;
+  }
+}
