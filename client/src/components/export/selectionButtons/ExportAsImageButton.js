@@ -27,11 +27,12 @@ class ExportButtonPng extends React.Component<Props> {
   };
 
   render() {
-    const { likedColors } = this.props;
+    const { likedColors, className } = this.props;
     const stringifiedColors = url.stringifyColors(likedColors);
 
     return (
       <UISelectableButton
+        className={className}
         icon={FaImage}
         href={`${IMAGE_ENDPOINT}/${stringifiedColors}`}
         onClick={this.handleClick}

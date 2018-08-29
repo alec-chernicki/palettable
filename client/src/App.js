@@ -57,7 +57,6 @@ class App extends React.Component<Props> {
 
     if (!isEventFromInput) {
       if (keycode === L_KEYCODE) {
-        console.log(lastColorInPalette);
         onLike(lastColorInPalette);
       } else if (keycode === D_KEYCODE) {
         onDislike(lastColorInPalette);
@@ -66,12 +65,14 @@ class App extends React.Component<Props> {
   };
 
   render() {
+    const { lastColorInPalette } = this.props;
+
     return (
       <div className={styles.app}>
         <NavigationBar />
         <ColorList />
         <div className={styles.footer}>
-          <ColorListItemFooter active={true} />
+          <ColorListItemFooter active={true} color={lastColorInPalette} />
         </div>
       </div>
     );

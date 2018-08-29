@@ -38,7 +38,11 @@ class ExportModal extends React.Component<Props, State> {
       const { ButtonComponent } = exportOptionsConfig[exportOptionKey];
 
       return (
-        <ButtonComponent key={index} onClick={this.handleExportOptionClick} />
+        <ButtonComponent
+          key={index}
+          className={styles.exportButton}
+          onClick={this.handleExportOptionClick}
+        />
       );
     });
   }

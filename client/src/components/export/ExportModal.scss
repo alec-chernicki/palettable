@@ -59,6 +59,20 @@
   bottom: 0;
 }
 
+@media only screen and (max-width: 768px) {
+  .exportButton + .exportButton {
+    margin-top: 15px;
+  }
+
+  .exportModal {
+    width: 100%;
+  }
+
+  .exportButtons {
+    flex-direction: column;
+  }
+}
+
 :global .ReactModal__Overlay {
   transition: opacity 100ms ease-out;
   opacity: 0;

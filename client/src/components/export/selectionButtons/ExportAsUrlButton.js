@@ -16,8 +16,14 @@ class ExportButtonUrl extends React.Component<Props> {
   };
 
   render() {
+    const { className } = this.props;
+
     return (
-      <UISelectableButton icon={FaChain} onClick={this.handleClick}>
+      <UISelectableButton
+        className={className}
+        icon={FaChain}
+        onClick={this.handleClick}
+      >
         URL
       </UISelectableButton>
     );
