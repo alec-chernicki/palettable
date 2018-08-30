@@ -11,7 +11,7 @@ import { addLikedColors } from './redux/actions/likedColors';
 import lastColorInPaletteSelector from './redux/selectors/lastColorInPaletteSelector';
 import url from './utils/url';
 import type { ColorType } from './constants/FlowTypes';
-import ColorListItemFooter from './components/colors/ColorListItemFooter';
+import ColorSelectionFooter from './components/colors/ColorSelectionFooter';
 
 type Props = {
   dispatchHydrateFromUrl: (ColorType[]) => void,
@@ -82,7 +82,7 @@ export class App extends React.Component<Props> {
         <NavigationBar />
         <ColorList />
         <div className={styles.footer}>
-          <ColorListItemFooter active={true} color={lastColorInPalette} />
+          <ColorSelectionFooter active={true} color={lastColorInPalette} />
         </div>
       </div>
     );

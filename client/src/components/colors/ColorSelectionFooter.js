@@ -1,5 +1,5 @@
 // @flow
-import styles from './ColorListItemFooter.scss';
+import styles from './ColorSelectionFooter.scss';
 import type { ColorType } from '../../constants/FlowTypes';
 import React from 'react';
 import classNames from 'classnames';
@@ -19,7 +19,7 @@ type Props = {
   +active: boolean,
 };
 
-class ColorListItemFooter extends React.Component<Props> {
+class ColorSelectionFooter extends React.Component<Props> {
   static defaultProps = {
     active: false,
     isAtMaximum: false,
@@ -82,4 +82,4 @@ const mapDispatchToProps = (dispatch, { color }) => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(ColorListItemFooter);
+)(ColorSelectionFooter);

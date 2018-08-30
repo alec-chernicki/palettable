@@ -2,7 +2,7 @@
 import styles from './ColorListItem.scss';
 import React from 'react';
 import HexCodeInput from './tools/HexCodeInput';
-import ColorListItemFooter from './ColorListItemFooter';
+import ColorSelectionFooter from './ColorSelectionFooter';
 import AdjustColorTool from './tools/AdjustColorTool';
 import RemoveColorTool from './tools/RemoveColorTool';
 import { MoonLoader } from 'halogen';
@@ -85,7 +85,7 @@ class ColorListItem extends React.Component<Props> {
         <div style={style} className={styles.colorListItemBackground}>
           <TransitionGroup>{this.renderContent()}</TransitionGroup>
           <div className={styles.footer}>
-            <ColorListItemFooter active={isLastItem} color={color} />
+            <ColorSelectionFooter active={isLastItem} color={color} />
           </div>
         </div>
       </div>
