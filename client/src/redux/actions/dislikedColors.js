@@ -17,7 +17,6 @@ export const addDislikedColor = (color: Object): AddDislikedColorAction => {
   return { type: DISLIKED_COLOR_ADDED, payload: color };
 };
 
-// Handled by Sagas
 export const dislikeColor = (color: Object): DislikedColorAction => {
   return { type: COLOR_DISLIKED, payload: color };
 };

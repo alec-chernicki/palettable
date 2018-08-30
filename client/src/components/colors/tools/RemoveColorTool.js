@@ -15,7 +15,7 @@ type Props = {
   isOnlyItem: boolean,
 };
 
-const RemoveColorTool = ({
+export const RemoveColorTool = ({
   onClick,
   color,
   isOnlyItem,
@@ -41,6 +41,7 @@ const RemoveColorTool = ({
     >
       <svg
         className={classNames(styles.removeColorToolIcon, colorClassName)}
+        data-jest="removeColorTool"
         onClick={onClick}
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 408.483 408.483"

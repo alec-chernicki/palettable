@@ -2,7 +2,6 @@
 import type { ColorType } from '../../constants/FlowTypes';
 import {
   COLOR_LIKED,
-  COLOR_REMOVED,
   LIKED_COLOR_ADDED,
   LIKED_COLORS_ADDED,
   LIKED_COLOR_REMOVED,
@@ -59,8 +58,4 @@ export const changeLikedColor = ({
 
 export const likeColor = (color: ColorType): AddLikedColorAction => {
   return { type: COLOR_LIKED, payload: color };
-};
-
-export const removeColor = (color: ColorType): RemoveLikedColorAction => {
-  return { type: COLOR_REMOVED, payload: color };
 };
