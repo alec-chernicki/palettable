@@ -45,7 +45,7 @@ export class ColorSelectionFooter extends React.Component<Props> {
       <UIButton
         data-jest="dislikeButton"
         use="negative"
-        className={styles.buttdispatchDislikeColor}
+        className={styles.buttonDislike}
         onClick={dispatchDislikeColor}
       >
         Dislike
