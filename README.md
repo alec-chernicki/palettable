@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/alecortega/palettable.svg?branch=master)](https://travis-ci.org/alecortega/palettable)
+
 # <img src='http://i.imgur.com/580vPI2.png' height='50'></a>
 
 Create color palettes using the knowledge of millions of designers.
