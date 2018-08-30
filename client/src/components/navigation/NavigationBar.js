@@ -32,6 +32,8 @@ class NavigationBar extends React.Component<Props> {
             Generate beautiful color palettes using the knowledge of millions of
             designers.
           </p>
+        </div>
+        <div className={styles.exportOptions}>
           <div className={styles.helpers}>
             <p>
               <span className={styles.key}>L</span>
@@ -42,8 +44,7 @@ class NavigationBar extends React.Component<Props> {
               Dislike
             </p>
           </div>
-        </div>
-        <div className={styles.exportOptions}>
+          <div className={styles.divider} />
           <a onClick={this.handleClickTweet}>
             <svg
               style={{ cursor: 'pointer' }}
