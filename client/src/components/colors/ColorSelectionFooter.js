@@ -13,13 +13,12 @@ import ExportButton from '../export/ExportButton';
 type Props = {
   +isAtMaximum: boolean,
   +dispatchLikeColor: () => {},
-  +onDislike: () => {},
+  +dispatchDislikeColor: () => {},
   +color: ColorType,
-  +isAtMaximum: boolean,
   +active: boolean,
 };
 
-class ColorSelectionFooter extends React.Component<Props> {
+export class ColorSelectionFooter extends React.Component<Props> {
   static defaultProps = {
     active: false,
     isAtMaximum: false,
@@ -29,20 +28,25 @@ class ColorSelectionFooter extends React.Component<Props> {
     const { dispatchLikeColor } = this.props;
 
     return (
-      <UIButton use="positive" onClick={dispatchLikeColor}>
+      <UIButton
+        data-jest="likeButton"
+        use="positive"
+        onClick={dispatchLikeColor}
+      >
         Like
       </UIButton>
     );
   }
 
   renderDislikeButton() {
-    const { onDislike } = this.props;
+    const { dispatchDislikeColor } = this.props;
 
     return (
       <UIButton
+        data-jest="dislikeButton"
         use="negative"
-        className={styles.buttonDislike}
-        onClick={onDislike}
+        className={styles.buttdispatchDislikeColor}
+        onClick={dispatchDislikeColor}
       >
         Dislike
       </UIButton>
@@ -61,7 +65,11 @@ class ColorSelectionFooter extends React.Component<Props> {
         {isAtMaximum && <p className={styles.message}>Maximum of 5 colors</p>}
         <div className={styles.buttons}>
           {this.renderDislikeButton()}
-          {isAtMaximum ? <ExportButton /> : this.renderLikeButton()}
+          {isAtMaximum ? (
+            <ExportButton data-jest="exportButton" />
+          ) : (
+            this.renderLikeButton()
+          )}
         </div>
       </div>
     );
@@ -75,7 +83,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = (dispatch, { color }) => {
   return {
     dispatchLikeColor: () => dispatch(likeColor(color)),
-    onDislike: () => dispatch(dislikeColor(color)),
+    dispatchDislikeColor: () => dispatch(dislikeColor(color)),
   };
 };
 
