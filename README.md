@@ -5,6 +5,7 @@
 Create color palettes using the knowledge of millions of designers.
 
 **Full Website: https://palettable.io**
+Fun fact: Palettable has 2000 daily unique pageviews, 90% of which are from Japan! 
 
 ![alt tag](http://i63.tinypic.com/16iikx4.png)
 
