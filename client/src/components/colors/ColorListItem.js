@@ -41,6 +41,7 @@ class ColorListItem extends React.Component<Props> {
       </CSSTransition>
     );
   }
+
   renderTools() {
     const { color } = this.props;
     return (
@@ -65,17 +66,8 @@ class ColorListItem extends React.Component<Props> {
     );
   }
 
-  renderContent() {
-    const { isFetching, isLastItem } = this.props;
-
-    if (isFetching && isLastItem) {
-      return this.renderLoader();
-    }
-
-    return this.renderTools();
-  }
   render() {
-    const { color, isLastItem } = this.props;
+    const { color, isLastItem, isFetching } = this.props;
     const style = {
       backgroundColor: color.hexCode,
     };
@@ -83,7 +75,11 @@ class ColorListItem extends React.Component<Props> {
     return (
       <div className={styles.colorListItem}>
         <div style={style} className={styles.colorListItemBackground}>
-          <TransitionGroup>{this.renderContent()}</TransitionGroup>
+          <TransitionGroup>
+            {isFetching && isLastItem
+              ? this.renderLoader()
+              : this.renderTools()}
+          </TransitionGroup>
           <div className={styles.footer}>
             <ColorSelectionFooter active={isLastItem} color={color} />
           </div>

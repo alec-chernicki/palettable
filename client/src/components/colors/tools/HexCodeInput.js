@@ -11,7 +11,7 @@ import connectInterfaceColorScheme from '../../decorators/connectInterfaceColorS
 
 type Props = {
   color: ColorType,
-  onBlur: (hexCode: string) => mixed,
+  dispatchChangeLikedColor: (hexCode: string) => mixed,
   accentHexCode: string,
   isDark: boolean,
 };
@@ -29,7 +29,7 @@ const _formatToHashedString = (hexCode: string): string => {
   return hexCode;
 };
 
-class HexCodeInput extends React.Component<Props, State> {
+export class HexCodeInput extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
 
@@ -58,7 +58,7 @@ class HexCodeInput extends React.Component<Props, State> {
     this.setState({ shownHexCode: value });
 
     if (isHex(formattedValue)) {
-      this.props.onBlur(formattedValue);
+      this.props.dispatchChangeLikedColor(formattedValue);
     }
   };
 
@@ -66,6 +66,7 @@ class HexCodeInput extends React.Component<Props, State> {
     const {
       color: { hexCode },
     } = this.props;
+
     const { value }: { value: string } = e.target;
     const formattedValue = _formatToHashedString(value);
 
@@ -74,7 +75,7 @@ class HexCodeInput extends React.Component<Props, State> {
     }
 
     this.setState({ shownHexCode: Color(formattedValue).hex() });
-    this.props.onBlur(formattedValue);
+    this.props.dispatchChangeLikedColor(formattedValue);
   };
 
   render() {
@@ -92,6 +93,7 @@ class HexCodeInput extends React.Component<Props, State> {
 
     return (
       <input
+        data-jest="hexCodeInput"
         type="text"
         className={classNames(styles.hexCodeInput, colorClassName)}
         value={shownHexCode}
@@ -106,7 +108,7 @@ class HexCodeInput extends React.Component<Props, State> {
 
 const mapDispatchToProps = (dispatch, { color }: Props) => {
   return {
-    onBlur: (newHexCode: string) => {
+    dispatchChangeLikedColor: (newHexCode: string) => {
       dispatch(
         changeLikedColor({
           color,

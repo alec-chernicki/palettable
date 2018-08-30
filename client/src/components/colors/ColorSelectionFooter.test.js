@@ -1,7 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import { ColorSelectionFooter } from './ColorSelectionFooter';
-import ExportContentImage from '../export/selectedScreens/ExportAsImageScreen';
 
 const mockedProps = {
   dispatchLikeColor: jest.fn(),
