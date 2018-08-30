@@ -8,6 +8,16 @@ Create color palettes using the knowledge of millions of designers.
 
 Palettable is split up into two separate deployables, a web client and a beckend server.
 
+## How to run the application:
+
+Navigate to the client directory and run: `yarn`.
+
+Navigation to the server directory and run: `yarn`.
+
+Navigate to the root directory and run: `yarn start`. This will spin up both the client and the server on the same process.
+
+Run tests with: `yarn test` in either sub-directory.
+
 ## Client
 
 ### Tech Used: React, Redux, Redux-Observable, Sass
