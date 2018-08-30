@@ -14,26 +14,32 @@ import type { ColorType } from './constants/FlowTypes';
 import ColorListItemFooter from './components/colors/ColorListItemFooter';
 
 type Props = {
-  hydrateFromUrl: (ColorType[]) => void,
-  requestRandomPalette: () => mixed,
-  onLike: (lastColorInPalette: Object) => mixed,
-  onDislike: (lastColorInPalette: Object) => mixed,
+  dispatchHydrateFromUrl: (ColorType[]) => void,
+  dispatchRequestPalette: () => mixed,
+  dispatchLikeColor: (lastColorInPalette: Object) => mixed,
+  dispatchDislikeColor: (lastColorInPalette: Object) => mixed,
   lastColorInPalette: Object,
 };
 
 const L_KEYCODE = 76;
 const D_KEYCODE = 68;
 
-class App extends React.Component<Props> {
+export class App extends React.Component<Props> {
+  static defaultProps = {
+    dispatchLikeColor: () => {},
+    dispatchDislikeColor: () => {},
+    dispatchRequestPalette: () => {},
+  };
+
   componentDidMount() {
-    const { requestRandomPalette, hydrateFromUrl } = this.props;
-    const paletteFromUrl = url.parseColors();
+    const { dispatchRequestPalette, dispatchHydrateFromUrl } = this.props;
+    const paletteFromUrl = url.parseColorsFromUrl();
 
     if (paletteFromUrl.length) {
-      return hydrateFromUrl(paletteFromUrl);
+      return dispatchHydrateFromUrl(paletteFromUrl);
     }
 
-    requestRandomPalette();
+    dispatchRequestPalette();
   }
 
   componentWillMount() {
@@ -51,15 +57,19 @@ class App extends React.Component<Props> {
   }
 
   handleKeydown = (event: KeyboardEvent) => {
-    const { onLike, onDislike, lastColorInPalette } = this.props;
+    const {
+      dispatchLikeColor,
+      dispatchDislikeColor,
+      lastColorInPalette,
+    } = this.props;
     const keycode: number = event.which;
     const isEventFromInput = this.getIsEventFromInput(event);
 
     if (!isEventFromInput) {
       if (keycode === L_KEYCODE) {
-        onLike(lastColorInPalette);
+        dispatchLikeColor(lastColorInPalette);
       } else if (keycode === D_KEYCODE) {
-        onDislike(lastColorInPalette);
+        dispatchDislikeColor(lastColorInPalette);
       }
     }
   };
@@ -87,10 +97,10 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onLike: color => dispatch(likeColor(color)),
-    onDislike: color => dispatch(dislikeColor(color)),
-    requestRandomPalette: () => dispatch(requestPalette()),
-    hydrateFromUrl: colors => dispatch(addLikedColors(colors)),
+    dispatchLikeColor: color => dispatch(likeColor(color)),
+    dispatchDislikeColor: color => dispatch(dislikeColor(color)),
+    dispatchRequestPalette: () => dispatch(requestPalette()),
+    dispatchHydrateFromUrl: colors => dispatch(addLikedColors(colors)),
   };
 };
 

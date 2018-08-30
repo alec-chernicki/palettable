@@ -33,7 +33,7 @@ const url = {
   stringifyColors(colors: ColorType[]): string {
     return _colorsToString(colors);
   },
-  parseColors() {
+  parseColorsFromUrl() {
     return _stringToColors();
   },
 };

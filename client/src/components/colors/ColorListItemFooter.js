@@ -12,7 +12,7 @@ import ExportButton from '../export/ExportButton';
 
 type Props = {
   +isAtMaximum: boolean,
-  +onLike: () => {},
+  +dispatchLikeColor: () => {},
   +onDislike: () => {},
   +color: ColorType,
   +isAtMaximum: boolean,
@@ -26,10 +26,10 @@ class ColorListItemFooter extends React.Component<Props> {
   };
 
   renderLikeButton() {
-    const { onLike } = this.props;
+    const { dispatchLikeColor } = this.props;
 
     return (
-      <UIButton use="positive" onClick={onLike}>
+      <UIButton use="positive" onClick={dispatchLikeColor}>
         Like
       </UIButton>
     );
@@ -74,7 +74,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = (dispatch, { color }) => {
   return {
-    onLike: () => dispatch(likeColor(color)),
+    dispatchLikeColor: () => dispatch(likeColor(color)),
     onDislike: () => dispatch(dislikeColor(color)),
   };
 };
