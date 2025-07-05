@@ -28,7 +28,7 @@ Run tests with: `yarn test` in either sub-directory.
 
 **Why was this stack chosen?**
 
-When a user likes or dislikes, a color a call to Palettable's backend is fired if there are no cached colors left that a user hasn not already liked or disliked. If a user is using the tool fairly quickly this results in a high number of asynchronous calls that all depend on one another and have side effects on client state when they resolve. On top of that, these calls may or may not be fired at all if there are still suggested colors in the cache that a user has not yet seen.
+When a user likes or dislikes, a color a call to Palettable's backend is fired if there are no cached colors left that a user has not already liked or disliked. If a user is using the tool fairly quickly this results in a high number of asynchronous calls that all depend on one another and have side effects on client state when they resolve. On top of that, these calls may or may not be fired at all if there are still suggested colors in the cache that a user has not yet seen.
 
 Observables lend themselves well to solving this exact problem by using streams to handle the asynchronous calls and allows a developer to write the outcome of those streams in a very declaritive way. Redux-Observable inject's the current Redux state tree into each Observable function so that we can easily dispatch new events based on the previous state tree.
 
